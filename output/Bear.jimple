@@ -1,0 +1,168 @@
+public class Bear extends java.lang.Object
+{
+    public static int num;
+    public int myNum;
+    public java.lang.String name;
+
+    public void <init>(int, java.lang.String)
+    {
+        Bear r0;
+        int $i0, $i1, i2;
+        java.lang.String r1;
+
+        r0 := @this: Bear;
+
+        i2 := @parameter0: int;
+
+        r1 := @parameter1: java.lang.String;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        $i0 = <Bear: int num>;
+
+        $i1 = $i0 + 1;
+
+        <Bear: int num> = $i1;
+
+        r0.<Bear: int myNum> = i2;
+
+        r0.<Bear: java.lang.String name> = r1;
+
+        return;
+    }
+
+    public void printNum()
+    {
+        Bear r0;
+        int $i0;
+        java.io.PrintStream $r1;
+
+        r0 := @this: Bear;
+
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+
+        $i0 = r0.<Bear: int myNum>;
+
+        virtualinvoke $r1.<java.io.PrintStream: void println(int)>($i0);
+
+        return;
+    }
+
+    public void printInfo(java.lang.String)
+    {
+        java.lang.StringBuilder $r0, $r2, $r4;
+        java.io.PrintStream $r1;
+        java.lang.String r3, $r5;
+        Bear r6;
+
+        r6 := @this: Bear;
+
+        r3 := @parameter0: java.lang.String;
+
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("I like ");
+
+        $r4 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(r3);
+
+        $r5 = virtualinvoke $r4.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r1.<java.io.PrintStream: void println(java.lang.String)>($r5);
+
+        return;
+    }
+
+    public void printInfo(int)
+    {
+        java.lang.StringBuilder $r0, $r2, $r3;
+        java.io.PrintStream $r1;
+        int i0;
+        java.lang.String $r4;
+        Bear r5;
+
+        r5 := @this: Bear;
+
+        i0 := @parameter0: int;
+
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+
+        $r0 = new java.lang.StringBuilder;
+
+        specialinvoke $r0.<java.lang.StringBuilder: void <init>()>();
+
+        $r2 = virtualinvoke $r0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Number: ");
+
+        $r3 = virtualinvoke $r2.<java.lang.StringBuilder: java.lang.StringBuilder append(int)>(i0);
+
+        $r4 = virtualinvoke $r3.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $r1.<java.io.PrintStream: void println(java.lang.String)>($r4);
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        Bear $r0, $r2;
+        int $i0, $i1, $i2, $i3, $i4, $i5, $i6;
+        java.io.PrintStream $r4, $r5, $r6;
+        java.lang.String[] r7;
+
+        r7 := @parameter0: java.lang.String[];
+
+        $r0 = new Bear;
+
+        specialinvoke $r0.<Bear: void <init>(int,java.lang.String)>(4, "Oski");
+
+        $r2 = new Bear;
+
+        specialinvoke $r2.<Bear: void <init>(int,java.lang.String)>(2, "Clark");
+
+        $r4 = <java.lang.System: java.io.PrintStream out>;
+
+        $i0 = <Bear: int num>;
+
+        virtualinvoke $r4.<java.io.PrintStream: void println(int)>($i0);
+
+        $i1 = <Bear: int num>;
+
+        $i2 = $i1 - 1;
+
+        <Bear: int num> = $i2;
+
+        $r5 = <java.lang.System: java.io.PrintStream out>;
+
+        $i3 = <Bear: int num>;
+
+        virtualinvoke $r5.<java.io.PrintStream: void println(int)>($i3);
+
+        $i4 = $r2.<Bear: int myNum>;
+
+        $i5 = $i4 - 1;
+
+        $r2.<Bear: int myNum> = $i5;
+
+        $r6 = <java.lang.System: java.io.PrintStream out>;
+
+        $i6 = $r0.<Bear: int myNum>;
+
+        virtualinvoke $r6.<java.io.PrintStream: void println(int)>($i6);
+
+        virtualinvoke $r0.<Bear: void printInfo(int)>(2);
+
+        virtualinvoke $r0.<Bear: void printInfo(java.lang.String)>("apples");
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        <Bear: int num> = 0;
+
+        return;
+    }
+}

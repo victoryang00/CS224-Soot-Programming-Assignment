@@ -1,0 +1,36 @@
+public class DoWhileLoop3ACExample extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        DoWhileLoop3ACExample r0;
+
+        r0 := @this: DoWhileLoop3ACExample;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        int[] r0;
+        int $i0, i1;
+        java.lang.String[] r1;
+
+        r1 := @parameter0: java.lang.String[];
+
+        r0 = newarray (int)[10];
+
+        i1 = 0;
+
+     label1:
+        i1 = i1 + 1;
+
+        $i0 = r0[i1];
+
+        if $i0 < 10 goto label1;
+
+        return;
+    }
+}
