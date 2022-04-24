@@ -33,7 +33,7 @@ public class LiveMain {
         Options.v().set_whole_program(true);
         Options.v().set_verbose(true);
         Options.v().setPhaseOption("jb", "use-original-names:true");
-        Options.v().setPhaseOption("jb.dae", "only-stack-locals:true"); // 不去优化b = $stack5;的语句，保持原汁原味
+        Options.v().setPhaseOption("jb.dae", "only-stack-locals:true");
 
         Options.v().set_main_class(classname);
         Scene.v().loadNecessaryClasses();
