@@ -1,0 +1,317 @@
+public class LiveVariableAnalysis.LiveVariables extends soot.toolkits.scalar.BackwardFlowAnalysis
+{
+
+    public void <init>(soot.toolkits.graph.DirectedGraph)
+    {
+        LiveVariableAnalysis.LiveVariables this;
+        soot.toolkits.graph.DirectedGraph graph;
+
+        this := @this: LiveVariableAnalysis.LiveVariables;
+
+        graph := @parameter0: soot.toolkits.graph.DirectedGraph;
+
+        specialinvoke this.<soot.toolkits.scalar.BackwardFlowAnalysis: void <init>(soot.toolkits.graph.DirectedGraph)>(graph);
+
+        virtualinvoke this.<LiveVariableAnalysis.LiveVariables: void doAnalysis()>();
+
+        return;
+    }
+
+    protected LiveVariableAnalysis.LiveVariableFlowSet newInitialFlow()
+    {
+        LiveVariableAnalysis.LiveVariableFlowSet $stack1;
+        LiveVariableAnalysis.LiveVariables this;
+
+        this := @this: LiveVariableAnalysis.LiveVariables;
+
+        $stack1 = new LiveVariableAnalysis.LiveVariableFlowSet;
+
+        specialinvoke $stack1.<LiveVariableAnalysis.LiveVariableFlowSet: void <init>()>();
+
+        return $stack1;
+    }
+
+    protected LiveVariableAnalysis.LiveVariableFlowSet entryInitialFlow()
+    {
+        LiveVariableAnalysis.LiveVariableFlowSet $stack1;
+        LiveVariableAnalysis.LiveVariables this;
+
+        this := @this: LiveVariableAnalysis.LiveVariables;
+
+        $stack1 = new LiveVariableAnalysis.LiveVariableFlowSet;
+
+        specialinvoke $stack1.<LiveVariableAnalysis.LiveVariableFlowSet: void <init>()>();
+
+        return $stack1;
+    }
+
+    protected void merge(LiveVariableAnalysis.LiveVariableFlowSet, LiveVariableAnalysis.LiveVariableFlowSet, LiveVariableAnalysis.LiveVariableFlowSet)
+    {
+        LiveVariableAnalysis.LiveVariableFlowSet srcSet1, srcSet2, destSet;
+        LiveVariableAnalysis.LiveVariables this;
+        soot.toolkits.scalar.FlowSet $r0, $r1;
+
+        this := @this: LiveVariableAnalysis.LiveVariables;
+
+        srcSet1 := @parameter0: LiveVariableAnalysis.LiveVariableFlowSet;
+
+        srcSet2 := @parameter1: LiveVariableAnalysis.LiveVariableFlowSet;
+
+        destSet := @parameter2: LiveVariableAnalysis.LiveVariableFlowSet;
+
+        $r0 = (soot.toolkits.scalar.FlowSet) srcSet2;
+
+        $r1 = (soot.toolkits.scalar.FlowSet) srcSet2;
+
+        virtualinvoke srcSet1.<LiveVariableAnalysis.LiveVariableFlowSet: void union(soot.toolkits.scalar.FlowSet,soot.toolkits.scalar.FlowSet)>($r0, $r1);
+
+        return;
+    }
+
+    protected void copy(LiveVariableAnalysis.LiveVariableFlowSet, LiveVariableAnalysis.LiveVariableFlowSet)
+    {
+        LiveVariableAnalysis.LiveVariableFlowSet srcSet, destSet;
+        LiveVariableAnalysis.LiveVariables this;
+        soot.toolkits.scalar.FlowSet $r0;
+
+        this := @this: LiveVariableAnalysis.LiveVariables;
+
+        srcSet := @parameter0: LiveVariableAnalysis.LiveVariableFlowSet;
+
+        destSet := @parameter1: LiveVariableAnalysis.LiveVariableFlowSet;
+
+        $r0 = (soot.toolkits.scalar.FlowSet) destSet;
+
+        virtualinvoke srcSet.<LiveVariableAnalysis.LiveVariableFlowSet: void copy(soot.toolkits.scalar.FlowSet)>($r0);
+
+        return;
+    }
+
+    protected void flowThrough(LiveVariableAnalysis.LiveVariableFlowSet, soot.Unit, LiveVariableAnalysis.LiveVariableFlowSet)
+    {
+        LiveVariableAnalysis.LiveVariables this;
+        LiveVariableAnalysis.LiveVariableFlowSet srcSet, destSet;
+        soot.Unit u;
+
+        this := @this: LiveVariableAnalysis.LiveVariables;
+
+        srcSet := @parameter0: LiveVariableAnalysis.LiveVariableFlowSet;
+
+        u := @parameter1: soot.Unit;
+
+        destSet := @parameter2: LiveVariableAnalysis.LiveVariableFlowSet;
+
+        specialinvoke this.<LiveVariableAnalysis.LiveVariables: void kill(LiveVariableAnalysis.LiveVariableFlowSet,soot.Unit,LiveVariableAnalysis.LiveVariableFlowSet)>(srcSet, u, destSet);
+
+        specialinvoke this.<LiveVariableAnalysis.LiveVariables: void gen(soot.Unit,LiveVariableAnalysis.LiveVariableFlowSet)>(u, destSet);
+
+        return;
+    }
+
+    private void kill(LiveVariableAnalysis.LiveVariableFlowSet, soot.Unit, LiveVariableAnalysis.LiveVariableFlowSet)
+    {
+        soot.Unit u;
+        java.util.List $stack8;
+        java.util.Iterator l5;
+        boolean $stack10;
+        LiveVariableAnalysis.LiveVariableFlowSet inSet, destSet, $u0;
+        java.lang.Object $stack11;
+        soot.ValueBox defBox;
+        soot.Value $stack12;
+        LiveVariableAnalysis.LiveVariables this;
+        LiveVariableAnalysis.LiveVariables$1 $u1;
+        soot.util.Switch $r0;
+        soot.toolkits.scalar.FlowSet $r1, $r2;
+
+        this := @this: LiveVariableAnalysis.LiveVariables;
+
+        inSet := @parameter0: LiveVariableAnalysis.LiveVariableFlowSet;
+
+        u := @parameter1: soot.Unit;
+
+        destSet := @parameter2: LiveVariableAnalysis.LiveVariableFlowSet;
+
+        $u0 = new LiveVariableAnalysis.LiveVariableFlowSet;
+
+        specialinvoke $u0.<LiveVariableAnalysis.LiveVariableFlowSet: void <init>()>();
+
+        $stack8 = interfaceinvoke u.<soot.Unit: java.util.List getDefBoxes()>();
+
+        l5 = interfaceinvoke $stack8.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $stack10 = interfaceinvoke l5.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack10 == 0 goto label2;
+
+        $stack11 = interfaceinvoke l5.<java.util.Iterator: java.lang.Object next()>();
+
+        defBox = (soot.ValueBox) $stack11;
+
+        $stack12 = interfaceinvoke defBox.<soot.ValueBox: soot.Value getValue()>();
+
+        $u1 = new LiveVariableAnalysis.LiveVariables$1;
+
+        specialinvoke $u1.<LiveVariableAnalysis.LiveVariables$1: void <init>(LiveVariableAnalysis.LiveVariables,LiveVariableAnalysis.LiveVariableFlowSet,soot.ValueBox,LiveVariableAnalysis.LiveVariableFlowSet)>(this, inSet, defBox, $u0);
+
+        $r0 = (soot.util.Switch) $u1;
+
+        interfaceinvoke $stack12.<soot.Value: void apply(soot.util.Switch)>($r0);
+
+        goto label1;
+
+     label2:
+        $r1 = (soot.toolkits.scalar.FlowSet) $u0;
+
+        $r2 = (soot.toolkits.scalar.FlowSet) destSet;
+
+        virtualinvoke inSet.<LiveVariableAnalysis.LiveVariableFlowSet: void difference(soot.toolkits.scalar.FlowSet,soot.toolkits.scalar.FlowSet)>($r1, $r2);
+
+        return;
+    }
+
+    private void gen(soot.Unit, LiveVariableAnalysis.LiveVariableFlowSet)
+    {
+        soot.Unit u;
+        java.util.List $stack5;
+        java.util.Iterator l3;
+        boolean $stack7;
+        java.lang.Object $stack8;
+        soot.ValueBox useBox;
+        soot.Value $stack9;
+        LiveVariableAnalysis.LiveVariables this;
+        LiveVariableAnalysis.LiveVariableFlowSet destSet;
+        LiveVariableAnalysis.LiveVariables$2 $u0;
+        soot.util.Switch $r0;
+
+        this := @this: LiveVariableAnalysis.LiveVariables;
+
+        u := @parameter0: soot.Unit;
+
+        destSet := @parameter1: LiveVariableAnalysis.LiveVariableFlowSet;
+
+        $stack5 = interfaceinvoke u.<soot.Unit: java.util.List getUseBoxes()>();
+
+        l3 = interfaceinvoke $stack5.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $stack7 = interfaceinvoke l3.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack7 == 0 goto label2;
+
+        $stack8 = interfaceinvoke l3.<java.util.Iterator: java.lang.Object next()>();
+
+        useBox = (soot.ValueBox) $stack8;
+
+        $stack9 = interfaceinvoke useBox.<soot.ValueBox: soot.Value getValue()>();
+
+        $u0 = new LiveVariableAnalysis.LiveVariables$2;
+
+        specialinvoke $u0.<LiveVariableAnalysis.LiveVariables$2: void <init>(LiveVariableAnalysis.LiveVariables,LiveVariableAnalysis.LiveVariableFlowSet,soot.ValueBox)>(this, destSet, useBox);
+
+        $r0 = (soot.util.Switch) $u0;
+
+        interfaceinvoke $stack9.<soot.Value: void apply(soot.util.Switch)>($r0);
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    protected volatile void flowThrough(java.lang.Object, java.lang.Object, java.lang.Object)
+    {
+        LiveVariableAnalysis.LiveVariables this;
+        java.lang.Object l1, l2, l3;
+        LiveVariableAnalysis.LiveVariableFlowSet $stack4, $stack6;
+        soot.Unit $stack5;
+
+        this := @this: LiveVariableAnalysis.LiveVariables;
+
+        l1 := @parameter0: java.lang.Object;
+
+        l2 := @parameter1: java.lang.Object;
+
+        l3 := @parameter2: java.lang.Object;
+
+        $stack6 = (LiveVariableAnalysis.LiveVariableFlowSet) l1;
+
+        $stack5 = (soot.Unit) l2;
+
+        $stack4 = (LiveVariableAnalysis.LiveVariableFlowSet) l3;
+
+        virtualinvoke this.<LiveVariableAnalysis.LiveVariables: void flowThrough(LiveVariableAnalysis.LiveVariableFlowSet,soot.Unit,LiveVariableAnalysis.LiveVariableFlowSet)>($stack6, $stack5, $stack4);
+
+        return;
+    }
+
+    protected volatile void copy(java.lang.Object, java.lang.Object)
+    {
+        LiveVariableAnalysis.LiveVariables this;
+        java.lang.Object l1, l2;
+        LiveVariableAnalysis.LiveVariableFlowSet $stack3, $stack4;
+
+        this := @this: LiveVariableAnalysis.LiveVariables;
+
+        l1 := @parameter0: java.lang.Object;
+
+        l2 := @parameter1: java.lang.Object;
+
+        $stack4 = (LiveVariableAnalysis.LiveVariableFlowSet) l1;
+
+        $stack3 = (LiveVariableAnalysis.LiveVariableFlowSet) l2;
+
+        virtualinvoke this.<LiveVariableAnalysis.LiveVariables: void copy(LiveVariableAnalysis.LiveVariableFlowSet,LiveVariableAnalysis.LiveVariableFlowSet)>($stack4, $stack3);
+
+        return;
+    }
+
+    protected volatile void merge(java.lang.Object, java.lang.Object, java.lang.Object)
+    {
+        LiveVariableAnalysis.LiveVariables this;
+        java.lang.Object l1, l2, l3;
+        LiveVariableAnalysis.LiveVariableFlowSet $stack4, $stack5, $stack6;
+
+        this := @this: LiveVariableAnalysis.LiveVariables;
+
+        l1 := @parameter0: java.lang.Object;
+
+        l2 := @parameter1: java.lang.Object;
+
+        l3 := @parameter2: java.lang.Object;
+
+        $stack6 = (LiveVariableAnalysis.LiveVariableFlowSet) l1;
+
+        $stack5 = (LiveVariableAnalysis.LiveVariableFlowSet) l2;
+
+        $stack4 = (LiveVariableAnalysis.LiveVariableFlowSet) l3;
+
+        virtualinvoke this.<LiveVariableAnalysis.LiveVariables: void merge(LiveVariableAnalysis.LiveVariableFlowSet,LiveVariableAnalysis.LiveVariableFlowSet,LiveVariableAnalysis.LiveVariableFlowSet)>($stack6, $stack5, $stack4);
+
+        return;
+    }
+
+    protected volatile java.lang.Object entryInitialFlow()
+    {
+        LiveVariableAnalysis.LiveVariables this;
+        LiveVariableAnalysis.LiveVariableFlowSet $stack1;
+
+        this := @this: LiveVariableAnalysis.LiveVariables;
+
+        $stack1 = virtualinvoke this.<LiveVariableAnalysis.LiveVariables: LiveVariableAnalysis.LiveVariableFlowSet entryInitialFlow()>();
+
+        return $stack1;
+    }
+
+    protected volatile java.lang.Object newInitialFlow()
+    {
+        LiveVariableAnalysis.LiveVariables this;
+        LiveVariableAnalysis.LiveVariableFlowSet $stack1;
+
+        this := @this: LiveVariableAnalysis.LiveVariables;
+
+        $stack1 = virtualinvoke this.<LiveVariableAnalysis.LiveVariables: LiveVariableAnalysis.LiveVariableFlowSet newInitialFlow()>();
+
+        return $stack1;
+    }
+}

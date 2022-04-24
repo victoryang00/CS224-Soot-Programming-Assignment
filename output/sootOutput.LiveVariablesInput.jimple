@@ -1,0 +1,48 @@
+public class sootOutput.LiveVariablesInput extends java.lang.Object
+{
+    private java.util.concurrent.locks.Lock lock;
+
+    public void <init>()
+    {
+        sootOutput.LiveVariablesInput l0;
+        java.util.concurrent.locks.ReentrantLock $u0;
+        LiveVariablesInput $r0;
+
+        l0 := @this: sootOutput.LiveVariablesInput;
+
+        specialinvoke l0.<java.lang.Object: void <init>()>();
+
+        $u0 = new java.util.concurrent.locks.ReentrantLock;
+
+        specialinvoke $u0.<java.util.concurrent.locks.ReentrantLock: void <init>()>();
+
+        $r0 = (LiveVariablesInput) l0;
+
+        $r0.<LiveVariablesInput: java.util.concurrent.locks.Lock lock> = $u0;
+
+        return;
+    }
+
+    static java.util.concurrent.locks.Lock access$000(LiveVariablesInput)
+    {
+        LiveVariablesInput l0;
+        java.util.concurrent.locks.Lock $stack1;
+
+        l0 := @parameter0: LiveVariablesInput;
+
+        $stack1 = l0.<LiveVariablesInput: java.util.concurrent.locks.Lock lock>;
+
+        return $stack1;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.lang.String[] l0;
+
+        l0 := @parameter0: java.lang.String[];
+
+        staticinvoke <LiveVariablesInput$test0: int main(java.lang.String[])>(l0);
+
+        return;
+    }
+}

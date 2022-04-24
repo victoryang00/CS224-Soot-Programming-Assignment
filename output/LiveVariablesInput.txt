@@ -1,0 +1,6 @@
+args := @parameter0: java.lang.String[]; []
+a = 0; []
+a#2 = 1; [a#2]
+b = a#2 * 2; []
+c = 3; [c]
+d = c; []

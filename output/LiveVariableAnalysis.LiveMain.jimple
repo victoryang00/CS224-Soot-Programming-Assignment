@@ -1,0 +1,443 @@
+public class LiveVariableAnalysis.LiveMain extends java.lang.Object
+{
+    public static final java.lang.String sourceDirectory;
+
+    public void <init>()
+    {
+        LiveVariableAnalysis.LiveMain this;
+
+        this := @this: LiveVariableAnalysis.LiveMain;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void setupSoot(java.lang.String)
+    {
+        soot.options.Options $stack1, $stack2, $stack3, $stack4, $stack6, $stack7, $stack8, $stack11, $stack12, $stack13, $stack15, $stack17;
+        java.lang.String $stack5, $stack9, classname;
+        java.util.List $stack10;
+        soot.Scene $stack18;
+
+        classname := @parameter0: java.lang.String;
+
+        staticinvoke <soot.G: void reset()>();
+
+        $stack1 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack1.<soot.options.Options: void set_prepend_classpath(boolean)>(1);
+
+        $stack2 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack2.<soot.options.Options: void set_allow_phantom_refs(boolean)>(1);
+
+        $stack3 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack3.<soot.options.Options: void set_keep_line_number(boolean)>(1);
+
+        $stack4 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        $stack5 = <LiveVariableAnalysis.LiveMain: java.lang.String sourceDirectory>;
+
+        virtualinvoke $stack4.<soot.options.Options: void set_soot_classpath(java.lang.String)>($stack5);
+
+        $stack6 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack6.<soot.options.Options: void set_output_format(int)>(1);
+
+        $stack7 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack7.<soot.options.Options: void set_output_dir(java.lang.String)>("./output");
+
+        $stack8 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        $stack9 = <LiveVariableAnalysis.LiveMain: java.lang.String sourceDirectory>;
+
+        $stack10 = staticinvoke <java.util.Collections: java.util.List singletonList(java.lang.Object)>($stack9);
+
+        virtualinvoke $stack8.<soot.options.Options: void set_process_dir(java.util.List)>($stack10);
+
+        $stack11 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack11.<soot.options.Options: void set_whole_program(boolean)>(1);
+
+        $stack12 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack12.<soot.options.Options: void set_verbose(boolean)>(1);
+
+        $stack13 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack13.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jb", "use-original-names:true");
+
+        $stack15 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack15.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jb.dae", "only-stack-locals:true");
+
+        $stack17 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack17.<soot.options.Options: void set_main_class(java.lang.String)>(classname);
+
+        $stack18 = staticinvoke <soot.Scene: soot.Scene v()>();
+
+        virtualinvoke $stack18.<soot.Scene: void loadNecessaryClasses()>();
+
+        return;
+    }
+
+    protected static void performLiveVariablesAnalysis(soot.SootMethod, java.lang.String)
+    {
+        soot.SootMethod m;
+        java.lang.String $stack9, $stack10, $stack15, $stack17, filename, $stack27, $stack35, $stack46, $stack51, $stack52, $stack53, $stack56, $stack60, $stack62;
+        boolean $stack11, $stack28, $stack38;
+        java.io.PrintStream $stack13, $stack18, $stack29, $stack39, $stack40, $stack58, $stack64, $stack67;
+        java.lang.StringBuilder $stack14, $stack16, $stack24, $stack25, $stack26, $stack32, $stack33, $stack34, $stack47, $stack48, $stack54, $stack55, $stack59, $stack61, $u0, $u3, $u5, $u6, $u8;
+        soot.Body $stack19, $r0;
+        soot.jimple.JimpleBody body;
+        soot.UnitPatchingChain $stack36, $stack42;
+        java.util.Iterator l6;
+        java.lang.Object $stack41, $stack49;
+        soot.Unit unit, unit1;
+        LiveVariableAnalysis.LiveVariableFlowSet $stack50;
+        java.io.IOException $stack63, $stack66;
+        soot.toolkits.graph.BriefUnitGraph $u1;
+        LiveVariableAnalysis.LiveVariables $u2;
+        java.io.File $u4;
+        java.io.FileWriter $u7;
+        soot.toolkits.graph.DirectedGraph $r1;
+
+        m := @parameter0: soot.SootMethod;
+
+        filename := @parameter1: java.lang.String;
+
+        $stack9 = "<init>";
+
+        $stack10 = virtualinvoke m.<soot.SootMethod: java.lang.String getName()>();
+
+        $stack11 = virtualinvoke $stack9.<java.lang.String: boolean equals(java.lang.Object)>($stack10);
+
+        if $stack11 != 0 goto label12;
+
+        $stack13 = <java.lang.System: java.io.PrintStream out>;
+
+        $u0 = new java.lang.StringBuilder;
+
+        specialinvoke $u0.<java.lang.StringBuilder: void <init>()>();
+
+        $stack14 = virtualinvoke $u0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("Method : ");
+
+        $stack15 = virtualinvoke m.<soot.SootMethod: java.lang.String getName()>();
+
+        $stack16 = virtualinvoke $stack14.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($stack15);
+
+        $stack17 = virtualinvoke $stack16.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $stack13.<java.io.PrintStream: void println(java.lang.String)>($stack17);
+
+        $stack18 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $stack18.<java.io.PrintStream: void println(java.lang.String)>("==================");
+
+        $stack19 = virtualinvoke m.<soot.SootMethod: soot.Body retrieveActiveBody()>();
+
+        body = (soot.jimple.JimpleBody) $stack19;
+
+        $u1 = new soot.toolkits.graph.BriefUnitGraph;
+
+        $r0 = (soot.Body) body;
+
+        specialinvoke $u1.<soot.toolkits.graph.BriefUnitGraph: void <init>(soot.Body)>($r0);
+
+        $u2 = new LiveVariableAnalysis.LiveVariables;
+
+        $r1 = (soot.toolkits.graph.DirectedGraph) $u1;
+
+        specialinvoke $u2.<LiveVariableAnalysis.LiveVariables: void <init>(soot.toolkits.graph.DirectedGraph)>($r1);
+
+     label01:
+        $u4 = new java.io.File;
+
+        $u3 = new java.lang.StringBuilder;
+
+        specialinvoke $u3.<java.lang.StringBuilder: void <init>()>();
+
+        $stack24 = virtualinvoke $u3.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("output/");
+
+        $stack25 = virtualinvoke $stack24.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(filename);
+
+        $stack26 = virtualinvoke $stack25.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(".txt");
+
+        $stack27 = virtualinvoke $stack26.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $u4.<java.io.File: void <init>(java.lang.String)>($stack27);
+
+        $stack28 = virtualinvoke $u4.<java.io.File: boolean createNewFile()>();
+
+        if $stack28 == 0 goto label02;
+
+        $stack58 = <java.lang.System: java.io.PrintStream out>;
+
+        $u5 = new java.lang.StringBuilder;
+
+        specialinvoke $u5.<java.lang.StringBuilder: void <init>()>();
+
+        $stack59 = virtualinvoke $u5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("File created: ");
+
+        $stack60 = virtualinvoke $u4.<java.io.File: java.lang.String getName()>();
+
+        $stack61 = virtualinvoke $stack59.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($stack60);
+
+        $stack62 = virtualinvoke $stack61.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $stack58.<java.io.PrintStream: void println(java.lang.String)>($stack62);
+
+        goto label03;
+
+     label02:
+        $stack29 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $stack29.<java.io.PrintStream: void println(java.lang.String)>("File already exists.");
+
+     label03:
+        goto label05;
+
+     label04:
+        $stack66 := @caughtexception;
+
+        $stack67 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $stack67.<java.io.PrintStream: void println(java.lang.String)>("An error occurred.");
+
+        virtualinvoke $stack66.<java.io.IOException: void printStackTrace()>();
+
+     label05:
+        $u7 = new java.io.FileWriter;
+
+        $u6 = new java.lang.StringBuilder;
+
+        specialinvoke $u6.<java.lang.StringBuilder: void <init>()>();
+
+        $stack32 = virtualinvoke $u6.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("output/");
+
+        $stack33 = virtualinvoke $stack32.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(filename);
+
+        $stack34 = virtualinvoke $stack33.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(".txt");
+
+        $stack35 = virtualinvoke $stack34.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $u7.<java.io.FileWriter: void <init>(java.lang.String)>($stack35);
+
+        $stack36 = virtualinvoke body.<soot.jimple.JimpleBody: soot.UnitPatchingChain getUnits()>();
+
+        l6 = virtualinvoke $stack36.<soot.UnitPatchingChain: java.util.Iterator iterator()>();
+
+     label06:
+        $stack38 = interfaceinvoke l6.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack38 == 0 goto label08;
+
+        $stack41 = interfaceinvoke l6.<java.util.Iterator: java.lang.Object next()>();
+
+        unit = (soot.Unit) $stack41;
+
+        $stack42 = virtualinvoke body.<soot.jimple.JimpleBody: soot.UnitPatchingChain getUnits()>();
+
+        unit1 = virtualinvoke $stack42.<soot.UnitPatchingChain: soot.Unit getSuccOf(soot.Unit)>(unit);
+
+        if unit1 == null goto label07;
+
+        $u8 = new java.lang.StringBuilder;
+
+        specialinvoke $u8.<java.lang.StringBuilder: void <init>()>();
+
+        $stack46 = virtualinvoke unit.<java.lang.Object: java.lang.String toString()>();
+
+        $stack47 = virtualinvoke $u8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($stack46);
+
+        $stack48 = virtualinvoke $stack47.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("; ");
+
+        $stack49 = virtualinvoke $u2.<LiveVariableAnalysis.LiveVariables: java.lang.Object getFlowBefore(java.lang.Object)>(unit1);
+
+        $stack50 = (LiveVariableAnalysis.LiveVariableFlowSet) $stack49;
+
+        $stack51 = virtualinvoke $stack50.<LiveVariableAnalysis.LiveVariableFlowSet: java.lang.String toString()>();
+
+        $stack52 = virtualinvoke $stack51.<java.lang.String: java.lang.String replace(java.lang.CharSequence,java.lang.CharSequence)>("{", "[");
+
+        $stack53 = virtualinvoke $stack52.<java.lang.String: java.lang.String replace(java.lang.CharSequence,java.lang.CharSequence)>("}", "]");
+
+        $stack54 = virtualinvoke $stack48.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($stack53);
+
+        $stack55 = virtualinvoke $stack54.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("\n");
+
+        $stack56 = virtualinvoke $stack55.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $u7.<java.io.FileWriter: void write(java.lang.String)>($stack56);
+
+     label07:
+        goto label06;
+
+     label08:
+        virtualinvoke $u7.<java.io.FileWriter: void close()>();
+
+        $stack39 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $stack39.<java.io.PrintStream: void println(java.lang.String)>("Successfully wrote to the file.");
+
+     label09:
+        goto label11;
+
+     label10:
+        $stack63 := @caughtexception;
+
+        $stack64 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $stack64.<java.io.PrintStream: void println(java.lang.String)>("An error occurred.");
+
+        virtualinvoke $stack63.<java.io.IOException: void printStackTrace()>();
+
+     label11:
+        $stack40 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $stack40.<java.io.PrintStream: void println(java.lang.String)>("==================");
+
+     label12:
+        return;
+
+        catch java.io.IOException from label01 to label03 with label04;
+        catch java.io.IOException from label05 to label09 with label10;
+    }
+
+    private static void printCallGraph(soot.jimple.toolkits.callgraph.CallGraph, soot.SootMethod)
+    {
+        soot.jimple.toolkits.callgraph.CallGraph cg;
+        soot.SootMethod m, trgt;
+        java.util.Iterator $stack5, $r1, $r2;
+        boolean $stack6;
+        java.lang.Object $stack7;
+        soot.jimple.toolkits.callgraph.Targets $u0;
+        soot.MethodOrMethodContext $r0;
+
+        cg := @parameter0: soot.jimple.toolkits.callgraph.CallGraph;
+
+        m := @parameter1: soot.SootMethod;
+
+        $u0 = new soot.jimple.toolkits.callgraph.Targets;
+
+        $r0 = (soot.MethodOrMethodContext) m;
+
+        $stack5 = virtualinvoke cg.<soot.jimple.toolkits.callgraph.CallGraph: java.util.Iterator edgesOutOf(soot.MethodOrMethodContext)>($r0);
+
+        specialinvoke $u0.<soot.jimple.toolkits.callgraph.Targets: void <init>(java.util.Iterator)>($stack5);
+
+     label1:
+        $r1 = (java.util.Iterator) $u0;
+
+        $stack6 = interfaceinvoke $r1.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack6 == 0 goto label2;
+
+        $r2 = (java.util.Iterator) $u0;
+
+        $stack7 = interfaceinvoke $r2.<java.util.Iterator: java.lang.Object next()>();
+
+        trgt = (soot.SootMethod) $stack7;
+
+        staticinvoke <LiveVariableAnalysis.LiveMain: void performLiveVariablesAnalysis(soot.SootMethod,java.lang.String)>(trgt, "");
+
+        goto label1;
+
+     label2:
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.lang.String[] args;
+        int $stack2;
+        soot.PackManager $stack3;
+        soot.Pack $stack4;
+        java.lang.String $stack8, $stack12;
+        soot.Scene $stack9;
+        soot.SootClass $stack10;
+        soot.SootMethod m;
+        LiveVariableAnalysis.LiveMain$1 $u0;
+        soot.Transform $u1;
+        soot.Transformer $r0;
+
+        args := @parameter0: java.lang.String[];
+
+        $stack2 = lengthof args;
+
+        if $stack2 != 0 goto label1;
+
+        staticinvoke <java.lang.System: void exit(int)>(-1);
+
+     label1:
+        $stack3 = staticinvoke <soot.PackManager: soot.PackManager v()>();
+
+        $stack4 = virtualinvoke $stack3.<soot.PackManager: soot.Pack getPack(java.lang.String)>("wjtp");
+
+        $u1 = new soot.Transform;
+
+        $u0 = new LiveVariableAnalysis.LiveMain$1;
+
+        specialinvoke $u0.<LiveVariableAnalysis.LiveMain$1: void <init>(java.lang.String[])>(args);
+
+        $r0 = (soot.Transformer) $u0;
+
+        specialinvoke $u1.<soot.Transform: void <init>(java.lang.String,soot.Transformer)>("wjtp.liveVariables", $r0);
+
+        virtualinvoke $stack4.<soot.Pack: void add(soot.Transform)>($u1);
+
+        $stack8 = args[0];
+
+        staticinvoke <LiveVariableAnalysis.LiveMain: void setupSoot(java.lang.String)>($stack8);
+
+        $stack9 = staticinvoke <soot.Scene: soot.Scene v()>();
+
+        $stack10 = virtualinvoke $stack9.<soot.Scene: soot.SootClass getMainClass()>();
+
+        m = virtualinvoke $stack10.<soot.SootClass: soot.SootMethod getMethodByName(java.lang.String)>("main");
+
+        $stack12 = args[0];
+
+        staticinvoke <LiveVariableAnalysis.LiveMain: void performLiveVariablesAnalysis(soot.SootMethod,java.lang.String)>(m, $stack12);
+
+        staticinvoke <soot.Main: void main(java.lang.String[])>(args);
+
+        return;
+    }
+
+    static void <clinit>()
+    {
+        java.lang.StringBuilder $stack0, $stack2, $stack4, $stack5, $stack7, $stack8;
+        java.lang.String $stack1, $stack3, $stack6, $stack9;
+
+        $stack0 = new java.lang.StringBuilder;
+
+        specialinvoke $stack0.<java.lang.StringBuilder: void <init>()>();
+
+        $stack1 = staticinvoke <java.lang.System: java.lang.String getProperty(java.lang.String)>("user.dir");
+
+        $stack2 = virtualinvoke $stack0.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($stack1);
+
+        $stack3 = <java.io.File: java.lang.String separator>;
+
+        $stack4 = virtualinvoke $stack2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($stack3);
+
+        $stack5 = virtualinvoke $stack4.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("target");
+
+        $stack6 = <java.io.File: java.lang.String separator>;
+
+        $stack7 = virtualinvoke $stack5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($stack6);
+
+        $stack8 = virtualinvoke $stack7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("classes");
+
+        $stack9 = virtualinvoke $stack8.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        <LiveVariableAnalysis.LiveMain: java.lang.String sourceDirectory> = $stack9;
+
+        return;
+    }
+}

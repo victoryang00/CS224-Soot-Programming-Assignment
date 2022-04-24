@@ -1,0 +1,57 @@
+class LiveVariableAnalysis.LiveVariables$2 extends soot.jimple.AbstractJimpleValueSwitch
+{
+    final LiveVariableAnalysis.LiveVariableFlowSet val$destSet;
+    final soot.ValueBox val$useBox;
+    final LiveVariableAnalysis.LiveVariables this$0;
+
+    void <init>(LiveVariableAnalysis.LiveVariables, LiveVariableAnalysis.LiveVariableFlowSet, soot.ValueBox)
+    {
+        LiveVariableAnalysis.LiveVariables$2 this;
+        LiveVariableAnalysis.LiveVariables this$0;
+        LiveVariableAnalysis.LiveVariableFlowSet l2;
+        soot.ValueBox l3;
+
+        this := @this: LiveVariableAnalysis.LiveVariables$2;
+
+        this$0 := @parameter0: LiveVariableAnalysis.LiveVariables;
+
+        l2 := @parameter1: LiveVariableAnalysis.LiveVariableFlowSet;
+
+        l3 := @parameter2: soot.ValueBox;
+
+        this.<LiveVariableAnalysis.LiveVariables$2: LiveVariableAnalysis.LiveVariables this$0> = this$0;
+
+        this.<LiveVariableAnalysis.LiveVariables$2: LiveVariableAnalysis.LiveVariableFlowSet val$destSet> = l2;
+
+        this.<LiveVariableAnalysis.LiveVariables$2: soot.ValueBox val$useBox> = l3;
+
+        specialinvoke this.<soot.jimple.AbstractJimpleValueSwitch: void <init>()>();
+
+        return;
+    }
+
+    public void caseLocal(soot.Local)
+    {
+        LiveVariableAnalysis.LiveVariables$2 this;
+        soot.ValueBox $stack2;
+        LiveVariableAnalysis.LiveVariableFlowSet $stack3;
+        soot.Value $stack4;
+        soot.Local $stack5, v;
+
+        this := @this: LiveVariableAnalysis.LiveVariables$2;
+
+        v := @parameter0: soot.Local;
+
+        $stack3 = this.<LiveVariableAnalysis.LiveVariables$2: LiveVariableAnalysis.LiveVariableFlowSet val$destSet>;
+
+        $stack2 = this.<LiveVariableAnalysis.LiveVariables$2: soot.ValueBox val$useBox>;
+
+        $stack4 = interfaceinvoke $stack2.<soot.ValueBox: soot.Value getValue()>();
+
+        $stack5 = (soot.Local) $stack4;
+
+        virtualinvoke $stack3.<LiveVariableAnalysis.LiveVariableFlowSet: void add(soot.Local)>($stack5);
+
+        return;
+    }
+}

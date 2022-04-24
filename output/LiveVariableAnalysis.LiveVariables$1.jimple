@@ -1,0 +1,90 @@
+class LiveVariableAnalysis.LiveVariables$1 extends soot.jimple.AbstractJimpleValueSwitch
+{
+    final LiveVariableAnalysis.LiveVariableFlowSet val$inSet;
+    final soot.ValueBox val$defBox;
+    final LiveVariableAnalysis.LiveVariableFlowSet val$kills;
+    final LiveVariableAnalysis.LiveVariables this$0;
+
+    void <init>(LiveVariableAnalysis.LiveVariables, LiveVariableAnalysis.LiveVariableFlowSet, soot.ValueBox, LiveVariableAnalysis.LiveVariableFlowSet)
+    {
+        LiveVariableAnalysis.LiveVariables$1 this;
+        LiveVariableAnalysis.LiveVariables this$0;
+        LiveVariableAnalysis.LiveVariableFlowSet l2, l4;
+        soot.ValueBox l3;
+
+        this := @this: LiveVariableAnalysis.LiveVariables$1;
+
+        this$0 := @parameter0: LiveVariableAnalysis.LiveVariables;
+
+        l2 := @parameter1: LiveVariableAnalysis.LiveVariableFlowSet;
+
+        l3 := @parameter2: soot.ValueBox;
+
+        l4 := @parameter3: LiveVariableAnalysis.LiveVariableFlowSet;
+
+        this.<LiveVariableAnalysis.LiveVariables$1: LiveVariableAnalysis.LiveVariables this$0> = this$0;
+
+        this.<LiveVariableAnalysis.LiveVariables$1: LiveVariableAnalysis.LiveVariableFlowSet val$inSet> = l2;
+
+        this.<LiveVariableAnalysis.LiveVariables$1: soot.ValueBox val$defBox> = l3;
+
+        this.<LiveVariableAnalysis.LiveVariables$1: LiveVariableAnalysis.LiveVariableFlowSet val$kills> = l4;
+
+        specialinvoke this.<soot.jimple.AbstractJimpleValueSwitch: void <init>()>();
+
+        return;
+    }
+
+    public void caseLocal(soot.Local)
+    {
+        LiveVariableAnalysis.LiveVariables$1 this;
+        LiveVariableAnalysis.LiveVariableFlowSet $stack4, $stack13;
+        java.util.Iterator l2;
+        boolean $stack6, $stack10;
+        java.lang.Object $stack7;
+        soot.Local inValue, $stack15, v;
+        soot.ValueBox $stack8, $stack12;
+        soot.Value $stack9, $stack14;
+
+        this := @this: LiveVariableAnalysis.LiveVariables$1;
+
+        v := @parameter0: soot.Local;
+
+        $stack4 = this.<LiveVariableAnalysis.LiveVariables$1: LiveVariableAnalysis.LiveVariableFlowSet val$inSet>;
+
+        l2 = virtualinvoke $stack4.<LiveVariableAnalysis.LiveVariableFlowSet: java.util.Iterator iterator()>();
+
+     label1:
+        $stack6 = interfaceinvoke l2.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack6 == 0 goto label3;
+
+        $stack7 = interfaceinvoke l2.<java.util.Iterator: java.lang.Object next()>();
+
+        inValue = (soot.Local) $stack7;
+
+        $stack8 = this.<LiveVariableAnalysis.LiveVariables$1: soot.ValueBox val$defBox>;
+
+        $stack9 = interfaceinvoke $stack8.<soot.ValueBox: soot.Value getValue()>();
+
+        $stack10 = interfaceinvoke inValue.<soot.Local: boolean equivTo(java.lang.Object)>($stack9);
+
+        if $stack10 == 0 goto label2;
+
+        $stack13 = this.<LiveVariableAnalysis.LiveVariables$1: LiveVariableAnalysis.LiveVariableFlowSet val$kills>;
+
+        $stack12 = this.<LiveVariableAnalysis.LiveVariables$1: soot.ValueBox val$defBox>;
+
+        $stack14 = interfaceinvoke $stack12.<soot.ValueBox: soot.Value getValue()>();
+
+        $stack15 = (soot.Local) $stack14;
+
+        virtualinvoke $stack13.<LiveVariableAnalysis.LiveVariableFlowSet: void add(soot.Local)>($stack15);
+
+     label2:
+        goto label1;
+
+     label3:
+        return;
+    }
+}

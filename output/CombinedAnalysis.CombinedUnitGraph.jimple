@@ -1,0 +1,614 @@
+public class CombinedAnalysis.CombinedUnitGraph extends soot.toolkits.graph.BriefUnitGraph
+{
+    private java.util.List lockUnitsForThread1;
+    private java.util.List unlockUnitsForThread1;
+    private java.util.List lockUnitsForThread2;
+    private java.util.List unlockUnitsForThread2;
+
+    public void <init>(soot.Body)
+    {
+        CombinedAnalysis.CombinedUnitGraph this;
+        soot.Body b;
+        java.util.ArrayList $stack3, $stack4, $stack5, $stack6, $stack7, $stack10;
+        java.util.List $stack8, $stack11, tempList;
+
+        this := @this: CombinedAnalysis.CombinedUnitGraph;
+
+        b := @parameter0: soot.Body;
+
+        specialinvoke this.<soot.toolkits.graph.BriefUnitGraph: void <init>(soot.Body)>(b);
+
+        $stack3 = new java.util.ArrayList;
+
+        specialinvoke $stack3.<java.util.ArrayList: void <init>()>();
+
+        this.<CombinedAnalysis.CombinedUnitGraph: java.util.List lockUnitsForThread1> = $stack3;
+
+        $stack4 = new java.util.ArrayList;
+
+        specialinvoke $stack4.<java.util.ArrayList: void <init>()>();
+
+        this.<CombinedAnalysis.CombinedUnitGraph: java.util.List unlockUnitsForThread1> = $stack4;
+
+        $stack5 = new java.util.ArrayList;
+
+        specialinvoke $stack5.<java.util.ArrayList: void <init>()>();
+
+        this.<CombinedAnalysis.CombinedUnitGraph: java.util.List lockUnitsForThread2> = $stack5;
+
+        $stack6 = new java.util.ArrayList;
+
+        specialinvoke $stack6.<java.util.ArrayList: void <init>()>();
+
+        this.<CombinedAnalysis.CombinedUnitGraph: java.util.List unlockUnitsForThread2> = $stack6;
+
+        tempList = this.<CombinedAnalysis.CombinedUnitGraph: java.util.List heads>;
+
+        $stack7 = new java.util.ArrayList;
+
+        specialinvoke $stack7.<java.util.ArrayList: void <init>()>();
+
+        this.<CombinedAnalysis.CombinedUnitGraph: java.util.List heads> = $stack7;
+
+        $stack8 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.List heads>;
+
+        interfaceinvoke $stack8.<java.util.List: boolean addAll(java.util.Collection)>(tempList);
+
+        tempList = this.<CombinedAnalysis.CombinedUnitGraph: java.util.List tails>;
+
+        $stack10 = new java.util.ArrayList;
+
+        specialinvoke $stack10.<java.util.ArrayList: void <init>()>();
+
+        this.<CombinedAnalysis.CombinedUnitGraph: java.util.List tails> = $stack10;
+
+        $stack11 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.List tails>;
+
+        interfaceinvoke $stack11.<java.util.List: boolean addAll(java.util.Collection)>(tempList);
+
+        return;
+    }
+
+    public void addLockUnlockUnitsForThread1()
+    {
+        CombinedAnalysis.CombinedUnitGraph this;
+        soot.util.Chain $stack7;
+        java.util.Iterator unitIt, boxIt;
+        boolean $stack9, $stack13, $stack17, $stack23, $stack29, $stack18;
+        java.lang.Object $stack10, $stack15;
+        soot.Unit u;
+        soot.jimple.Stmt s;
+        java.util.List $stack11, $stack24, $stack31;
+        soot.ValueBox box;
+        soot.Value value;
+        soot.jimple.InterfaceInvokeExpr $stack20, $stack26;
+        soot.SootMethod $stack21, $stack27;
+        java.lang.String $stack22, $stack28;
+
+        this := @this: CombinedAnalysis.CombinedUnitGraph;
+
+        $stack7 = this.<CombinedAnalysis.CombinedUnitGraph: soot.util.Chain unitChain>;
+
+        unitIt = interfaceinvoke $stack7.<soot.util.Chain: java.util.Iterator iterator()>();
+
+     label1:
+        $stack9 = interfaceinvoke unitIt.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack9 == 0 goto label6;
+
+        $stack10 = interfaceinvoke unitIt.<java.util.Iterator: java.lang.Object next()>();
+
+        u = (soot.Unit) $stack10;
+
+        s = (soot.jimple.Stmt) u;
+
+        $stack11 = interfaceinvoke s.<soot.jimple.Stmt: java.util.List getUseBoxes()>();
+
+        boxIt = interfaceinvoke $stack11.<java.util.List: java.util.Iterator iterator()>();
+
+     label2:
+        $stack13 = interfaceinvoke boxIt.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack13 == 0 goto label5;
+
+        $stack15 = interfaceinvoke boxIt.<java.util.Iterator: java.lang.Object next()>();
+
+        box = (soot.ValueBox) $stack15;
+
+        value = interfaceinvoke box.<soot.ValueBox: soot.Value getValue()>();
+
+        $stack17 = value instanceof soot.jimple.InterfaceInvokeExpr;
+
+        if $stack17 == 0 goto label3;
+
+        $stack26 = (soot.jimple.InterfaceInvokeExpr) value;
+
+        $stack27 = interfaceinvoke $stack26.<soot.jimple.InterfaceInvokeExpr: soot.SootMethod getMethod()>();
+
+        $stack28 = virtualinvoke $stack27.<soot.SootMethod: java.lang.String getName()>();
+
+        $stack29 = virtualinvoke $stack28.<java.lang.String: boolean equals(java.lang.Object)>("lock");
+
+        if $stack29 == 0 goto label3;
+
+        $stack31 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.List lockUnitsForThread1>;
+
+        interfaceinvoke $stack31.<java.util.List: boolean add(java.lang.Object)>(u);
+
+     label3:
+        $stack18 = value instanceof soot.jimple.InterfaceInvokeExpr;
+
+        if $stack18 == 0 goto label4;
+
+        $stack20 = (soot.jimple.InterfaceInvokeExpr) value;
+
+        $stack21 = interfaceinvoke $stack20.<soot.jimple.InterfaceInvokeExpr: soot.SootMethod getMethod()>();
+
+        $stack22 = virtualinvoke $stack21.<soot.SootMethod: java.lang.String getName()>();
+
+        $stack23 = virtualinvoke $stack22.<java.lang.String: boolean equals(java.lang.Object)>("unlock");
+
+        if $stack23 == 0 goto label4;
+
+        $stack24 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.List unlockUnitsForThread1>;
+
+        interfaceinvoke $stack24.<java.util.List: boolean add(java.lang.Object)>(u);
+
+     label4:
+        goto label2;
+
+     label5:
+        goto label1;
+
+     label6:
+        return;
+    }
+
+    public void addLockUnlockUnitsForThread2()
+    {
+        CombinedAnalysis.CombinedUnitGraph this;
+        soot.util.Chain $stack7;
+        java.util.Iterator unitIt, boxIt;
+        boolean $stack9, $stack13, $stack17, $stack23, $stack25, $stack31, $stack34, $stack18;
+        java.lang.Object $stack10, $stack15;
+        soot.Unit u;
+        soot.jimple.Stmt s;
+        java.util.List $stack11, $stack24, $stack26, $stack33, $stack35;
+        soot.ValueBox box;
+        soot.Value value;
+        soot.jimple.InterfaceInvokeExpr $stack20, $stack28;
+        soot.SootMethod $stack21, $stack29;
+        java.lang.String $stack22, $stack30;
+
+        this := @this: CombinedAnalysis.CombinedUnitGraph;
+
+        $stack7 = this.<CombinedAnalysis.CombinedUnitGraph: soot.util.Chain unitChain>;
+
+        unitIt = interfaceinvoke $stack7.<soot.util.Chain: java.util.Iterator iterator()>();
+
+     label1:
+        $stack9 = interfaceinvoke unitIt.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack9 == 0 goto label6;
+
+        $stack10 = interfaceinvoke unitIt.<java.util.Iterator: java.lang.Object next()>();
+
+        u = (soot.Unit) $stack10;
+
+        s = (soot.jimple.Stmt) u;
+
+        $stack11 = interfaceinvoke s.<soot.jimple.Stmt: java.util.List getUseBoxes()>();
+
+        boxIt = interfaceinvoke $stack11.<java.util.List: java.util.Iterator iterator()>();
+
+     label2:
+        $stack13 = interfaceinvoke boxIt.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack13 == 0 goto label5;
+
+        $stack15 = interfaceinvoke boxIt.<java.util.Iterator: java.lang.Object next()>();
+
+        box = (soot.ValueBox) $stack15;
+
+        value = interfaceinvoke box.<soot.ValueBox: soot.Value getValue()>();
+
+        $stack17 = value instanceof soot.jimple.InterfaceInvokeExpr;
+
+        if $stack17 == 0 goto label3;
+
+        $stack28 = (soot.jimple.InterfaceInvokeExpr) value;
+
+        $stack29 = interfaceinvoke $stack28.<soot.jimple.InterfaceInvokeExpr: soot.SootMethod getMethod()>();
+
+        $stack30 = virtualinvoke $stack29.<soot.SootMethod: java.lang.String getName()>();
+
+        $stack31 = virtualinvoke $stack30.<java.lang.String: boolean equals(java.lang.Object)>("lock");
+
+        if $stack31 == 0 goto label3;
+
+        $stack33 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.List lockUnitsForThread1>;
+
+        $stack34 = interfaceinvoke $stack33.<java.util.List: boolean contains(java.lang.Object)>(u);
+
+        if $stack34 != 0 goto label3;
+
+        $stack35 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.List lockUnitsForThread2>;
+
+        interfaceinvoke $stack35.<java.util.List: boolean add(java.lang.Object)>(u);
+
+     label3:
+        $stack18 = value instanceof soot.jimple.InterfaceInvokeExpr;
+
+        if $stack18 == 0 goto label4;
+
+        $stack20 = (soot.jimple.InterfaceInvokeExpr) value;
+
+        $stack21 = interfaceinvoke $stack20.<soot.jimple.InterfaceInvokeExpr: soot.SootMethod getMethod()>();
+
+        $stack22 = virtualinvoke $stack21.<soot.SootMethod: java.lang.String getName()>();
+
+        $stack23 = virtualinvoke $stack22.<java.lang.String: boolean equals(java.lang.Object)>("unlock");
+
+        if $stack23 == 0 goto label4;
+
+        $stack24 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.List unlockUnitsForThread1>;
+
+        $stack25 = interfaceinvoke $stack24.<java.util.List: boolean contains(java.lang.Object)>(u);
+
+        if $stack25 != 0 goto label4;
+
+        $stack26 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.List unlockUnitsForThread2>;
+
+        interfaceinvoke $stack26.<java.util.List: boolean add(java.lang.Object)>(u);
+
+     label4:
+        goto label2;
+
+     label5:
+        goto label1;
+
+     label6:
+        return;
+    }
+
+    public void addPreds(java.util.List, soot.toolkits.graph.UnitGraph)
+    {
+        java.util.List l, preds;
+        java.util.Iterator lIt;
+        boolean $stack7, $stack10;
+        java.lang.Object $stack8;
+        soot.Unit lUnit;
+        CombinedAnalysis.CombinedUnitGraph this;
+        soot.util.Chain $stack9, $stack15;
+        soot.toolkits.graph.UnitGraph g;
+        java.util.Map $stack12;
+
+        this := @this: CombinedAnalysis.CombinedUnitGraph;
+
+        l := @parameter0: java.util.List;
+
+        g := @parameter1: soot.toolkits.graph.UnitGraph;
+
+        lIt = interfaceinvoke l.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $stack7 = interfaceinvoke lIt.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack7 == 0 goto label3;
+
+        $stack8 = interfaceinvoke lIt.<java.util.Iterator: java.lang.Object next()>();
+
+        lUnit = (soot.Unit) $stack8;
+
+        $stack9 = this.<CombinedAnalysis.CombinedUnitGraph: soot.util.Chain unitChain>;
+
+        $stack10 = interfaceinvoke $stack9.<soot.util.Chain: boolean contains(java.lang.Object)>(lUnit);
+
+        if $stack10 != 0 goto label2;
+
+        $stack15 = this.<CombinedAnalysis.CombinedUnitGraph: soot.util.Chain unitChain>;
+
+        interfaceinvoke $stack15.<soot.util.Chain: boolean add(java.lang.Object)>(lUnit);
+
+     label2:
+        preds = virtualinvoke g.<soot.toolkits.graph.UnitGraph: java.util.List getPredsOf(soot.Unit)>(lUnit);
+
+        $stack12 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.Map unitToPreds>;
+
+        interfaceinvoke $stack12.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(lUnit, preds);
+
+        virtualinvoke this.<CombinedAnalysis.CombinedUnitGraph: void addPreds(java.util.List,soot.toolkits.graph.UnitGraph)>(preds, g);
+
+        goto label1;
+
+     label3:
+        return;
+    }
+
+    public void addSuccs(java.util.List, soot.toolkits.graph.UnitGraph)
+    {
+        java.util.List l, succs;
+        java.util.Iterator lIt;
+        boolean $stack7, $stack10;
+        java.lang.Object $stack8;
+        soot.Unit lUnit;
+        CombinedAnalysis.CombinedUnitGraph this;
+        soot.util.Chain $stack9, $stack15;
+        soot.toolkits.graph.UnitGraph g;
+        java.util.Map $stack12;
+
+        this := @this: CombinedAnalysis.CombinedUnitGraph;
+
+        l := @parameter0: java.util.List;
+
+        g := @parameter1: soot.toolkits.graph.UnitGraph;
+
+        lIt = interfaceinvoke l.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $stack7 = interfaceinvoke lIt.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack7 == 0 goto label3;
+
+        $stack8 = interfaceinvoke lIt.<java.util.Iterator: java.lang.Object next()>();
+
+        lUnit = (soot.Unit) $stack8;
+
+        $stack9 = this.<CombinedAnalysis.CombinedUnitGraph: soot.util.Chain unitChain>;
+
+        $stack10 = interfaceinvoke $stack9.<soot.util.Chain: boolean contains(java.lang.Object)>(lUnit);
+
+        if $stack10 != 0 goto label2;
+
+        $stack15 = this.<CombinedAnalysis.CombinedUnitGraph: soot.util.Chain unitChain>;
+
+        interfaceinvoke $stack15.<soot.util.Chain: boolean add(java.lang.Object)>(lUnit);
+
+     label2:
+        succs = virtualinvoke g.<soot.toolkits.graph.UnitGraph: java.util.List getSuccsOf(soot.Unit)>(lUnit);
+
+        $stack12 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.Map unitToSuccs>;
+
+        interfaceinvoke $stack12.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(lUnit, succs);
+
+        virtualinvoke this.<CombinedAnalysis.CombinedUnitGraph: void addSuccs(java.util.List,soot.toolkits.graph.UnitGraph)>(succs, g);
+
+        goto label1;
+
+     label3:
+        return;
+    }
+
+    public void addUnlockToLockEdges()
+    {
+        CombinedAnalysis.CombinedUnitGraph this;
+        java.util.List $stack7, $stack9, $stack12, $stack14, $stack19, $stack28, $stack36, $stack45;
+        boolean $stack11, $stack16, $stack21, $stack38;
+        java.lang.Object $stack17, $stack25, $stack34, $stack42;
+        java.util.ArrayList $stack18, $stack27, $stack35, $stack44;
+        java.util.Map $stack22, $stack31, $stack39, $stack48;
+        java.util.Iterator lockIt, unlockIt;
+        soot.Unit unlockUnit, lockUnit;
+
+        this := @this: CombinedAnalysis.CombinedUnitGraph;
+
+        $stack7 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.List lockUnitsForThread2>;
+
+        lockIt = interfaceinvoke $stack7.<java.util.List: java.util.Iterator iterator()>();
+
+        $stack9 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.List unlockUnitsForThread1>;
+
+        unlockIt = interfaceinvoke $stack9.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $stack11 = interfaceinvoke unlockIt.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack11 == 0 goto label4;
+
+        $stack34 = interfaceinvoke unlockIt.<java.util.Iterator: java.lang.Object next()>();
+
+        unlockUnit = (soot.Unit) $stack34;
+
+        $stack35 = new java.util.ArrayList;
+
+        specialinvoke $stack35.<java.util.ArrayList: void <init>()>();
+
+        $stack36 = virtualinvoke this.<CombinedAnalysis.CombinedUnitGraph: java.util.List getSuccsOf(soot.Unit)>(unlockUnit);
+
+        interfaceinvoke $stack35.<java.util.List: boolean addAll(java.util.Collection)>($stack36);
+
+     label2:
+        $stack38 = interfaceinvoke lockIt.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack38 == 0 goto label3;
+
+        $stack42 = interfaceinvoke lockIt.<java.util.Iterator: java.lang.Object next()>();
+
+        lockUnit = (soot.Unit) $stack42;
+
+        interfaceinvoke $stack35.<java.util.List: boolean add(java.lang.Object)>(lockUnit);
+
+        $stack44 = new java.util.ArrayList;
+
+        specialinvoke $stack44.<java.util.ArrayList: void <init>()>();
+
+        $stack45 = virtualinvoke this.<CombinedAnalysis.CombinedUnitGraph: java.util.List getPredsOf(soot.Unit)>(lockUnit);
+
+        interfaceinvoke $stack44.<java.util.List: boolean addAll(java.util.Collection)>($stack45);
+
+        interfaceinvoke $stack44.<java.util.List: boolean add(java.lang.Object)>(unlockUnit);
+
+        $stack48 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.Map unitToPreds>;
+
+        interfaceinvoke $stack48.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(lockUnit, $stack44);
+
+        goto label2;
+
+     label3:
+        $stack39 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.Map unitToSuccs>;
+
+        interfaceinvoke $stack39.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(unlockUnit, $stack35);
+
+        goto label1;
+
+     label4:
+        $stack12 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.List lockUnitsForThread1>;
+
+        lockIt = interfaceinvoke $stack12.<java.util.List: java.util.Iterator iterator()>();
+
+        $stack14 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.List unlockUnitsForThread2>;
+
+        unlockIt = interfaceinvoke $stack14.<java.util.List: java.util.Iterator iterator()>();
+
+     label5:
+        $stack16 = interfaceinvoke unlockIt.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack16 == 0 goto label8;
+
+        $stack17 = interfaceinvoke unlockIt.<java.util.Iterator: java.lang.Object next()>();
+
+        unlockUnit = (soot.Unit) $stack17;
+
+        $stack18 = new java.util.ArrayList;
+
+        specialinvoke $stack18.<java.util.ArrayList: void <init>()>();
+
+        $stack19 = virtualinvoke this.<CombinedAnalysis.CombinedUnitGraph: java.util.List getSuccsOf(soot.Unit)>(unlockUnit);
+
+        interfaceinvoke $stack18.<java.util.List: boolean addAll(java.util.Collection)>($stack19);
+
+     label6:
+        $stack21 = interfaceinvoke lockIt.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack21 == 0 goto label7;
+
+        $stack25 = interfaceinvoke lockIt.<java.util.Iterator: java.lang.Object next()>();
+
+        lockUnit = (soot.Unit) $stack25;
+
+        interfaceinvoke $stack18.<java.util.List: boolean add(java.lang.Object)>(lockUnit);
+
+        $stack27 = new java.util.ArrayList;
+
+        specialinvoke $stack27.<java.util.ArrayList: void <init>()>();
+
+        $stack28 = virtualinvoke this.<CombinedAnalysis.CombinedUnitGraph: java.util.List getPredsOf(soot.Unit)>(lockUnit);
+
+        interfaceinvoke $stack27.<java.util.List: boolean addAll(java.util.Collection)>($stack28);
+
+        interfaceinvoke $stack27.<java.util.List: boolean add(java.lang.Object)>(unlockUnit);
+
+        $stack31 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.Map unitToPreds>;
+
+        interfaceinvoke $stack31.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(lockUnit, $stack27);
+
+        goto label6;
+
+     label7:
+        $stack22 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.Map unitToSuccs>;
+
+        interfaceinvoke $stack22.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(unlockUnit, $stack18);
+
+        goto label5;
+
+     label8:
+        return;
+    }
+
+    public void addGraph(soot.toolkits.graph.UnitGraph)
+    {
+        soot.toolkits.graph.UnitGraph g;
+        java.util.List gHeads, $stack17, preds, $stack38, succs, h#3;
+        java.util.Iterator headIt, succs#4;
+        boolean $stack10, $stack13, $stack16, $stack37;
+        java.lang.Object $stack14, $stack35;
+        soot.Unit t, h;
+        CombinedAnalysis.CombinedUnitGraph this;
+        soot.util.Chain $stack15, $stack23, $stack36, $stack44;
+        java.util.Map $stack20, $stack41;
+
+        this := @this: CombinedAnalysis.CombinedUnitGraph;
+
+        g := @parameter0: soot.toolkits.graph.UnitGraph;
+
+        gHeads = virtualinvoke g.<soot.toolkits.graph.UnitGraph: java.util.List getHeads()>();
+
+        headIt = interfaceinvoke gHeads.<java.util.List: java.util.Iterator iterator()>();
+
+     label1:
+        $stack10 = interfaceinvoke headIt.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack10 == 0 goto label3;
+
+        $stack35 = interfaceinvoke headIt.<java.util.Iterator: java.lang.Object next()>();
+
+        h = (soot.Unit) $stack35;
+
+        $stack36 = this.<CombinedAnalysis.CombinedUnitGraph: soot.util.Chain unitChain>;
+
+        $stack37 = interfaceinvoke $stack36.<soot.util.Chain: boolean contains(java.lang.Object)>(h);
+
+        if $stack37 != 0 goto label2;
+
+        $stack44 = this.<CombinedAnalysis.CombinedUnitGraph: soot.util.Chain unitChain>;
+
+        interfaceinvoke $stack44.<soot.util.Chain: boolean add(java.lang.Object)>(h);
+
+     label2:
+        $stack38 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.List heads>;
+
+        interfaceinvoke $stack38.<java.util.List: boolean add(java.lang.Object)>(h);
+
+        succs = virtualinvoke g.<soot.toolkits.graph.UnitGraph: java.util.List getSuccsOf(soot.Unit)>(h);
+
+        $stack41 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.Map unitToSuccs>;
+
+        interfaceinvoke $stack41.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(h, succs);
+
+        virtualinvoke this.<CombinedAnalysis.CombinedUnitGraph: void addSuccs(java.util.List,soot.toolkits.graph.UnitGraph)>(succs, g);
+
+        goto label1;
+
+     label3:
+        h#3 = virtualinvoke g.<soot.toolkits.graph.UnitGraph: java.util.List getTails()>();
+
+        succs#4 = interfaceinvoke h#3.<java.util.List: java.util.Iterator iterator()>();
+
+     label4:
+        $stack13 = interfaceinvoke succs#4.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack13 == 0 goto label6;
+
+        $stack14 = interfaceinvoke succs#4.<java.util.Iterator: java.lang.Object next()>();
+
+        t = (soot.Unit) $stack14;
+
+        $stack15 = this.<CombinedAnalysis.CombinedUnitGraph: soot.util.Chain unitChain>;
+
+        $stack16 = interfaceinvoke $stack15.<soot.util.Chain: boolean contains(java.lang.Object)>(t);
+
+        if $stack16 != 0 goto label5;
+
+        $stack23 = this.<CombinedAnalysis.CombinedUnitGraph: soot.util.Chain unitChain>;
+
+        interfaceinvoke $stack23.<soot.util.Chain: boolean add(java.lang.Object)>(t);
+
+     label5:
+        $stack17 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.List tails>;
+
+        interfaceinvoke $stack17.<java.util.List: boolean add(java.lang.Object)>(t);
+
+        preds = virtualinvoke g.<soot.toolkits.graph.UnitGraph: java.util.List getPredsOf(soot.Unit)>(t);
+
+        $stack20 = this.<CombinedAnalysis.CombinedUnitGraph: java.util.Map unitToPreds>;
+
+        interfaceinvoke $stack20.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(t, preds);
+
+        virtualinvoke this.<CombinedAnalysis.CombinedUnitGraph: void addPreds(java.util.List,soot.toolkits.graph.UnitGraph)>(preds, g);
+
+        goto label4;
+
+     label6:
+        return;
+    }
+}

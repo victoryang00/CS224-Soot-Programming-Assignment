@@ -1,0 +1,184 @@
+public class LiveVariableAnalysis.LiveVariablesTagger extends soot.BodyTransformer
+{
+
+    public void <init>()
+    {
+        LiveVariableAnalysis.LiveVariablesTagger this;
+
+        this := @this: LiveVariableAnalysis.LiveVariablesTagger;
+
+        specialinvoke this.<soot.BodyTransformer: void <init>()>();
+
+        return;
+    }
+
+    protected void internalTransform(soot.Body, java.lang.String, java.util.Map)
+    {
+        soot.Body b;
+        soot.UnitPatchingChain $stack14;
+        java.util.Iterator it, variableIt, variable#4;
+        boolean $stack16, $stack19, $stack25, $stack28, $stack32, $stack34;
+        soot.SootMethod $stack17;
+        java.lang.Object $stack22, $stack23, $stack30, $stack37;
+        soot.toolkits.scalar.FlowSet live;
+        java.util.List $stack26;
+        soot.Value v, variable;
+        java.lang.StringBuilder $stack40, $stack41, $u2;
+        java.lang.String $stack42, phaseName;
+        LiveVariableAnalysis.LiveVariablesTagger this;
+        java.util.Map options;
+        soot.jimple.Stmt s;
+        soot.ValueBox t#5;
+        soot.SootClass s#6;
+        soot.toolkits.graph.BriefUnitGraph $u0;
+        LiveVariableAnalysis.LiveVariables $u1;
+        soot.tagkit.StringTag $u3;
+        soot.tagkit.ColorTag $u4, $u5;
+        soot.tagkit.KeyTag $u6, $u7;
+        soot.toolkits.graph.DirectedGraph $r0;
+        soot.tagkit.Tag $r1, $r2, $r3, $r4, $r5;
+
+        this := @this: LiveVariableAnalysis.LiveVariablesTagger;
+
+        b := @parameter0: soot.Body;
+
+        phaseName := @parameter1: java.lang.String;
+
+        options := @parameter2: java.util.Map;
+
+        $u1 = new LiveVariableAnalysis.LiveVariables;
+
+        $u0 = new soot.toolkits.graph.BriefUnitGraph;
+
+        specialinvoke $u0.<soot.toolkits.graph.BriefUnitGraph: void <init>(soot.Body)>(b);
+
+        $r0 = (soot.toolkits.graph.DirectedGraph) $u0;
+
+        specialinvoke $u1.<LiveVariableAnalysis.LiveVariables: void <init>(soot.toolkits.graph.DirectedGraph)>($r0);
+
+        $stack14 = virtualinvoke b.<soot.Body: soot.UnitPatchingChain getUnits()>();
+
+        it = virtualinvoke $stack14.<soot.UnitPatchingChain: java.util.Iterator iterator()>();
+
+     label1:
+        $stack16 = interfaceinvoke it.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack16 == 0 goto label8;
+
+        $stack22 = interfaceinvoke it.<java.util.Iterator: java.lang.Object next()>();
+
+        s = (soot.jimple.Stmt) $stack22;
+
+        $stack23 = virtualinvoke $u1.<LiveVariableAnalysis.LiveVariables: java.lang.Object getFlowAfter(java.lang.Object)>(s);
+
+        live = (soot.toolkits.scalar.FlowSet) $stack23;
+
+        variableIt = interfaceinvoke live.<soot.toolkits.scalar.FlowSet: java.util.Iterator iterator()>();
+
+     label2:
+        $stack25 = interfaceinvoke variableIt.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack25 == 0 goto label3;
+
+        $stack37 = interfaceinvoke variableIt.<java.util.Iterator: java.lang.Object next()>();
+
+        variable = (soot.Value) $stack37;
+
+        $u3 = new soot.tagkit.StringTag;
+
+        $u2 = new java.lang.StringBuilder;
+
+        specialinvoke $u2.<java.lang.StringBuilder: void <init>()>();
+
+        $stack40 = virtualinvoke $u2.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("live :");
+
+        $stack41 = virtualinvoke $stack40.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(variable);
+
+        $stack42 = virtualinvoke $stack41.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $u3.<soot.tagkit.StringTag: void <init>(java.lang.String)>($stack42);
+
+        $r1 = (soot.tagkit.Tag) $u3;
+
+        interfaceinvoke s.<soot.jimple.Stmt: void addTag(soot.tagkit.Tag)>($r1);
+
+        goto label2;
+
+     label3:
+        $stack26 = interfaceinvoke s.<soot.jimple.Stmt: java.util.List getUseAndDefBoxes()>();
+
+        variable#4 = interfaceinvoke $stack26.<java.util.List: java.util.Iterator iterator()>();
+
+     label4:
+        $stack28 = interfaceinvoke variable#4.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack28 == 0 goto label7;
+
+        $stack30 = interfaceinvoke variable#4.<java.util.Iterator: java.lang.Object next()>();
+
+        t#5 = (soot.ValueBox) $stack30;
+
+        v = interfaceinvoke t#5.<soot.ValueBox: soot.Value getValue()>();
+
+        $stack32 = v instanceof soot.Local;
+
+        if $stack32 == 0 goto label6;
+
+        $stack34 = interfaceinvoke live.<soot.toolkits.scalar.FlowSet: boolean contains(java.lang.Object)>(v);
+
+        if $stack34 == 0 goto label5;
+
+        $u4 = new soot.tagkit.ColorTag;
+
+        specialinvoke $u4.<soot.tagkit.ColorTag: void <init>(int,java.lang.String)>(1, "Liveness");
+
+        $r2 = (soot.tagkit.Tag) $u4;
+
+        interfaceinvoke t#5.<soot.ValueBox: void addTag(soot.tagkit.Tag)>($r2);
+
+        goto label6;
+
+     label5:
+        $u5 = new soot.tagkit.ColorTag;
+
+        specialinvoke $u5.<soot.tagkit.ColorTag: void <init>(int,java.lang.String)>(0, "Liveness");
+
+        $r3 = (soot.tagkit.Tag) $u5;
+
+        interfaceinvoke t#5.<soot.ValueBox: void addTag(soot.tagkit.Tag)>($r3);
+
+     label6:
+        goto label4;
+
+     label7:
+        goto label1;
+
+     label8:
+        $stack17 = virtualinvoke b.<soot.Body: soot.SootMethod getMethod()>();
+
+        s#6 = virtualinvoke $stack17.<soot.SootMethod: soot.SootClass getDeclaringClass()>();
+
+        $stack19 = virtualinvoke s#6.<soot.SootClass: boolean hasTag(java.lang.String)>("KeyTag");
+
+        if $stack19 != 0 goto label9;
+
+        $u6 = new soot.tagkit.KeyTag;
+
+        specialinvoke $u6.<soot.tagkit.KeyTag: void <init>(int,java.lang.String,java.lang.String)>(1, "Live", "Liveness");
+
+        $r4 = (soot.tagkit.Tag) $u6;
+
+        virtualinvoke s#6.<soot.SootClass: void addTag(soot.tagkit.Tag)>($r4);
+
+        $u7 = new soot.tagkit.KeyTag;
+
+        specialinvoke $u7.<soot.tagkit.KeyTag: void <init>(int,java.lang.String,java.lang.String)>(0, "Dead", "Liveness");
+
+        $r5 = (soot.tagkit.Tag) $u7;
+
+        virtualinvoke s#6.<soot.SootClass: void addTag(soot.tagkit.Tag)>($r5);
+
+     label9:
+        return;
+    }
+}

@@ -1,0 +1,65 @@
+final class LiveVariableAnalysis.LiveMain$1 extends soot.SceneTransformer
+{
+    final java.lang.String[] val$args;
+
+    void <init>(java.lang.String[])
+    {
+        LiveVariableAnalysis.LiveMain$1 this;
+        java.lang.String[] l1;
+
+        this := @this: LiveVariableAnalysis.LiveMain$1;
+
+        l1 := @parameter0: java.lang.String[];
+
+        this.<LiveVariableAnalysis.LiveMain$1: java.lang.String[] val$args> = l1;
+
+        specialinvoke this.<soot.SceneTransformer: void <init>()>();
+
+        return;
+    }
+
+    protected void internalTransform(java.lang.String, java.util.Map)
+    {
+        soot.jimple.toolkits.callgraph.CHATransformer $stack5;
+        soot.Scene $stack6, $stack9;
+        java.io.PrintStream $stack8;
+        soot.SootClass $stack10;
+        soot.SootMethod m;
+        LiveVariableAnalysis.LiveMain$1 this;
+        java.lang.String[] $stack12;
+        java.lang.String $stack13, phaseName;
+        java.util.Map options;
+
+        this := @this: LiveVariableAnalysis.LiveMain$1;
+
+        phaseName := @parameter0: java.lang.String;
+
+        options := @parameter1: java.util.Map;
+
+        $stack5 = staticinvoke <soot.jimple.toolkits.callgraph.CHATransformer: soot.jimple.toolkits.callgraph.CHATransformer v()>();
+
+        virtualinvoke $stack5.<soot.jimple.toolkits.callgraph.CHATransformer: void transform()>();
+
+        $stack6 = staticinvoke <soot.Scene: soot.Scene v()>();
+
+        virtualinvoke $stack6.<soot.Scene: soot.jimple.toolkits.callgraph.CallGraph getCallGraph()>();
+
+        $stack8 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $stack8.<java.io.PrintStream: void println(java.lang.String)>("Exiting CFG transformer");
+
+        $stack9 = staticinvoke <soot.Scene: soot.Scene v()>();
+
+        $stack10 = virtualinvoke $stack9.<soot.Scene: soot.SootClass getMainClass()>();
+
+        m = virtualinvoke $stack10.<soot.SootClass: soot.SootMethod getMethodByName(java.lang.String)>("main");
+
+        $stack12 = this.<LiveVariableAnalysis.LiveMain$1: java.lang.String[] val$args>;
+
+        $stack13 = $stack12[0];
+
+        staticinvoke <LiveVariableAnalysis.LiveMain: void performLiveVariablesAnalysis(soot.SootMethod,java.lang.String)>(m, $stack13);
+
+        return;
+    }
+}
