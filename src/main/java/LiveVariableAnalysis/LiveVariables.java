@@ -68,7 +68,6 @@ public class LiveVariables extends BackwardFlowAnalysis<Unit, LiveVariableFlowSe
         doAnalysis();
     }
 
-
     @Override
     protected LiveVariableFlowSet newInitialFlow() {
         return new LiveVariableFlowSet();
@@ -90,7 +89,10 @@ public class LiveVariables extends BackwardFlowAnalysis<Unit, LiveVariableFlowSe
         srcSet.copy(destSet);
 
     }
-
+    @Override
+    public void doAnalysis() {
+        super.doAnalysis();
+    }
     @Override
     protected void flowThrough(LiveVariableFlowSet srcSet, Unit u, LiveVariableFlowSet destSet) {
         // kill

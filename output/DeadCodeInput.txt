@@ -1,0 +1,2 @@
+Line 7 : int a = x;  dead assignment;
+Line 4 : int y = x + 2;  dead assignment;

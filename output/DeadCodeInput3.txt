@@ -1,0 +1,5 @@
+Line 18 : int y = 666;  unreachable branch;
+Line 10 : int y = 100;  unreachable branch;
+Line 11 : goto [?= $stack4 = y];  fall through;
+Line 16 : goto [?= $stack4 = y];  fall through;
+Line 15 : int $stack3 = 300;  unreachable branch;
