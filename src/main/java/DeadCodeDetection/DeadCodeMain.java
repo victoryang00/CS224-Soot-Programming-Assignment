@@ -19,8 +19,8 @@ import java.util.*;
 
 public class DeadCodeMain {
 
-    //    public static final String sourceDirectory = System.getProperty("user.dir");
-    public static final String sourceDirectory = System.getProperty("user.dir") + File.separator + "target" + File.separator + "classes";
+    public static final String sourceDirectory = System.getProperty("user.dir");
+//    public static final String sourceDirectory = System.getProperty("user.dir") + File.separator + "target" + File.separator + "classes";
 
     /**
      * reference: https://github.com/PL-Ninja/MySootScript/tree/c4689d06fd08ffad43c810c40398bd44c7705531
@@ -95,7 +95,7 @@ public class DeadCodeMain {
                             AssignStmt assign = (AssignStmt) str;
                             Value v = assign.getLeftOp();
                             if (v instanceof Local) {
-                                if (Objects.equals(v.getType().toString(), "byte")||Objects.equals(v.getType().toString(), "short"))
+                                if (Objects.equals(v.getType().toString(), "byte") || Objects.equals(v.getType().toString(), "short"))
                                     myWriter.write("Line " + str.getTag(LineNumberTag.IDENTIFIER) + " : " + "int " + str + ";  " + str.getTag(ConfigTag.IDENTIFIER) + ";\n");
                                 else
                                     myWriter.write("Line " + str.getTag(LineNumberTag.IDENTIFIER) + " : " + v.getType() + " " + str + ";  " + str.getTag(ConfigTag.IDENTIFIER) + ";\n");

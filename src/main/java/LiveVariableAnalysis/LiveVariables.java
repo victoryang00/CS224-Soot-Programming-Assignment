@@ -59,6 +59,12 @@ class LiveVariableFlowSet extends AbstractBoundedFlowSet<Local> {
     public List<Local> toList() {
         return new ArrayList<>(liveVariableSet);
     }
+
+    public LiveVariableFlowSet setTo(LiveVariableFlowSet another) {
+        liveVariableSet.clear();
+        liveVariableSet.addAll(another.liveVariableSet);
+        return this;
+    }
 }
 
 public class LiveVariables extends BackwardFlowAnalysis<Unit, LiveVariableFlowSet> {
@@ -86,7 +92,7 @@ public class LiveVariables extends BackwardFlowAnalysis<Unit, LiveVariableFlowSe
 
     @Override
     protected void copy(LiveVariableFlowSet srcSet, LiveVariableFlowSet destSet) {
-        srcSet.copy(destSet);
+        destSet.setTo(srcSet);
 
     }
     @Override

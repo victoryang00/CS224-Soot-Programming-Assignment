@@ -20,7 +20,10 @@ public class LiveMain {
 
     public static final String sourceDirectory = System.getProperty("user.dir");
 //    public static final String sourceDirectory = System.getProperty("user.dir") + File.separator + "target" + File.separator + "classes";
-/** reference: https://github.com/PL-Ninja/MySootScript/tree/c4689d06fd08ffad43c810c40398bd44c7705531 */
+
+    /**
+     * reference: https://github.com/PL-Ninja/MySootScript/tree/c4689d06fd08ffad43c810c40398bd44c7705531
+     */
     public static void setupSoot(String classname) {
         G.reset();
         Options.v().set_prepend_classpath(true);
@@ -40,79 +43,62 @@ public class LiveMain {
 
     }
 
-    protected static void performLiveVariablesAnalysis(SootMethod m, String filename) {
-        if (!"<init>".equals(m.getName())) {
-            System.out.println("Method : " + m.getName());
-            System.out.println("==================");
-            JimpleBody body = (JimpleBody) m.retrieveActiveBody();
-            BriefUnitGraph g = new BriefUnitGraph(body);
-            LiveVariables lva = new LiveVariables(g);
-            try {
-                File myPath = new File("output/");
-                if (!myPath.exists()) {
-                    if (myPath.mkdir()) {
-                        System.out.println("Path created.");
-                    }
+    protected static void performLiveVariablesAnalysis(Body body, String filename) {
+        BriefUnitGraph g = new BriefUnitGraph(body);
+        LiveVariables lva = new LiveVariables(g);
+        try {
+            File myPath = new File("output/");
+            if (!myPath.exists()) {
+                if (myPath.mkdir()) {
+                    System.out.println("Path created.");
                 }
-                File myObj = new File("output/" + filename + ".txt");
-                if (myObj.createNewFile()) {
-                    System.out.println("File created: " + myObj.getName());
-                } else {
-                    System.out.println("File already exists.");
-                }
-            } catch (IOException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
             }
-            try {
-                FileWriter myWriter = new FileWriter("output/" + filename + ".txt");
+            File myObj = new File("output/" + filename + ".txt");
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        try {
+            FileWriter myWriter = new FileWriter("output/" + filename + ".txt");
 
-                for (Unit unit : body.getUnits()) {
-                    Unit unit1 = body.getUnits().getSuccOf(unit);
-                    if (unit1 != null) {
+            for (Unit unit : body.getUnits()) {
+                Unit unit1 = body.getUnits().getSuccOf(unit);
+                if (unit1 != null) {
 //                    System.out.println(unit.toString() + "; "+  lva.getFlowBefore(unit1).toString().replace("{","[").replace("}","]") );
-                        myWriter.write(unit.toString() + "; " + lva.getFlowBefore(unit1).toString().replace("{", "[").replace("}", "]") + "\n");
-                    }
+                    myWriter.write(unit.toString() + "; " + lva.getFlowBefore(unit1).toString().replace("{", "[").replace("}", "]") + "\n");
                 }
-                myWriter.close();
-                System.out.println("Successfully wrote to the file.");
-            } catch (IOException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
             }
-            System.out.println("==================");
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
-    }
+        System.out.println("==================");
 
-    private static void printCallGraph(CallGraph cg, SootMethod m) {
-        Iterator targets = new Targets(cg.edgesOutOf(m));
-        while (targets.hasNext()) {
-            SootMethod trgt = (SootMethod) targets.next();
-            //System.out.println(m.getName() + " -> " + trgt.getName() + ";");
-            performLiveVariablesAnalysis(trgt, "");
-        }
     }
 
     public static void main(String[] args) {
         if (args.length == 0) System.exit(-1);
-        PackManager.v().getPack("wjtp").
-                add(new Transform("wjtp.liveVariables", new SceneTransformer() {
+        Transform transform = new Transform("jtp.liveVariables", new BodyTransformer() {
+            @Override
+            protected void internalTransform(Body b, String phaseName, Map<String, String> options) {
+                CallGraph cg = Scene.v().getCallGraph();
+                JimpleBody body = (JimpleBody) Scene.v().getMainClass().getMethodByName(args[1]).retrieveActiveBody();
+                System.out.println("Exiting CFG transformer");
+                performLiveVariablesAnalysis(body, args[0]);
+            }
 
-                    @Override
-                    protected void internalTransform(String phaseName, Map options) {
-                        CHATransformer.v().transform();
-                        CallGraph cg = Scene.v().getCallGraph();
-                        System.out.println("Exiting CFG transformer");
-                        SootMethod m = Scene.v().getMainClass().getMethodByName("main");
-                        performLiveVariablesAnalysis(m, args[0]);
-                        printCallGraph(cg, m);
-                    }
-                }));
+        });
         String filename = args[0].replace(".class", "").replace("./", "");
         args[0] = filename;
         setupSoot(filename);
-        SootMethod m = Scene.v().getMainClass().getMethodByName("main");
-        performLiveVariablesAnalysis(m, filename);
+        PackManager.v().getPack("jtp").add(transform);
         soot.Main.main(args);
     }
 }

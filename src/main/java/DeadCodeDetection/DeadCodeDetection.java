@@ -53,7 +53,7 @@ public class DeadCodeDetection {
         Queue<Unit> queue = new LinkedList<Unit>();
         queue.add(cfg.getHeads().get(0));
 
-        /** Do propagation to ifstmt */
+        /** Do propagation to ifstmt/switchstmt */
         for (Unit unit : unit_cfg) {
             if (unit instanceof IfStmt) {
                 IfStmt ifStmt = (IfStmt) unit;
