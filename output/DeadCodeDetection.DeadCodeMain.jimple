@@ -1,0 +1,605 @@
+public class DeadCodeDetection.DeadCodeMain extends java.lang.Object
+{
+    public static final java.lang.String sourceDirectory;
+
+    static void <clinit>()
+    {
+        java.lang.String $stack0;
+
+        $stack0 = staticinvoke <java.lang.System: java.lang.String getProperty(java.lang.String)>("user.dir");
+
+        <DeadCodeDetection.DeadCodeMain: java.lang.String sourceDirectory> = $stack0;
+
+        return;
+    }
+
+    public void <init>()
+    {
+        DeadCodeDetection.DeadCodeMain this;
+
+        this := @this: DeadCodeDetection.DeadCodeMain;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void setupSoot(java.lang.String)
+    {
+        soot.options.Options $stack1, $stack2, $stack3, $stack4, $stack6, $stack7, $stack8, $stack11, $stack12, $stack13, $stack15, $stack17, $stack19, $stack21, $stack23, $stack25, $stack27, $stack29, $stack31, $stack33, $stack35, $stack37, $stack39, $stack41, $stack43, $stack45, $stack47, $stack49, $stack51, $stack53;
+        java.lang.String $stack5, $stack9, classname;
+        java.util.List $stack10;
+        soot.Scene $stack54;
+
+        classname := @parameter0: java.lang.String;
+
+        staticinvoke <soot.G: void reset()>();
+
+        $stack1 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack1.<soot.options.Options: void set_prepend_classpath(boolean)>(1);
+
+        $stack2 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack2.<soot.options.Options: void set_allow_phantom_refs(boolean)>(1);
+
+        $stack3 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack3.<soot.options.Options: void set_keep_line_number(boolean)>(1);
+
+        $stack4 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        $stack5 = <DeadCodeDetection.DeadCodeMain: java.lang.String sourceDirectory>;
+
+        virtualinvoke $stack4.<soot.options.Options: void set_soot_classpath(java.lang.String)>($stack5);
+
+        $stack6 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack6.<soot.options.Options: void set_output_format(int)>(1);
+
+        $stack7 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack7.<soot.options.Options: void set_output_dir(java.lang.String)>("./output");
+
+        $stack8 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        $stack9 = <DeadCodeDetection.DeadCodeMain: java.lang.String sourceDirectory>;
+
+        $stack10 = staticinvoke <java.util.Collections: java.util.List singletonList(java.lang.Object)>($stack9);
+
+        virtualinvoke $stack8.<soot.options.Options: void set_process_dir(java.util.List)>($stack10);
+
+        $stack11 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack11.<soot.options.Options: void set_whole_program(boolean)>(1);
+
+        $stack12 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack12.<soot.options.Options: void set_verbose(boolean)>(1);
+
+        $stack13 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack13.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jb", "use-original-names:true");
+
+        $stack15 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack15.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jb.dae", "enabled:false");
+
+        $stack17 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack17.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jb.a", "enabled:false");
+
+        $stack19 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack19.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jb.cp", "enabled:false");
+
+        $stack21 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack21.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jb.ule", "enabled:false");
+
+        $stack23 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack23.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jb.uce", "enabled:false");
+
+        $stack25 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack25.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jb.cp-ule", "enabled:false");
+
+        $stack27 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack27.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jop.cse", "enabled:false");
+
+        $stack29 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack29.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jop.bcm", "enabled:false");
+
+        $stack31 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack31.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jop.lcm", "enabled:false");
+
+        $stack33 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack33.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jop.cp", "enabled:false");
+
+        $stack35 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack35.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jop.cpf", "enabled:false");
+
+        $stack37 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack37.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jop.cbf", "enabled:false");
+
+        $stack39 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack39.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jop.dae", "enabled:false");
+
+        $stack41 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack41.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jop.nce", "enabled:false");
+
+        $stack43 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack43.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jop.uce1", "enabled:false");
+
+        $stack45 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack45.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jop.ubf1", "enabled:false");
+
+        $stack47 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack47.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jop.uce2", "enabled:false");
+
+        $stack49 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack49.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jop.ubf2", "enabled:false");
+
+        $stack51 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack51.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jop.ule", "enabled:false");
+
+        $stack53 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack53.<soot.options.Options: void set_main_class(java.lang.String)>(classname);
+
+        $stack54 = staticinvoke <soot.Scene: soot.Scene v()>();
+
+        virtualinvoke $stack54.<soot.Scene: void loadNecessaryClasses()>();
+
+        return;
+    }
+
+    protected static void performDeadCodeAnalysis(soot.SootMethod, java.lang.String, soot.Body)
+    {
+        soot.SootMethod m;
+        java.lang.String $stack8, $stack9, $stack13, $stack15, filename, $stack41, $stack43, $stack28, $stack35;
+        boolean $stack10, $stack23, $stack51, $stack29;
+        java.lang.StringBuilder $stack11, $stack14, $stack39, $stack42, $stack25, $stack26, $stack27, $stack32, $stack33, $stack34;
+        java.io.PrintStream $stack12, $stack16, $stack19, $stack30, $stack38, $stack40, $stack56, $stack58, $stack61, $stack37;
+        DeadCodeDetection.DeadCodeDetection $stack17;
+        soot.Body b;
+        java.util.Set deadCode;
+        java.util.function.Consumer $stack21, $stack36;
+        java.io.File $stack22, $stack24;
+        java.io.IOException $stack57, $stack60;
+        java.io.FileWriter $stack31;
+
+        m := @parameter0: soot.SootMethod;
+
+        filename := @parameter1: java.lang.String;
+
+        b := @parameter2: soot.Body;
+
+        $stack8 = "<init>";
+
+        $stack9 = virtualinvoke m.<soot.SootMethod: java.lang.String getName()>();
+
+        $stack10 = virtualinvoke $stack8.<java.lang.String: boolean equals(java.lang.Object)>($stack9);
+
+        if $stack10 != 0 goto label10;
+
+        $stack12 = <java.lang.System: java.io.PrintStream out>;
+
+        $stack11 = new java.lang.StringBuilder;
+
+        specialinvoke $stack11.<java.lang.StringBuilder: void <init>(java.lang.String)>("Method : ");
+
+        $stack13 = virtualinvoke m.<soot.SootMethod: java.lang.String getName()>();
+
+        $stack14 = virtualinvoke $stack11.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($stack13);
+
+        $stack15 = virtualinvoke $stack14.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $stack12.<java.io.PrintStream: void println(java.lang.String)>($stack15);
+
+        $stack16 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $stack16.<java.io.PrintStream: void println(java.lang.String)>("==================");
+
+        $stack17 = new DeadCodeDetection.DeadCodeDetection;
+
+        specialinvoke $stack17.<DeadCodeDetection.DeadCodeDetection: void <init>()>();
+
+        deadCode = virtualinvoke $stack17.<DeadCodeDetection.DeadCodeDetection: java.util.Set findDeadCode(soot.Body)>(b);
+
+        $stack19 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $stack19.<java.lang.Object: java.lang.Class getClass()>();
+
+        $stack21 = staticinvoke <DeadCodeDetection.DeadCodeMain$println__2: java.util.function.Consumer bootstrap$(java.io.PrintStream)>($stack19);
+
+        interfaceinvoke deadCode.<java.util.Set: void forEach(java.util.function.Consumer)>($stack21);
+
+     label01:
+        $stack22 = new java.io.File;
+
+        specialinvoke $stack22.<java.io.File: void <init>(java.lang.String)>("output/");
+
+        $stack23 = virtualinvoke $stack22.<java.io.File: boolean exists()>();
+
+        if $stack23 != 0 goto label02;
+
+        $stack51 = virtualinvoke $stack22.<java.io.File: boolean mkdir()>();
+
+        if $stack51 == 0 goto label02;
+
+        $stack56 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $stack56.<java.io.PrintStream: void println(java.lang.String)>("Path created.");
+
+     label02:
+        $stack24 = new java.io.File;
+
+        $stack25 = new java.lang.StringBuilder;
+
+        specialinvoke $stack25.<java.lang.StringBuilder: void <init>(java.lang.String)>("output/");
+
+        $stack26 = virtualinvoke $stack25.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(filename);
+
+        $stack27 = virtualinvoke $stack26.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(".txt");
+
+        $stack28 = virtualinvoke $stack27.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $stack24.<java.io.File: void <init>(java.lang.String)>($stack28);
+
+        $stack29 = virtualinvoke $stack24.<java.io.File: boolean createNewFile()>();
+
+        if $stack29 == 0 goto label03;
+
+        $stack40 = <java.lang.System: java.io.PrintStream out>;
+
+        $stack39 = new java.lang.StringBuilder;
+
+        specialinvoke $stack39.<java.lang.StringBuilder: void <init>(java.lang.String)>("File created: ");
+
+        $stack41 = virtualinvoke $stack24.<java.io.File: java.lang.String getName()>();
+
+        $stack42 = virtualinvoke $stack39.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>($stack41);
+
+        $stack43 = virtualinvoke $stack42.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke $stack40.<java.io.PrintStream: void println(java.lang.String)>($stack43);
+
+        goto label06;
+
+     label03:
+        $stack30 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $stack30.<java.io.PrintStream: void println(java.lang.String)>("File already exists.");
+
+     label04:
+        goto label06;
+
+     label05:
+        $stack60 := @caughtexception;
+
+        $stack61 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $stack61.<java.io.PrintStream: void println(java.lang.String)>("An error occurred.");
+
+        virtualinvoke $stack60.<java.io.IOException: void printStackTrace()>();
+
+     label06:
+        $stack31 = new java.io.FileWriter;
+
+        $stack32 = new java.lang.StringBuilder;
+
+        specialinvoke $stack32.<java.lang.StringBuilder: void <init>(java.lang.String)>("output/");
+
+        $stack33 = virtualinvoke $stack32.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(filename);
+
+        $stack34 = virtualinvoke $stack33.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(".txt");
+
+        $stack35 = virtualinvoke $stack34.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        specialinvoke $stack31.<java.io.FileWriter: void <init>(java.lang.String)>($stack35);
+
+        $stack36 = staticinvoke <DeadCodeDetection.DeadCodeMain$lambda_1__3: java.util.function.Consumer bootstrap$(java.io.FileWriter)>($stack31);
+
+        interfaceinvoke deadCode.<java.util.Set: void forEach(java.util.function.Consumer)>($stack36);
+
+        virtualinvoke $stack31.<java.io.FileWriter: void close()>();
+
+        $stack37 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $stack37.<java.io.PrintStream: void println(java.lang.String)>("Successfully wrote to the file.");
+
+     label07:
+        goto label09;
+
+     label08:
+        $stack57 := @caughtexception;
+
+        $stack58 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $stack58.<java.io.PrintStream: void println(java.lang.String)>("An error occurred.");
+
+        virtualinvoke $stack57.<java.io.IOException: void printStackTrace()>();
+
+     label09:
+        $stack38 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $stack38.<java.io.PrintStream: void println(java.lang.String)>("==================");
+
+     label10:
+        return;
+
+        catch java.io.IOException from label01 to label04 with label05;
+        catch java.io.IOException from label06 to label07 with label08;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.lang.String[] args;
+        int $stack4, $stack20;
+        java.lang.String filename, $stack8, $stack9, $stack15;
+        soot.jimple.JimpleBody body;
+        soot.PackManager $stack11, $stack18;
+        soot.Pack $stack12, $stack19;
+        soot.Scene $stack13;
+        soot.SootClass $stack14;
+        soot.SootMethod $stack16;
+        soot.Body $stack17, $r1;
+        DeadCodeDetection.DeadCodeMain$1 $u0;
+        soot.Transform $u1;
+        soot.Transformer $r0;
+
+        args := @parameter0: java.lang.String[];
+
+        $stack4 = lengthof args;
+
+        if $stack4 == 0 goto label1;
+
+        $stack20 = lengthof args;
+
+        if $stack20 != 1 goto label2;
+
+     label1:
+        staticinvoke <java.lang.System: void exit(int)>(-1);
+
+     label2:
+        $u1 = new soot.Transform;
+
+        $u0 = new DeadCodeDetection.DeadCodeMain$1;
+
+        specialinvoke $u0.<DeadCodeDetection.DeadCodeMain$1: void <init>(java.lang.String[])>(args);
+
+        $r0 = (soot.Transformer) $u0;
+
+        specialinvoke $u1.<soot.Transform: void <init>(java.lang.String,soot.Transformer)>("jtp.DeadCodeDetection", $r0);
+
+        $stack8 = args[0];
+
+        $stack9 = virtualinvoke $stack8.<java.lang.String: java.lang.String replace(java.lang.CharSequence,java.lang.CharSequence)>(".class", "");
+
+        filename = virtualinvoke $stack9.<java.lang.String: java.lang.String replace(java.lang.CharSequence,java.lang.CharSequence)>("./", "");
+
+        args[0] = filename;
+
+        staticinvoke <DeadCodeDetection.DeadCodeMain: void setupSoot(java.lang.String)>(filename);
+
+        $stack11 = staticinvoke <soot.PackManager: soot.PackManager v()>();
+
+        $stack12 = virtualinvoke $stack11.<soot.PackManager: soot.Pack getPack(java.lang.String)>("jtp");
+
+        virtualinvoke $stack12.<soot.Pack: void add(soot.Transform)>($u1);
+
+        $stack13 = staticinvoke <soot.Scene: soot.Scene v()>();
+
+        $stack14 = virtualinvoke $stack13.<soot.Scene: soot.SootClass getMainClass()>();
+
+        $stack15 = args[1];
+
+        $stack16 = virtualinvoke $stack14.<soot.SootClass: soot.SootMethod getMethodByName(java.lang.String)>($stack15);
+
+        $stack17 = virtualinvoke $stack16.<soot.SootMethod: soot.Body retrieveActiveBody()>();
+
+        body = (soot.jimple.JimpleBody) $stack17;
+
+        $stack18 = staticinvoke <soot.PackManager: soot.PackManager v()>();
+
+        $stack19 = virtualinvoke $stack18.<soot.PackManager: soot.Pack getPack(java.lang.String)>("jtp");
+
+        $r1 = (soot.Body) body;
+
+        virtualinvoke $stack19.<soot.Pack: void apply(soot.Body)>($r1);
+
+        return;
+    }
+
+    public static void lambda$1(java.io.FileWriter, soot.Unit)
+    {
+        soot.Unit str;
+        boolean $stack4, $stack16, $stack29, $stack43;
+        java.io.FileWriter l0;
+        java.lang.StringBuilder $stack5, $stack7, $stack8, $stack9, $stack10, $stack12, $stack13, $stack17, $stack19, $stack20, $stack21, $stack22, $stack24, $stack25, $stack30, $stack32, $stack33, $stack34, $stack35, $stack36, $stack38, $stack39, $stack44, $stack46, $stack47, $stack49, $stack50, $stack51, $stack52, $stack54, $stack55;
+        soot.tagkit.Tag $stack6, $stack11, $stack18, $stack23, $stack31, $stack37, $stack45, $stack53;
+        java.lang.String $stack14, $stack26, $stack28, $stack40, $stack42, $stack56;
+        soot.Value v;
+        soot.Type $stack27, $stack41, $stack48;
+        java.io.IOException $stack68;
+        java.io.PrintStream $stack69;
+        soot.jimple.AssignStmt assign;
+
+        l0 := @parameter0: java.io.FileWriter;
+
+        str := @parameter1: soot.Unit;
+
+     label1:
+        $stack4 = str instanceof soot.jimple.AssignStmt;
+
+        if $stack4 == 0 goto label5;
+
+        assign = (soot.jimple.AssignStmt) str;
+
+        v = interfaceinvoke assign.<soot.jimple.AssignStmt: soot.Value getLeftOp()>();
+
+        $stack16 = v instanceof soot.Local;
+
+        if $stack16 == 0 goto label4;
+
+        $stack27 = interfaceinvoke v.<soot.Value: soot.Type getType()>();
+
+        $stack28 = virtualinvoke $stack27.<soot.Type: java.lang.String toString()>();
+
+        $stack29 = staticinvoke <java.util.Objects: boolean equals(java.lang.Object,java.lang.Object)>($stack28, "byte");
+
+        if $stack29 != 0 goto label2;
+
+        $stack41 = interfaceinvoke v.<soot.Value: soot.Type getType()>();
+
+        $stack42 = virtualinvoke $stack41.<soot.Type: java.lang.String toString()>();
+
+        $stack43 = staticinvoke <java.util.Objects: boolean equals(java.lang.Object,java.lang.Object)>($stack42, "short");
+
+        if $stack43 == 0 goto label3;
+
+     label2:
+        $stack30 = new java.lang.StringBuilder;
+
+        specialinvoke $stack30.<java.lang.StringBuilder: void <init>(java.lang.String)>("Line ");
+
+        $stack31 = interfaceinvoke str.<soot.Unit: soot.tagkit.Tag getTag(java.lang.String)>("LineNumberTag");
+
+        $stack32 = virtualinvoke $stack30.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($stack31);
+
+        $stack33 = virtualinvoke $stack32.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" : ");
+
+        $stack34 = virtualinvoke $stack33.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>("int ");
+
+        $stack35 = virtualinvoke $stack34.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(str);
+
+        $stack36 = virtualinvoke $stack35.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";  ");
+
+        $stack37 = interfaceinvoke str.<soot.Unit: soot.tagkit.Tag getTag(java.lang.String)>("ConfigTag");
+
+        $stack38 = virtualinvoke $stack36.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($stack37);
+
+        $stack39 = virtualinvoke $stack38.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";\n");
+
+        $stack40 = virtualinvoke $stack39.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke l0.<java.io.FileWriter: void write(java.lang.String)>($stack40);
+
+        goto label8;
+
+     label3:
+        $stack44 = new java.lang.StringBuilder;
+
+        specialinvoke $stack44.<java.lang.StringBuilder: void <init>(java.lang.String)>("Line ");
+
+        $stack45 = interfaceinvoke str.<soot.Unit: soot.tagkit.Tag getTag(java.lang.String)>("LineNumberTag");
+
+        $stack46 = virtualinvoke $stack44.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($stack45);
+
+        $stack47 = virtualinvoke $stack46.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" : ");
+
+        $stack48 = interfaceinvoke v.<soot.Value: soot.Type getType()>();
+
+        $stack49 = virtualinvoke $stack47.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($stack48);
+
+        $stack50 = virtualinvoke $stack49.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" ");
+
+        $stack51 = virtualinvoke $stack50.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(str);
+
+        $stack52 = virtualinvoke $stack51.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";  ");
+
+        $stack53 = interfaceinvoke str.<soot.Unit: soot.tagkit.Tag getTag(java.lang.String)>("ConfigTag");
+
+        $stack54 = virtualinvoke $stack52.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($stack53);
+
+        $stack55 = virtualinvoke $stack54.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";\n");
+
+        $stack56 = virtualinvoke $stack55.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke l0.<java.io.FileWriter: void write(java.lang.String)>($stack56);
+
+        goto label8;
+
+     label4:
+        $stack17 = new java.lang.StringBuilder;
+
+        specialinvoke $stack17.<java.lang.StringBuilder: void <init>(java.lang.String)>("Line ");
+
+        $stack18 = interfaceinvoke str.<soot.Unit: soot.tagkit.Tag getTag(java.lang.String)>("LineNumberTag");
+
+        $stack19 = virtualinvoke $stack17.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($stack18);
+
+        $stack20 = virtualinvoke $stack19.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" : ");
+
+        $stack21 = virtualinvoke $stack20.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(str);
+
+        $stack22 = virtualinvoke $stack21.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";  ");
+
+        $stack23 = interfaceinvoke str.<soot.Unit: soot.tagkit.Tag getTag(java.lang.String)>("ConfigTag");
+
+        $stack24 = virtualinvoke $stack22.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($stack23);
+
+        $stack25 = virtualinvoke $stack24.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";\n");
+
+        $stack26 = virtualinvoke $stack25.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke l0.<java.io.FileWriter: void write(java.lang.String)>($stack26);
+
+        goto label8;
+
+     label5:
+        $stack5 = new java.lang.StringBuilder;
+
+        specialinvoke $stack5.<java.lang.StringBuilder: void <init>(java.lang.String)>("Line ");
+
+        $stack6 = interfaceinvoke str.<soot.Unit: soot.tagkit.Tag getTag(java.lang.String)>("LineNumberTag");
+
+        $stack7 = virtualinvoke $stack5.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($stack6);
+
+        $stack8 = virtualinvoke $stack7.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(" : ");
+
+        $stack9 = virtualinvoke $stack8.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>(str);
+
+        $stack10 = virtualinvoke $stack9.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";  ");
+
+        $stack11 = interfaceinvoke str.<soot.Unit: soot.tagkit.Tag getTag(java.lang.String)>("ConfigTag");
+
+        $stack12 = virtualinvoke $stack10.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.Object)>($stack11);
+
+        $stack13 = virtualinvoke $stack12.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(";\n");
+
+        $stack14 = virtualinvoke $stack13.<java.lang.StringBuilder: java.lang.String toString()>();
+
+        virtualinvoke l0.<java.io.FileWriter: void write(java.lang.String)>($stack14);
+
+     label6:
+        goto label8;
+
+     label7:
+        $stack68 := @caughtexception;
+
+        $stack69 = <java.lang.System: java.io.PrintStream err>;
+
+        virtualinvoke $stack69.<java.io.PrintStream: void println(java.lang.Object)>($stack68);
+
+     label8:
+        return;
+
+        catch java.io.IOException from label1 to label6 with label7;
+    }
+}

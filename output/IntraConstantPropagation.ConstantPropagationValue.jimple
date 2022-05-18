@@ -1,0 +1,202 @@
+public class IntraConstantPropagation.ConstantPropagationValue extends java.lang.Object
+{
+    public static final IntraConstantPropagation.ConstantPropagationValue UNDEF;
+    public static final IntraConstantPropagation.ConstantPropagationValue NAC;
+    public int concrete_val;
+
+    static void <clinit>()
+    {
+        IntraConstantPropagation.ConstantPropagationValue $stack0, $stack1;
+
+        $stack0 = new IntraConstantPropagation.ConstantPropagationValue;
+
+        specialinvoke $stack0.<IntraConstantPropagation.ConstantPropagationValue: void <init>(int)>(99999999);
+
+        <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue UNDEF> = $stack0;
+
+        $stack1 = new IntraConstantPropagation.ConstantPropagationValue;
+
+        specialinvoke $stack1.<IntraConstantPropagation.ConstantPropagationValue: void <init>(int)>(-99999999);
+
+        <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue NAC> = $stack1;
+
+        return;
+    }
+
+    public void <init>()
+    {
+        IntraConstantPropagation.ConstantPropagationValue this;
+
+        this := @this: IntraConstantPropagation.ConstantPropagationValue;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void <init>(int)
+    {
+        IntraConstantPropagation.ConstantPropagationValue this;
+        int val;
+
+        this := @this: IntraConstantPropagation.ConstantPropagationValue;
+
+        val := @parameter0: int;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+
+        this.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val> = val;
+
+        return;
+    }
+
+    public static IntraConstantPropagation.ConstantPropagationValue meet(IntraConstantPropagation.ConstantPropagationValue, IntraConstantPropagation.ConstantPropagationValue)
+    {
+        IntraConstantPropagation.ConstantPropagationValue v1, $stack2, v2, $stack3, $stack4, $stack5, $stack6, $stack9, $stack10;
+        int $stack7, $stack8, $stack11;
+
+        v1 := @parameter0: IntraConstantPropagation.ConstantPropagationValue;
+
+        v2 := @parameter1: IntraConstantPropagation.ConstantPropagationValue;
+
+        $stack2 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue UNDEF>;
+
+        if v1 != $stack2 goto label1;
+
+        return v2;
+
+     label1:
+        $stack3 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue UNDEF>;
+
+        if v2 != $stack3 goto label2;
+
+        return v1;
+
+     label2:
+        $stack4 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue NAC>;
+
+        if v1 == $stack4 goto label3;
+
+        $stack6 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue NAC>;
+
+        if v2 != $stack6 goto label4;
+
+     label3:
+        $stack5 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue NAC>;
+
+        return $stack5;
+
+     label4:
+        $stack8 = v1.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack7 = v2.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        if $stack8 != $stack7 goto label5;
+
+        $stack10 = new IntraConstantPropagation.ConstantPropagationValue;
+
+        $stack11 = v1.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        specialinvoke $stack10.<IntraConstantPropagation.ConstantPropagationValue: void <init>(int)>($stack11);
+
+        return $stack10;
+
+     label5:
+        $stack9 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue NAC>;
+
+        return $stack9;
+    }
+
+    public boolean equals(java.lang.Object)
+    {
+        IntraConstantPropagation.ConstantPropagationValue this, cpValue;
+        java.lang.Object obj;
+        java.lang.Class $stack3, $stack4;
+        int $stack5, $stack6;
+
+        this := @this: IntraConstantPropagation.ConstantPropagationValue;
+
+        obj := @parameter0: java.lang.Object;
+
+        if this != obj goto label1;
+
+        return 1;
+
+     label1:
+        if obj == null goto label2;
+
+        $stack3 = virtualinvoke this.<java.lang.Object: java.lang.Class getClass()>();
+
+        $stack4 = virtualinvoke obj.<java.lang.Object: java.lang.Class getClass()>();
+
+        if $stack3 == $stack4 goto label3;
+
+     label2:
+        return 0;
+
+     label3:
+        cpValue = (IntraConstantPropagation.ConstantPropagationValue) obj;
+
+        $stack6 = this.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack5 = cpValue.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        if $stack6 != $stack5 goto label4;
+
+        return 1;
+
+     label4:
+        return 0;
+    }
+
+    public int hashCode()
+    {
+        java.lang.Object[] $stack1;
+        IntraConstantPropagation.ConstantPropagationValue this;
+        int $stack2, $stack5;
+        java.lang.Integer $stack4;
+
+        this := @this: IntraConstantPropagation.ConstantPropagationValue;
+
+        $stack1 = newarray (java.lang.Object)[1];
+
+        $stack2 = this.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack4 = staticinvoke <java.lang.Integer: java.lang.Integer valueOf(int)>($stack2);
+
+        $stack1[0] = $stack4;
+
+        $stack5 = staticinvoke <java.util.Objects: int hash(java.lang.Object[])>($stack1);
+
+        return $stack5;
+    }
+
+    public java.lang.String toString()
+    {
+        IntraConstantPropagation.ConstantPropagationValue this, $stack1, $stack2;
+        int $stack3;
+        java.lang.String $stack4;
+
+        this := @this: IntraConstantPropagation.ConstantPropagationValue;
+
+        $stack1 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue NAC>;
+
+        if this != $stack1 goto label1;
+
+        return "NAC";
+
+     label1:
+        $stack2 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue UNDEF>;
+
+        if this != $stack2 goto label2;
+
+        return "UNDEF";
+
+     label2:
+        $stack3 = this.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack4 = staticinvoke <java.lang.String: java.lang.String valueOf(int)>($stack3);
+
+        return $stack4;
+    }
+}

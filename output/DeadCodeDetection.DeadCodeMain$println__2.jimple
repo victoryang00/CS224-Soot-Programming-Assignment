@@ -1,0 +1,54 @@
+public final class DeadCodeDetection.DeadCodeMain$println__2 extends java.lang.Object implements java.util.function.Consumer
+{
+    java.io.PrintStream cap0;
+
+    public static java.util.function.Consumer bootstrap$(java.io.PrintStream)
+    {
+        java.io.PrintStream $r0;
+        DeadCodeDetection.DeadCodeMain$println__2 $r1;
+
+        $r0 := @parameter0: java.io.PrintStream;
+
+        $r1 = new DeadCodeDetection.DeadCodeMain$println__2;
+
+        specialinvoke $r1.<DeadCodeDetection.DeadCodeMain$println__2: void <init>(java.io.PrintStream)>($r0);
+
+        return $r1;
+    }
+
+    public void <init>(java.io.PrintStream)
+    {
+        DeadCodeDetection.DeadCodeMain$println__2 $r0;
+        java.io.PrintStream $r1;
+
+        $r0 := @this: DeadCodeDetection.DeadCodeMain$println__2;
+
+        $r1 := @parameter0: java.io.PrintStream;
+
+        specialinvoke $r0.<java.lang.Object: void <init>()>();
+
+        $r0.<DeadCodeDetection.DeadCodeMain$println__2: java.io.PrintStream cap0> = $r1;
+
+        return;
+    }
+
+    public void accept(java.lang.Object)
+    {
+        DeadCodeDetection.DeadCodeMain$println__2 $r0;
+        java.lang.Object $r1;
+        soot.Unit $r2;
+        java.io.PrintStream $r3;
+
+        $r0 := @this: DeadCodeDetection.DeadCodeMain$println__2;
+
+        $r1 := @parameter0: java.lang.Object;
+
+        $r2 = (soot.Unit) $r1;
+
+        $r3 = $r0.<DeadCodeDetection.DeadCodeMain$println__2: java.io.PrintStream cap0>;
+
+        virtualinvoke $r3.<java.io.PrintStream: void println(java.lang.Object)>($r2);
+
+        return;
+    }
+}

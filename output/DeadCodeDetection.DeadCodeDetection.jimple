@@ -1,0 +1,792 @@
+public class DeadCodeDetection.DeadCodeDetection extends java.lang.Object
+{
+    boolean marked_case_stmt;
+
+    public void <init>()
+    {
+        DeadCodeDetection.DeadCodeDetection this;
+
+        this := @this: DeadCodeDetection.DeadCodeDetection;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+
+        this.<DeadCodeDetection.DeadCodeDetection: boolean marked_case_stmt> = 0;
+
+        return;
+    }
+
+    public java.util.Set findDeadCode(soot.Body)
+    {
+        java.lang.Object $stack8, $stack39;
+        DeadCodeDetection.DeadCodeDetection this;
+        boolean $stack11;
+        java.util.function.Consumer $stack14;
+        java.util.Set unreachable, deadAssignments;
+        soot.UnitPatchingChain $stack19, $stack40;
+        java.util.function.Predicate $stack21, $stack42;
+        soot.Body b, b#2, deadAssignments#12;
+        int prevSize, count, $stack10;
+        java.util.HashSet $u0;
+        soot.toolkits.graph.BriefUnitGraph $u1;
+        soot.toolkits.graph.UnitGraph $r0;
+
+        this := @this: DeadCodeDetection.DeadCodeDetection;
+
+        b := @parameter0: soot.Body;
+
+        $stack8 = virtualinvoke b.<soot.Body: java.lang.Object clone()>();
+
+        b#2 = (soot.Body) $stack8;
+
+        $u0 = new java.util.HashSet;
+
+        specialinvoke $u0.<java.util.HashSet: void <init>()>();
+
+        prevSize = -1;
+
+        count = 0;
+
+        goto label3;
+
+     label1:
+        count = count + 1;
+
+        $stack11 = this.<DeadCodeDetection.DeadCodeDetection: boolean marked_case_stmt>;
+
+        if $stack11 == 0 goto label2;
+
+        if count != 2 goto label2;
+
+        goto label4;
+
+     label2:
+        prevSize = interfaceinvoke $u0.<java.util.Set: int size()>();
+
+        deadAssignments = specialinvoke this.<DeadCodeDetection.DeadCodeDetection: java.util.Set findDeadAssign(soot.Body)>(b#2);
+
+        $stack14 = staticinvoke <DeadCodeDetection.DeadCodeDetection$lambda_0__4: java.util.function.Consumer bootstrap$()>();
+
+        interfaceinvoke deadAssignments.<java.util.Set: void forEach(java.util.function.Consumer)>($stack14);
+
+        $u1 = new soot.toolkits.graph.BriefUnitGraph;
+
+        specialinvoke $u1.<soot.toolkits.graph.BriefUnitGraph: void <init>(soot.Body)>(b#2);
+
+        $r0 = (soot.toolkits.graph.UnitGraph) $u1;
+
+        unreachable = specialinvoke this.<DeadCodeDetection.DeadCodeDetection: java.util.Set findUnreachable(soot.Body,soot.toolkits.graph.UnitGraph)>(b#2, $r0);
+
+        interfaceinvoke $u0.<java.util.Set: boolean addAll(java.util.Collection)>(deadAssignments);
+
+        interfaceinvoke $u0.<java.util.Set: boolean addAll(java.util.Collection)>(unreachable);
+
+        $stack19 = virtualinvoke b#2.<soot.Body: soot.UnitPatchingChain getUnits()>();
+
+        virtualinvoke $u0.<java.lang.Object: java.lang.Class getClass()>();
+
+        $stack21 = staticinvoke <DeadCodeDetection.DeadCodeDetection$contains__5: java.util.function.Predicate bootstrap$(java.util.Set)>($u0);
+
+        virtualinvoke $stack19.<soot.UnitPatchingChain: boolean removeIf(java.util.function.Predicate)>($stack21);
+
+     label3:
+        $stack10 = interfaceinvoke $u0.<java.util.Set: int size()>();
+
+        if prevSize != $stack10 goto label1;
+
+     label4:
+        $stack39 = virtualinvoke b#2.<soot.Body: java.lang.Object clone()>();
+
+        deadAssignments#12 = (soot.Body) $stack39;
+
+        $stack40 = virtualinvoke deadAssignments#12.<soot.Body: soot.UnitPatchingChain getUnits()>();
+
+        virtualinvoke $u0.<java.lang.Object: java.lang.Class getClass()>();
+
+        $stack42 = staticinvoke <DeadCodeDetection.DeadCodeDetection$contains__6: java.util.function.Predicate bootstrap$(java.util.Set)>($u0);
+
+        virtualinvoke $stack40.<soot.UnitPatchingChain: boolean removeIf(java.util.function.Predicate)>($stack42);
+
+        return $u0;
+    }
+
+    private java.util.Set findUnreachable(soot.Body, soot.toolkits.graph.UnitGraph)
+    {
+        soot.toolkits.graph.UnitGraph cfg;
+        soot.Body b;
+        java.util.List $stack23, $stack96, $stack42, successor#54;
+        java.lang.Object $stack24, $stack29, $stack38, $stack64, $stack74, $stack80, $stack87, $stack97, $stack102, $stack111, $stack119, $stack125, $stack132;
+        soot.Unit $stack25, $stack71, $stack98, $stack109, $stack117, unit, ith_stmt, i#29, ifStmt#56, v#78, $r1, $r2, $r3, $r4, $r5, $r6, $r7;
+        boolean $stack30, $stack31, $stack32, $stack34, $stack49, $stack57, $stack75, $stack81, $stack88, $stack103, $stack107, $stack120, $stack126, $stack133, $stack28, $stack79, $stack73, $stack86, $stack101, $stack124, $stack118, $stack131;
+        DeadCodeDetection.DeadCodeDetection this;
+        IntraConstantPropagation.ConstantPropagationValue $stack40, $stack41, $stack66, $stack67, $stack113, $stack114, cp_value, ith_stmt#82;
+        int $stack44, $stack45, $stack68, $stack69, $stack115, i, $stack43;
+        soot.UnitBox $stack55;
+        soot.UnitPatchingChain $stack70, $stack105, $stack108, $stack116, unit_cfg;
+        soot.jimple.Stmt $stack72;
+        java.util.Iterator successor, v#55;
+        soot.jimple.IfStmt ifStmt, map#79;
+        soot.Value v, cp_value#80;
+        IntraConstantPropagation.ConstantPropagationMap map, i#81;
+        soot.jimple.SwitchStmt ifStmt#11;
+        soot.jimple.GotoStmt ifStmt#30;
+        soot.jimple.ReturnStmt ifStmt#77;
+        IntraConstantPropagation.IntraConstantPropagation $u0;
+        DeadCodeDetection.ReachableSet $u1, $u11;
+        java.util.HashSet $u2, $u3, $u12;
+        java.util.LinkedList $u4, $u13;
+        ConfigTag.ConfigTag $u5, $u6, $u7, $u8, $u9, $u10, $u14;
+        soot.toolkits.graph.DirectedGraph $r0;
+
+        this := @this: DeadCodeDetection.DeadCodeDetection;
+
+        b := @parameter0: soot.Body;
+
+        cfg := @parameter1: soot.toolkits.graph.UnitGraph;
+
+        $u0 = new IntraConstantPropagation.IntraConstantPropagation;
+
+        $r0 = (soot.toolkits.graph.DirectedGraph) cfg;
+
+        specialinvoke $u0.<IntraConstantPropagation.IntraConstantPropagation: void <init>(soot.toolkits.graph.DirectedGraph)>($r0);
+
+        virtualinvoke $u0.<IntraConstantPropagation.IntraConstantPropagation: void doAnalysis()>();
+
+        unit_cfg = virtualinvoke b.<soot.Body: soot.UnitPatchingChain getUnits()>();
+
+        $u1 = new DeadCodeDetection.ReachableSet;
+
+        specialinvoke $u1.<DeadCodeDetection.ReachableSet: void <init>()>();
+
+        $u2 = new java.util.HashSet;
+
+        specialinvoke $u2.<java.util.HashSet: void <init>()>();
+
+        $u3 = new java.util.HashSet;
+
+        specialinvoke $u3.<java.util.HashSet: void <init>()>();
+
+        $u4 = new java.util.LinkedList;
+
+        specialinvoke $u4.<java.util.LinkedList: void <init>()>();
+
+        $stack23 = virtualinvoke cfg.<soot.toolkits.graph.UnitGraph: java.util.List getHeads()>();
+
+        $stack24 = interfaceinvoke $stack23.<java.util.List: java.lang.Object get(int)>(0);
+
+        $stack25 = (soot.Unit) $stack24;
+
+        interfaceinvoke $u4.<java.util.Queue: boolean add(java.lang.Object)>($stack25);
+
+        successor = virtualinvoke unit_cfg.<soot.UnitPatchingChain: java.util.Iterator iterator()>();
+
+        goto label12;
+
+     label01:
+        $stack29 = interfaceinvoke successor.<java.util.Iterator: java.lang.Object next()>();
+
+        unit = (soot.Unit) $stack29;
+
+        $stack30 = unit instanceof soot.jimple.IfStmt;
+
+        if $stack30 == 0 goto label03;
+
+        ifStmt = (soot.jimple.IfStmt) unit;
+
+        v = interfaceinvoke ifStmt.<soot.jimple.IfStmt: soot.Value getCondition()>();
+
+        $stack64 = virtualinvoke $u0.<IntraConstantPropagation.IntraConstantPropagation: java.lang.Object getFlowBefore(java.lang.Object)>(ifStmt);
+
+        map = (IntraConstantPropagation.ConstantPropagationMap) $stack64;
+
+        cp_value = virtualinvoke map.<IntraConstantPropagation.ConstantPropagationMap: IntraConstantPropagation.ConstantPropagationValue compute(soot.Value)>(v);
+
+        $stack66 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue UNDEF>;
+
+        if cp_value == $stack66 goto label12;
+
+        $stack67 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue NAC>;
+
+        if cp_value == $stack67 goto label12;
+
+        $stack68 = cp_value.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        if $stack68 != 0 goto label02;
+
+        $stack72 = interfaceinvoke ifStmt.<soot.jimple.IfStmt: soot.jimple.Stmt getTarget()>();
+
+        $r1 = (soot.Unit) ifStmt;
+
+        $r2 = (soot.Unit) $stack72;
+
+        virtualinvoke $u1.<DeadCodeDetection.ReachableSet: void add(soot.Unit,soot.Unit)>($r1, $r2);
+
+        goto label12;
+
+     label02:
+        $stack69 = cp_value.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        if $stack69 != 1 goto label12;
+
+        $stack70 = virtualinvoke b.<soot.Body: soot.UnitPatchingChain getUnits()>();
+
+        $r3 = (soot.Unit) ifStmt;
+
+        $stack71 = virtualinvoke $stack70.<soot.UnitPatchingChain: soot.Unit getSuccOf(soot.Unit)>($r3);
+
+        $r4 = (soot.Unit) ifStmt;
+
+        virtualinvoke $u1.<DeadCodeDetection.ReachableSet: void add(soot.Unit,soot.Unit)>($r4, $stack71);
+
+        goto label12;
+
+     label03:
+        $stack31 = unit instanceof soot.jimple.SwitchStmt;
+
+        if $stack31 == 0 goto label11;
+
+        this.<DeadCodeDetection.DeadCodeDetection: boolean marked_case_stmt> = 1;
+
+        ifStmt#11 = (soot.jimple.SwitchStmt) unit;
+
+        v = interfaceinvoke ifStmt#11.<soot.jimple.SwitchStmt: soot.Value getKey()>();
+
+        $stack38 = virtualinvoke $u0.<IntraConstantPropagation.IntraConstantPropagation: java.lang.Object getFlowBefore(java.lang.Object)>(ifStmt#11);
+
+        map = (IntraConstantPropagation.ConstantPropagationMap) $stack38;
+
+        cp_value = virtualinvoke map.<IntraConstantPropagation.ConstantPropagationMap: IntraConstantPropagation.ConstantPropagationValue compute(soot.Value)>(v);
+
+        $stack40 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue UNDEF>;
+
+        if cp_value == $stack40 goto label12;
+
+        $stack41 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue NAC>;
+
+        if cp_value == $stack41 goto label12;
+
+        i = 0;
+
+        goto label08;
+
+     label04:
+        $stack44 = cp_value.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack45 = $stack44 - 1;
+
+        if i == $stack45 goto label07;
+
+        ith_stmt = interfaceinvoke ifStmt#11.<soot.jimple.SwitchStmt: soot.Unit getTarget(int)>(i);
+
+        $stack49 = ith_stmt instanceof soot.jimple.GotoStmt;
+
+        if $stack49 == 0 goto label05;
+
+        $u5 = new ConfigTag.ConfigTag;
+
+        specialinvoke $u5.<ConfigTag.ConfigTag: void <init>(java.lang.String)>("fall through");
+
+        interfaceinvoke ith_stmt.<soot.Unit: void addTag(soot.tagkit.Tag)>($u5);
+
+        goto label06;
+
+     label05:
+        $u6 = new ConfigTag.ConfigTag;
+
+        specialinvoke $u6.<ConfigTag.ConfigTag: void <init>(java.lang.String)>("unreachable branch");
+
+        interfaceinvoke ith_stmt.<soot.Unit: void addTag(soot.tagkit.Tag)>($u6);
+
+     label06:
+        interfaceinvoke $u2.<java.util.Set: boolean add(java.lang.Object)>(ith_stmt);
+
+     label07:
+        i = i + 1;
+
+     label08:
+        $stack42 = interfaceinvoke ifStmt#11.<soot.jimple.SwitchStmt: java.util.List getTargets()>();
+
+        $stack43 = interfaceinvoke $stack42.<java.util.List: int size()>();
+
+        if i < $stack43 goto label04;
+
+        $stack55 = interfaceinvoke ifStmt#11.<soot.jimple.SwitchStmt: soot.UnitBox getDefaultTargetBox()>();
+
+        i#29 = interfaceinvoke $stack55.<soot.UnitBox: soot.Unit getUnit()>();
+
+        $stack57 = i#29 instanceof soot.jimple.GotoStmt;
+
+        if $stack57 == 0 goto label09;
+
+        $u7 = new ConfigTag.ConfigTag;
+
+        specialinvoke $u7.<ConfigTag.ConfigTag: void <init>(java.lang.String)>("fall through");
+
+        interfaceinvoke i#29.<soot.Unit: void addTag(soot.tagkit.Tag)>($u7);
+
+        goto label10;
+
+     label09:
+        $u8 = new ConfigTag.ConfigTag;
+
+        specialinvoke $u8.<ConfigTag.ConfigTag: void <init>(java.lang.String)>("unreachable branch");
+
+        interfaceinvoke i#29.<soot.Unit: void addTag(soot.tagkit.Tag)>($u8);
+
+     label10:
+        interfaceinvoke $u2.<java.util.Set: boolean add(java.lang.Object)>(i#29);
+
+        goto label12;
+
+     label11:
+        $stack32 = unit instanceof soot.jimple.GotoStmt;
+
+        if $stack32 == 0 goto label12;
+
+        ifStmt#30 = (soot.jimple.GotoStmt) unit;
+
+        $stack34 = this.<DeadCodeDetection.DeadCodeDetection: boolean marked_case_stmt>;
+
+        if $stack34 == 0 goto label12;
+
+        $u9 = new ConfigTag.ConfigTag;
+
+        specialinvoke $u9.<ConfigTag.ConfigTag: void <init>(java.lang.String)>("fall through");
+
+        interfaceinvoke ifStmt#30.<soot.jimple.GotoStmt: void addTag(soot.tagkit.Tag)>($u9);
+
+        interfaceinvoke $u2.<java.util.Set: boolean add(java.lang.Object)>(ifStmt#30);
+
+     label12:
+        $stack28 = interfaceinvoke successor.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack28 != 0 goto label01;
+
+        goto label17;
+
+     label13:
+        $stack74 = interfaceinvoke $u4.<java.util.Queue: java.lang.Object poll()>();
+
+        unit = (soot.Unit) $stack74;
+
+        $stack75 = interfaceinvoke $u3.<java.util.Set: boolean contains(java.lang.Object)>(unit);
+
+        if $stack75 == 0 goto label14;
+
+        goto label17;
+
+     label14:
+        interfaceinvoke $u3.<java.util.Set: boolean add(java.lang.Object)>(unit);
+
+        successor#54 = virtualinvoke cfg.<soot.toolkits.graph.UnitGraph: java.util.List getSuccsOf(soot.Unit)>(unit);
+
+        v#55 = interfaceinvoke successor#54.<java.util.List: java.util.Iterator iterator()>();
+
+        goto label16;
+
+     label15:
+        $stack80 = interfaceinvoke v#55.<java.util.Iterator: java.lang.Object next()>();
+
+        ifStmt#56 = (soot.Unit) $stack80;
+
+        $stack81 = virtualinvoke $u1.<DeadCodeDetection.ReachableSet: boolean contains(soot.Unit,soot.Unit)>(unit, ifStmt#56);
+
+        if $stack81 != 0 goto label16;
+
+        interfaceinvoke $u4.<java.util.Queue: boolean add(java.lang.Object)>(ifStmt#56);
+
+     label16:
+        $stack79 = interfaceinvoke v#55.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack79 != 0 goto label15;
+
+     label17:
+        $stack73 = interfaceinvoke $u4.<java.util.Queue: boolean isEmpty()>();
+
+        if $stack73 == 0 goto label13;
+
+        successor = virtualinvoke cfg.<soot.toolkits.graph.UnitGraph: java.util.Iterator iterator()>();
+
+        goto label19;
+
+     label18:
+        $stack87 = interfaceinvoke successor.<java.util.Iterator: java.lang.Object next()>();
+
+        unit = (soot.Unit) $stack87;
+
+        $stack88 = interfaceinvoke $u3.<java.util.Set: boolean contains(java.lang.Object)>(unit);
+
+        if $stack88 != 0 goto label19;
+
+        $u10 = new ConfigTag.ConfigTag;
+
+        specialinvoke $u10.<ConfigTag.ConfigTag: void <init>(java.lang.String)>("unreachable branch");
+
+        interfaceinvoke unit.<soot.Unit: void addTag(soot.tagkit.Tag)>($u10);
+
+        interfaceinvoke $u2.<java.util.Set: boolean add(java.lang.Object)>(unit);
+
+     label19:
+        $stack86 = interfaceinvoke successor.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack86 != 0 goto label18;
+
+        unit_cfg = virtualinvoke b.<soot.Body: soot.UnitPatchingChain getUnits()>();
+
+        $u11 = new DeadCodeDetection.ReachableSet;
+
+        specialinvoke $u11.<DeadCodeDetection.ReachableSet: void <init>()>();
+
+        $u12 = new java.util.HashSet;
+
+        specialinvoke $u12.<java.util.HashSet: void <init>()>();
+
+        $u13 = new java.util.LinkedList;
+
+        specialinvoke $u13.<java.util.LinkedList: void <init>()>();
+
+        $stack96 = virtualinvoke cfg.<soot.toolkits.graph.UnitGraph: java.util.List getHeads()>();
+
+        $stack97 = interfaceinvoke $stack96.<java.util.List: java.lang.Object get(int)>(0);
+
+        $stack98 = (soot.Unit) $stack97;
+
+        interfaceinvoke $u13.<java.util.Queue: boolean add(java.lang.Object)>($stack98);
+
+        successor = virtualinvoke unit_cfg.<soot.UnitPatchingChain: java.util.Iterator iterator()>();
+
+        goto label22;
+
+     label20:
+        $stack102 = interfaceinvoke successor.<java.util.Iterator: java.lang.Object next()>();
+
+        unit = (soot.Unit) $stack102;
+
+        $stack103 = unit instanceof soot.jimple.ReturnStmt;
+
+        if $stack103 == 0 goto label22;
+
+        ifStmt#77 = (soot.jimple.ReturnStmt) unit;
+
+        $stack105 = virtualinvoke b.<soot.Body: soot.UnitPatchingChain getUnits()>();
+
+        $r5 = (soot.Unit) ifStmt#77;
+
+        v#78 = virtualinvoke $stack105.<soot.UnitPatchingChain: soot.Unit getPredOf(soot.Unit)>($r5);
+
+        $stack107 = v#78 instanceof soot.jimple.IfStmt;
+
+        if $stack107 == 0 goto label21;
+
+        map#79 = (soot.jimple.IfStmt) v#78;
+
+        cp_value#80 = interfaceinvoke map#79.<soot.jimple.IfStmt: soot.Value getCondition()>();
+
+        $stack111 = virtualinvoke $u0.<IntraConstantPropagation.IntraConstantPropagation: java.lang.Object getFlowBefore(java.lang.Object)>(map#79);
+
+        i#81 = (IntraConstantPropagation.ConstantPropagationMap) $stack111;
+
+        ith_stmt#82 = virtualinvoke i#81.<IntraConstantPropagation.ConstantPropagationMap: IntraConstantPropagation.ConstantPropagationValue compute(soot.Value)>(cp_value#80);
+
+        $stack113 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue UNDEF>;
+
+        if ith_stmt#82 == $stack113 goto label22;
+
+        $stack114 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue NAC>;
+
+        if ith_stmt#82 == $stack114 goto label22;
+
+        $stack115 = ith_stmt#82.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        if $stack115 != 1 goto label22;
+
+        $stack116 = virtualinvoke b.<soot.Body: soot.UnitPatchingChain getUnits()>();
+
+        $stack117 = virtualinvoke $stack116.<soot.UnitPatchingChain: soot.Unit getLast()>();
+
+        $r6 = (soot.Unit) ifStmt#77;
+
+        virtualinvoke $u11.<DeadCodeDetection.ReachableSet: void add(soot.Unit,soot.Unit)>($r6, $stack117);
+
+        goto label22;
+
+     label21:
+        $stack108 = virtualinvoke b.<soot.Body: soot.UnitPatchingChain getUnits()>();
+
+        $stack109 = virtualinvoke $stack108.<soot.UnitPatchingChain: soot.Unit getLast()>();
+
+        $r7 = (soot.Unit) ifStmt#77;
+
+        virtualinvoke $u11.<DeadCodeDetection.ReachableSet: void add(soot.Unit,soot.Unit)>($r7, $stack109);
+
+     label22:
+        $stack101 = interfaceinvoke successor.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack101 != 0 goto label20;
+
+        goto label27;
+
+     label23:
+        $stack119 = interfaceinvoke $u13.<java.util.Queue: java.lang.Object poll()>();
+
+        unit = (soot.Unit) $stack119;
+
+        $stack120 = interfaceinvoke $u12.<java.util.Set: boolean contains(java.lang.Object)>(unit);
+
+        if $stack120 == 0 goto label24;
+
+        goto label27;
+
+     label24:
+        interfaceinvoke $u12.<java.util.Set: boolean add(java.lang.Object)>(unit);
+
+        successor#54 = virtualinvoke cfg.<soot.toolkits.graph.UnitGraph: java.util.List getSuccsOf(soot.Unit)>(unit);
+
+        v#55 = interfaceinvoke successor#54.<java.util.List: java.util.Iterator iterator()>();
+
+        goto label26;
+
+     label25:
+        $stack125 = interfaceinvoke v#55.<java.util.Iterator: java.lang.Object next()>();
+
+        ifStmt#56 = (soot.Unit) $stack125;
+
+        $stack126 = virtualinvoke $u11.<DeadCodeDetection.ReachableSet: boolean contains(soot.Unit,soot.Unit)>(unit, ifStmt#56);
+
+        if $stack126 != 0 goto label26;
+
+        interfaceinvoke $u13.<java.util.Queue: boolean add(java.lang.Object)>(ifStmt#56);
+
+     label26:
+        $stack124 = interfaceinvoke v#55.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack124 != 0 goto label25;
+
+     label27:
+        $stack118 = interfaceinvoke $u13.<java.util.Queue: boolean isEmpty()>();
+
+        if $stack118 == 0 goto label23;
+
+        successor = virtualinvoke cfg.<soot.toolkits.graph.UnitGraph: java.util.Iterator iterator()>();
+
+        goto label29;
+
+     label28:
+        $stack132 = interfaceinvoke successor.<java.util.Iterator: java.lang.Object next()>();
+
+        unit = (soot.Unit) $stack132;
+
+        $stack133 = interfaceinvoke $u12.<java.util.Set: boolean contains(java.lang.Object)>(unit);
+
+        if $stack133 != 0 goto label29;
+
+        $u14 = new ConfigTag.ConfigTag;
+
+        specialinvoke $u14.<ConfigTag.ConfigTag: void <init>(java.lang.String)>("control-flow unreachable code");
+
+        interfaceinvoke unit.<soot.Unit: void addTag(soot.tagkit.Tag)>($u14);
+
+        interfaceinvoke $u2.<java.util.Set: boolean add(java.lang.Object)>(unit);
+
+     label29:
+        $stack131 = interfaceinvoke successor.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack131 != 0 goto label28;
+
+        return $u2;
+    }
+
+    private java.util.Set findDeadAssign(soot.Body)
+    {
+        soot.Body body, $stack27, $stack44;
+        java.util.Iterator l9;
+        java.lang.Object $stack23, tmp;
+        soot.Unit unit, tmp_unit;
+        boolean $stack24, $stack25, $stack34, $stack48, $stack55, $stack58, is_casestmt, counter, $stack36, $stack22;
+        soot.UnitPatchingChain $stack28, $stack45;
+        int $stack29, last_ops, l14, count, l13;
+        soot.jimple.AssignStmt $stack30, $stack32, $stack35, $stack51, $stack53;
+        soot.Local $stack37, $stack38, $stack40, $stack56;
+        java.lang.String $stack39, $stack41, $stack57;
+        soot.Value v, unit_list#17, tmp#18;
+        DeadCodeDetection.DeadCodeDetection this;
+        java.lang.Object[] unit_list;
+        soot.toolkits.graph.BriefUnitGraph $u0;
+        LiveVariableAnalysis.LiveVariables $u1;
+        java.util.HashSet $u2;
+        soot.toolkits.graph.DirectedGraph $r0;
+
+        this := @this: DeadCodeDetection.DeadCodeDetection;
+
+        body := @parameter0: soot.Body;
+
+        $u0 = new soot.toolkits.graph.BriefUnitGraph;
+
+        specialinvoke $u0.<soot.toolkits.graph.BriefUnitGraph: void <init>(soot.Body)>(body);
+
+        $u1 = new LiveVariableAnalysis.LiveVariables;
+
+        $r0 = (soot.toolkits.graph.DirectedGraph) $u0;
+
+        specialinvoke $u1.<LiveVariableAnalysis.LiveVariables: void <init>(soot.toolkits.graph.DirectedGraph)>($r0);
+
+        virtualinvoke $u1.<LiveVariableAnalysis.LiveVariables: void doAnalysis()>();
+
+        is_casestmt = 0;
+
+        counter = 0;
+
+        count = 0;
+
+        $u2 = new java.util.HashSet;
+
+        specialinvoke $u2.<java.util.HashSet: void <init>()>();
+
+        l9 = virtualinvoke $u0.<soot.toolkits.graph.BriefUnitGraph: java.util.Iterator iterator()>();
+
+        goto label8;
+
+     label1:
+        $stack23 = interfaceinvoke l9.<java.util.Iterator: java.lang.Object next()>();
+
+        unit = (soot.Unit) $stack23;
+
+        count = count + 1;
+
+        $stack24 = unit instanceof soot.jimple.TableSwitchStmt;
+
+        if $stack24 == 0 goto label2;
+
+        is_casestmt = 1;
+
+        goto label8;
+
+     label2:
+        $stack25 = unit instanceof soot.jimple.AssignStmt;
+
+        if $stack25 == 0 goto label8;
+
+        $stack27 = virtualinvoke $u0.<soot.toolkits.graph.BriefUnitGraph: soot.Body getBody()>();
+
+        $stack28 = virtualinvoke $stack27.<soot.Body: soot.UnitPatchingChain getUnits()>();
+
+        $stack29 = virtualinvoke $stack28.<soot.UnitPatchingChain: int size()>();
+
+        last_ops = $stack29 - 1;
+
+        if count >= last_ops goto label6;
+
+        $stack44 = virtualinvoke $u0.<soot.toolkits.graph.BriefUnitGraph: soot.Body getBody()>();
+
+        $stack45 = virtualinvoke $stack44.<soot.Body: soot.UnitPatchingChain getUnits()>();
+
+        unit_list = virtualinvoke $stack45.<soot.UnitPatchingChain: java.lang.Object[] toArray()>();
+
+        staticinvoke <java.util.Arrays: java.lang.Object[] copyOfRange(java.lang.Object[],int,int)>(unit_list, count, last_ops);
+
+        l14 = lengthof unit_list;
+
+        l13 = 0;
+
+        goto label5;
+
+     label3:
+        tmp = unit_list[l13];
+
+        tmp_unit = (soot.Unit) tmp;
+
+        $stack48 = tmp_unit instanceof soot.jimple.AssignStmt;
+
+        if $stack48 == 0 goto label4;
+
+        $stack51 = (soot.jimple.AssignStmt) tmp_unit;
+
+        v = interfaceinvoke $stack51.<soot.jimple.AssignStmt: soot.Value getLeftOp()>();
+
+        $stack53 = (soot.jimple.AssignStmt) tmp_unit;
+
+        interfaceinvoke $stack53.<soot.jimple.AssignStmt: soot.Value getRightOp()>();
+
+        counter = 0;
+
+        $stack55 = v instanceof soot.Local;
+
+        if $stack55 == 0 goto label4;
+
+        $stack56 = (soot.Local) v;
+
+        $stack57 = interfaceinvoke $stack56.<soot.Local: java.lang.String getName()>();
+
+        $stack58 = virtualinvoke $stack57.<java.lang.String: boolean contains(java.lang.CharSequence)>("$");
+
+        if $stack58 == 0 goto label4;
+
+        if is_casestmt == 0 goto label4;
+
+        counter = 1;
+
+     label4:
+        l13 = l13 + 1;
+
+     label5:
+        if l13 < l14 goto label3;
+
+     label6:
+        is_casestmt = counter;
+
+        $stack30 = (soot.jimple.AssignStmt) unit;
+
+        unit_list#17 = interfaceinvoke $stack30.<soot.jimple.AssignStmt: soot.Value getLeftOp()>();
+
+        $stack32 = (soot.jimple.AssignStmt) unit;
+
+        tmp#18 = interfaceinvoke $stack32.<soot.jimple.AssignStmt: soot.Value getRightOp()>();
+
+        $stack34 = tmp#18 instanceof soot.Local;
+
+        if $stack34 == 0 goto label7;
+
+        $stack38 = (soot.Local) tmp#18;
+
+        $stack39 = interfaceinvoke $stack38.<soot.Local: java.lang.String getName()>();
+
+        $stack40 = (soot.Local) unit_list#17;
+
+        $stack41 = interfaceinvoke $stack40.<soot.Local: java.lang.String getName()>();
+
+        if $stack39 != $stack41 goto label7;
+
+        is_casestmt = 0;
+
+     label7:
+        $stack35 = (soot.jimple.AssignStmt) unit;
+
+        $stack36 = unit_list#17 instanceof soot.Local;
+
+        if $stack36 == 0 goto label8;
+
+        $stack37 = (soot.Local) unit_list#17;
+
+     label8:
+        $stack22 = interfaceinvoke l9.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack22 != 0 goto label1;
+
+        return $u2;
+    }
+
+    public static void lambda$0(soot.Unit)
+    {
+        soot.Unit u;
+        ConfigTag.ConfigTag $stack1;
+
+        u := @parameter0: soot.Unit;
+
+        $stack1 = new ConfigTag.ConfigTag;
+
+        specialinvoke $stack1.<ConfigTag.ConfigTag: void <init>(java.lang.String)>("dead assignment");
+
+        interfaceinvoke u.<soot.Unit: void addTag(soot.tagkit.Tag)>($stack1);
+
+        return;
+    }
+}

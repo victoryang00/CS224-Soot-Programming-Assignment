@@ -1,0 +1,43 @@
+public final class IntraConstantPropagation.ConstantPropagationMap$lambda_0__1 extends java.lang.Object implements java.util.function.Function
+{
+
+    public static java.util.function.Function bootstrap$()
+    {
+        IntraConstantPropagation.ConstantPropagationMap$lambda_0__1 $r0;
+
+        $r0 = new IntraConstantPropagation.ConstantPropagationMap$lambda_0__1;
+
+        specialinvoke $r0.<IntraConstantPropagation.ConstantPropagationMap$lambda_0__1: void <init>()>();
+
+        return $r0;
+    }
+
+    public void <init>()
+    {
+        IntraConstantPropagation.ConstantPropagationMap$lambda_0__1 $r0;
+
+        $r0 := @this: IntraConstantPropagation.ConstantPropagationMap$lambda_0__1;
+
+        specialinvoke $r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public java.lang.Object apply(java.lang.Object)
+    {
+        IntraConstantPropagation.ConstantPropagationMap$lambda_0__1 $r0;
+        java.lang.Object $r1;
+        soot.Local $r2;
+        IntraConstantPropagation.ConstantPropagationValue $r3;
+
+        $r0 := @this: IntraConstantPropagation.ConstantPropagationMap$lambda_0__1;
+
+        $r1 := @parameter0: java.lang.Object;
+
+        $r2 = (soot.Local) $r1;
+
+        $r3 = staticinvoke <IntraConstantPropagation.ConstantPropagationMap: IntraConstantPropagation.ConstantPropagationValue lambda$0(soot.Local)>($r2);
+
+        return $r3;
+    }
+}

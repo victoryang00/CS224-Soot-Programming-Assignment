@@ -1,0 +1,87 @@
+public class DeadCodeDetection.ReachableSet extends java.lang.Object
+{
+    private final java.util.Set reachableSet;
+
+    public void <init>()
+    {
+        DeadCodeDetection.ReachableSet this;
+        java.util.HashSet $stack1;
+
+        this := @this: DeadCodeDetection.ReachableSet;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+
+        $stack1 = new java.util.HashSet;
+
+        specialinvoke $stack1.<java.util.HashSet: void <init>()>();
+
+        this.<DeadCodeDetection.ReachableSet: java.util.Set reachableSet> = $stack1;
+
+        return;
+    }
+
+    public void <init>(java.util.Set)
+    {
+        DeadCodeDetection.ReachableSet this;
+        java.util.Set objects;
+
+        this := @this: DeadCodeDetection.ReachableSet;
+
+        objects := @parameter0: java.util.Set;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+
+        this.<DeadCodeDetection.ReachableSet: java.util.Set reachableSet> = objects;
+
+        return;
+    }
+
+    public void add(soot.Unit, soot.Unit)
+    {
+        DeadCodeDetection.ReachableSet this;
+        soot.toolkits.scalar.Pair $stack3;
+        soot.Unit 'from', 'to';
+        java.util.Set $stack4;
+
+        this := @this: DeadCodeDetection.ReachableSet;
+
+        'from' := @parameter0: soot.Unit;
+
+        'to' := @parameter1: soot.Unit;
+
+        $stack4 = this.<DeadCodeDetection.ReachableSet: java.util.Set reachableSet>;
+
+        $stack3 = new soot.toolkits.scalar.Pair;
+
+        specialinvoke $stack3.<soot.toolkits.scalar.Pair: void <init>(java.lang.Object,java.lang.Object)>('from', 'to');
+
+        interfaceinvoke $stack4.<java.util.Set: boolean add(java.lang.Object)>($stack3);
+
+        return;
+    }
+
+    boolean contains(soot.Unit, soot.Unit)
+    {
+        DeadCodeDetection.ReachableSet this;
+        soot.toolkits.scalar.Pair $stack3;
+        soot.Unit 'from', 'to';
+        java.util.Set $stack4;
+        boolean $stack5;
+
+        this := @this: DeadCodeDetection.ReachableSet;
+
+        'from' := @parameter0: soot.Unit;
+
+        'to' := @parameter1: soot.Unit;
+
+        $stack4 = this.<DeadCodeDetection.ReachableSet: java.util.Set reachableSet>;
+
+        $stack3 = new soot.toolkits.scalar.Pair;
+
+        specialinvoke $stack3.<soot.toolkits.scalar.Pair: void <init>(java.lang.Object,java.lang.Object)>('from', 'to');
+
+        $stack5 = interfaceinvoke $stack4.<java.util.Set: boolean contains(java.lang.Object)>($stack3);
+
+        return $stack5;
+    }
+}

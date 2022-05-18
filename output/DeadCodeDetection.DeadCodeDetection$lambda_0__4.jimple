@@ -1,0 +1,42 @@
+public final class DeadCodeDetection.DeadCodeDetection$lambda_0__4 extends java.lang.Object implements java.util.function.Consumer
+{
+
+    public static java.util.function.Consumer bootstrap$()
+    {
+        DeadCodeDetection.DeadCodeDetection$lambda_0__4 $r0;
+
+        $r0 = new DeadCodeDetection.DeadCodeDetection$lambda_0__4;
+
+        specialinvoke $r0.<DeadCodeDetection.DeadCodeDetection$lambda_0__4: void <init>()>();
+
+        return $r0;
+    }
+
+    public void <init>()
+    {
+        DeadCodeDetection.DeadCodeDetection$lambda_0__4 $r0;
+
+        $r0 := @this: DeadCodeDetection.DeadCodeDetection$lambda_0__4;
+
+        specialinvoke $r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void accept(java.lang.Object)
+    {
+        DeadCodeDetection.DeadCodeDetection$lambda_0__4 $r0;
+        java.lang.Object $r1;
+        soot.Unit $r2;
+
+        $r0 := @this: DeadCodeDetection.DeadCodeDetection$lambda_0__4;
+
+        $r1 := @parameter0: java.lang.Object;
+
+        $r2 = (soot.Unit) $r1;
+
+        staticinvoke <DeadCodeDetection.DeadCodeDetection: void lambda$0(soot.Unit)>($r2);
+
+        return;
+    }
+}

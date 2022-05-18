@@ -1,0 +1,588 @@
+public class IntraConstantPropagation.ConstantPropagationMap extends java.lang.Object
+{
+    java.util.Map map;
+
+    public void <init>()
+    {
+        IntraConstantPropagation.ConstantPropagationMap this;
+        java.util.HashMap $stack1;
+
+        this := @this: IntraConstantPropagation.ConstantPropagationMap;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+
+        $stack1 = new java.util.HashMap;
+
+        specialinvoke $stack1.<java.util.HashMap: void <init>()>();
+
+        this.<IntraConstantPropagation.ConstantPropagationMap: java.util.Map map> = $stack1;
+
+        return;
+    }
+
+    public void <init>(java.util.Map)
+    {
+        IntraConstantPropagation.ConstantPropagationMap this;
+        java.util.Map map;
+
+        this := @this: IntraConstantPropagation.ConstantPropagationMap;
+
+        map := @parameter0: java.util.Map;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+
+        this.<IntraConstantPropagation.ConstantPropagationMap: java.util.Map map> = map;
+
+        return;
+    }
+
+    public IntraConstantPropagation.ConstantPropagationValue get(soot.Local)
+    {
+        IntraConstantPropagation.ConstantPropagationMap this;
+        soot.Local local;
+        java.util.Map $stack2;
+        java.util.function.Function $stack3;
+        java.lang.Object $stack4;
+        IntraConstantPropagation.ConstantPropagationValue $stack5;
+
+        this := @this: IntraConstantPropagation.ConstantPropagationMap;
+
+        local := @parameter0: soot.Local;
+
+        $stack2 = this.<IntraConstantPropagation.ConstantPropagationMap: java.util.Map map>;
+
+        $stack3 = staticinvoke <IntraConstantPropagation.ConstantPropagationMap$lambda_0__1: java.util.function.Function bootstrap$()>();
+
+        $stack4 = interfaceinvoke $stack2.<java.util.Map: java.lang.Object computeIfAbsent(java.lang.Object,java.util.function.Function)>(local, $stack3);
+
+        $stack5 = (IntraConstantPropagation.ConstantPropagationValue) $stack4;
+
+        return $stack5;
+    }
+
+    public IntraConstantPropagation.ConstantPropagationValue put(soot.Local, IntraConstantPropagation.ConstantPropagationValue)
+    {
+        IntraConstantPropagation.ConstantPropagationMap this;
+        soot.Local loc;
+        IntraConstantPropagation.ConstantPropagationValue value, $stack5;
+        java.util.Map $stack3;
+        java.lang.Object $stack4;
+
+        this := @this: IntraConstantPropagation.ConstantPropagationMap;
+
+        loc := @parameter0: soot.Local;
+
+        value := @parameter1: IntraConstantPropagation.ConstantPropagationValue;
+
+        $stack3 = this.<IntraConstantPropagation.ConstantPropagationMap: java.util.Map map>;
+
+        $stack4 = interfaceinvoke $stack3.<java.util.Map: java.lang.Object put(java.lang.Object,java.lang.Object)>(loc, value);
+
+        $stack5 = (IntraConstantPropagation.ConstantPropagationValue) $stack4;
+
+        return $stack5;
+    }
+
+    public java.util.Set keySet()
+    {
+        IntraConstantPropagation.ConstantPropagationMap this;
+        java.util.Map $stack1;
+        java.util.Set $stack2;
+
+        this := @this: IntraConstantPropagation.ConstantPropagationMap;
+
+        $stack1 = this.<IntraConstantPropagation.ConstantPropagationMap: java.util.Map map>;
+
+        $stack2 = interfaceinvoke $stack1.<java.util.Map: java.util.Set keySet()>();
+
+        return $stack2;
+    }
+
+    public boolean copyFrom(IntraConstantPropagation.ConstantPropagationMap)
+    {
+        IntraConstantPropagation.ConstantPropagationMap this, other;
+        java.util.Map $stack2, $stack3, $stack4, $stack5;
+        boolean $stack6;
+
+        this := @this: IntraConstantPropagation.ConstantPropagationMap;
+
+        other := @parameter0: IntraConstantPropagation.ConstantPropagationMap;
+
+        $stack3 = this.<IntraConstantPropagation.ConstantPropagationMap: java.util.Map map>;
+
+        $stack2 = other.<IntraConstantPropagation.ConstantPropagationMap: java.util.Map map>;
+
+        interfaceinvoke $stack3.<java.util.Map: void putAll(java.util.Map)>($stack2);
+
+        $stack5 = other.<IntraConstantPropagation.ConstantPropagationMap: java.util.Map map>;
+
+        $stack4 = this.<IntraConstantPropagation.ConstantPropagationMap: java.util.Map map>;
+
+        $stack6 = interfaceinvoke $stack5.<java.util.Map: boolean equals(java.lang.Object)>($stack4);
+
+        return $stack6;
+    }
+
+    public IntraConstantPropagation.ConstantPropagationValue compute(soot.Value)
+    {
+        soot.Value value, op1, op2;
+        boolean $stack7, $stack8, $stack9, $stack22, $stack23, $stack24, $stack25, $stack26, $stack27, $stack28, $stack29, $stack30, $stack31;
+        IntraConstantPropagation.ConstantPropagationValue $stack10, v1, v2, $stack15, $stack16, $stack17, $stack18, $stack19, $stack20, $stack21, $stack32, $stack36, $stack40, $stack44, $stack48, $stack52, $stack56, $stack60, $stack64, $stack68, $stack72, $stack74, $stack75, $stack79;
+        soot.jimple.BinopExpr binop;
+        IntraConstantPropagation.ConstantPropagationMap this;
+        int $stack33, $stack34, $stack37, $stack38, $stack41, $stack42, $stack45, $stack46, $stack49, $stack50, $stack53, $stack54, $stack57, $stack58, $stack59, $stack61, $stack62, $stack63, $stack65, $stack66, $stack67, $stack69, $stack70, $stack71, $stack77;
+        soot.jimple.IntConstant $stack76;
+        soot.Local $stack78;
+        byte $stack55, $stack51, $stack47, $stack43, $stack39, $stack35;
+
+        this := @this: IntraConstantPropagation.ConstantPropagationMap;
+
+        value := @parameter0: soot.Value;
+
+        $stack7 = value instanceof soot.Local;
+
+        if $stack7 == 0 goto label01;
+
+        $stack78 = (soot.Local) value;
+
+        $stack79 = virtualinvoke this.<IntraConstantPropagation.ConstantPropagationMap: IntraConstantPropagation.ConstantPropagationValue get(soot.Local)>($stack78);
+
+        return $stack79;
+
+     label01:
+        $stack8 = value instanceof soot.jimple.IntConstant;
+
+        if $stack8 == 0 goto label02;
+
+        $stack75 = new IntraConstantPropagation.ConstantPropagationValue;
+
+        $stack76 = (soot.jimple.IntConstant) value;
+
+        $stack77 = $stack76.<soot.jimple.IntConstant: int value>;
+
+        specialinvoke $stack75.<IntraConstantPropagation.ConstantPropagationValue: void <init>(int)>($stack77);
+
+        return $stack75;
+
+     label02:
+        $stack9 = value instanceof soot.jimple.BinopExpr;
+
+        if $stack9 == 0 goto label29;
+
+        binop = (soot.jimple.BinopExpr) value;
+
+        op1 = interfaceinvoke binop.<soot.jimple.BinopExpr: soot.Value getOp1()>();
+
+        v1 = virtualinvoke this.<IntraConstantPropagation.ConstantPropagationMap: IntraConstantPropagation.ConstantPropagationValue compute(soot.Value)>(op1);
+
+        op2 = interfaceinvoke binop.<soot.jimple.BinopExpr: soot.Value getOp2()>();
+
+        v2 = virtualinvoke this.<IntraConstantPropagation.ConstantPropagationMap: IntraConstantPropagation.ConstantPropagationValue compute(soot.Value)>(op2);
+
+        $stack15 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue UNDEF>;
+
+        if v1 != $stack15 goto label03;
+
+        $stack72 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue UNDEF>;
+
+        if v2 != $stack72 goto label03;
+
+        $stack74 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue UNDEF>;
+
+        return $stack74;
+
+     label03:
+        $stack16 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue UNDEF>;
+
+        if v1 == $stack16 goto label04;
+
+        $stack18 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue UNDEF>;
+
+        if v2 != $stack18 goto label05;
+
+     label04:
+        $stack17 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue NAC>;
+
+        return $stack17;
+
+     label05:
+        $stack19 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue NAC>;
+
+        if v1 == $stack19 goto label06;
+
+        $stack21 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue NAC>;
+
+        if v2 != $stack21 goto label07;
+
+     label06:
+        $stack20 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue NAC>;
+
+        return $stack20;
+
+     label07:
+        $stack22 = binop instanceof soot.jimple.AddExpr;
+
+        if $stack22 == 0 goto label08;
+
+        $stack68 = new IntraConstantPropagation.ConstantPropagationValue;
+
+        $stack70 = v1.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack69 = v2.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack71 = $stack70 + $stack69;
+
+        specialinvoke $stack68.<IntraConstantPropagation.ConstantPropagationValue: void <init>(int)>($stack71);
+
+        return $stack68;
+
+     label08:
+        $stack23 = binop instanceof soot.jimple.SubExpr;
+
+        if $stack23 == 0 goto label09;
+
+        $stack64 = new IntraConstantPropagation.ConstantPropagationValue;
+
+        $stack66 = v1.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack65 = v2.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack67 = $stack66 - $stack65;
+
+        specialinvoke $stack64.<IntraConstantPropagation.ConstantPropagationValue: void <init>(int)>($stack67);
+
+        return $stack64;
+
+     label09:
+        $stack24 = binop instanceof soot.jimple.MulExpr;
+
+        if $stack24 == 0 goto label10;
+
+        $stack60 = new IntraConstantPropagation.ConstantPropagationValue;
+
+        $stack62 = v1.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack61 = v2.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack63 = $stack62 * $stack61;
+
+        specialinvoke $stack60.<IntraConstantPropagation.ConstantPropagationValue: void <init>(int)>($stack63);
+
+        return $stack60;
+
+     label10:
+        $stack25 = binop instanceof soot.jimple.DivExpr;
+
+        if $stack25 == 0 goto label11;
+
+        $stack56 = new IntraConstantPropagation.ConstantPropagationValue;
+
+        $stack58 = v1.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack57 = v2.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack59 = $stack58 / $stack57;
+
+        specialinvoke $stack56.<IntraConstantPropagation.ConstantPropagationValue: void <init>(int)>($stack59);
+
+        return $stack56;
+
+     label11:
+        $stack26 = binop instanceof soot.jimple.EqExpr;
+
+        if $stack26 == 0 goto label14;
+
+        $stack52 = new IntraConstantPropagation.ConstantPropagationValue;
+
+        $stack54 = v1.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack53 = v2.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        if $stack54 != $stack53 goto label12;
+
+        $stack55 = 1;
+
+        goto label13;
+
+     label12:
+        $stack55 = 0;
+
+     label13:
+        specialinvoke $stack52.<IntraConstantPropagation.ConstantPropagationValue: void <init>(int)>($stack55);
+
+        return $stack52;
+
+     label14:
+        $stack27 = binop instanceof soot.jimple.NeExpr;
+
+        if $stack27 == 0 goto label17;
+
+        $stack48 = new IntraConstantPropagation.ConstantPropagationValue;
+
+        $stack50 = v1.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack49 = v2.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        if $stack50 == $stack49 goto label15;
+
+        $stack51 = 1;
+
+        goto label16;
+
+     label15:
+        $stack51 = 0;
+
+     label16:
+        specialinvoke $stack48.<IntraConstantPropagation.ConstantPropagationValue: void <init>(int)>($stack51);
+
+        return $stack48;
+
+     label17:
+        $stack28 = binop instanceof soot.jimple.GeExpr;
+
+        if $stack28 == 0 goto label20;
+
+        $stack44 = new IntraConstantPropagation.ConstantPropagationValue;
+
+        $stack46 = v1.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack45 = v2.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        if $stack46 < $stack45 goto label18;
+
+        $stack47 = 1;
+
+        goto label19;
+
+     label18:
+        $stack47 = 0;
+
+     label19:
+        specialinvoke $stack44.<IntraConstantPropagation.ConstantPropagationValue: void <init>(int)>($stack47);
+
+        return $stack44;
+
+     label20:
+        $stack29 = binop instanceof soot.jimple.GtExpr;
+
+        if $stack29 == 0 goto label23;
+
+        $stack40 = new IntraConstantPropagation.ConstantPropagationValue;
+
+        $stack42 = v1.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack41 = v2.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        if $stack42 <= $stack41 goto label21;
+
+        $stack43 = 1;
+
+        goto label22;
+
+     label21:
+        $stack43 = 0;
+
+     label22:
+        specialinvoke $stack40.<IntraConstantPropagation.ConstantPropagationValue: void <init>(int)>($stack43);
+
+        return $stack40;
+
+     label23:
+        $stack30 = binop instanceof soot.jimple.LeExpr;
+
+        if $stack30 == 0 goto label26;
+
+        $stack36 = new IntraConstantPropagation.ConstantPropagationValue;
+
+        $stack38 = v1.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack37 = v2.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        if $stack38 > $stack37 goto label24;
+
+        $stack39 = 1;
+
+        goto label25;
+
+     label24:
+        $stack39 = 0;
+
+     label25:
+        specialinvoke $stack36.<IntraConstantPropagation.ConstantPropagationValue: void <init>(int)>($stack39);
+
+        return $stack36;
+
+     label26:
+        $stack31 = binop instanceof soot.jimple.LtExpr;
+
+        if $stack31 == 0 goto label29;
+
+        $stack32 = new IntraConstantPropagation.ConstantPropagationValue;
+
+        $stack34 = v1.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        $stack33 = v2.<IntraConstantPropagation.ConstantPropagationValue: int concrete_val>;
+
+        if $stack34 >= $stack33 goto label27;
+
+        $stack35 = 1;
+
+        goto label28;
+
+     label27:
+        $stack35 = 0;
+
+     label28:
+        specialinvoke $stack32.<IntraConstantPropagation.ConstantPropagationValue: void <init>(int)>($stack35);
+
+        return $stack32;
+
+     label29:
+        $stack10 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue NAC>;
+
+        return $stack10;
+    }
+
+    public static IntraConstantPropagation.ConstantPropagationMap meet(IntraConstantPropagation.ConstantPropagationMap, IntraConstantPropagation.ConstantPropagationMap)
+    {
+        IntraConstantPropagation.ConstantPropagationMap $stack9, a, b;
+        java.util.HashSet $stack10;
+        java.util.Set $stack11, $stack13;
+        java.util.Iterator l5;
+        boolean $stack16;
+        java.lang.Object $stack17;
+        soot.Local local;
+        IntraConstantPropagation.ConstantPropagationValue a_value, b_value, meet_value;
+
+        a := @parameter0: IntraConstantPropagation.ConstantPropagationMap;
+
+        b := @parameter1: IntraConstantPropagation.ConstantPropagationMap;
+
+        $stack9 = new IntraConstantPropagation.ConstantPropagationMap;
+
+        specialinvoke $stack9.<IntraConstantPropagation.ConstantPropagationMap: void <init>()>();
+
+        $stack10 = new java.util.HashSet;
+
+        specialinvoke $stack10.<java.util.HashSet: void <init>()>();
+
+        $stack11 = virtualinvoke a.<IntraConstantPropagation.ConstantPropagationMap: java.util.Set keySet()>();
+
+        interfaceinvoke $stack10.<java.util.Set: boolean addAll(java.util.Collection)>($stack11);
+
+        $stack13 = virtualinvoke b.<IntraConstantPropagation.ConstantPropagationMap: java.util.Set keySet()>();
+
+        interfaceinvoke $stack10.<java.util.Set: boolean addAll(java.util.Collection)>($stack13);
+
+        l5 = interfaceinvoke $stack10.<java.util.Set: java.util.Iterator iterator()>();
+
+        goto label2;
+
+     label1:
+        $stack17 = interfaceinvoke l5.<java.util.Iterator: java.lang.Object next()>();
+
+        local = (soot.Local) $stack17;
+
+        a_value = virtualinvoke a.<IntraConstantPropagation.ConstantPropagationMap: IntraConstantPropagation.ConstantPropagationValue get(soot.Local)>(local);
+
+        b_value = virtualinvoke b.<IntraConstantPropagation.ConstantPropagationMap: IntraConstantPropagation.ConstantPropagationValue get(soot.Local)>(local);
+
+        meet_value = staticinvoke <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue meet(IntraConstantPropagation.ConstantPropagationValue,IntraConstantPropagation.ConstantPropagationValue)>(a_value, b_value);
+
+        virtualinvoke $stack9.<IntraConstantPropagation.ConstantPropagationMap: IntraConstantPropagation.ConstantPropagationValue put(soot.Local,IntraConstantPropagation.ConstantPropagationValue)>(local, meet_value);
+
+     label2:
+        $stack16 = interfaceinvoke l5.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack16 != 0 goto label1;
+
+        return $stack9;
+    }
+
+    public boolean equals(java.lang.Object)
+    {
+        IntraConstantPropagation.ConstantPropagationMap this, flow;
+        java.lang.Object obj;
+        java.lang.Class $stack3, $stack4;
+        java.util.Map $stack5, $stack6;
+        boolean $stack7;
+
+        this := @this: IntraConstantPropagation.ConstantPropagationMap;
+
+        obj := @parameter0: java.lang.Object;
+
+        if this != obj goto label1;
+
+        return 1;
+
+     label1:
+        if obj == null goto label2;
+
+        $stack3 = virtualinvoke this.<java.lang.Object: java.lang.Class getClass()>();
+
+        $stack4 = virtualinvoke obj.<java.lang.Object: java.lang.Class getClass()>();
+
+        if $stack3 == $stack4 goto label3;
+
+     label2:
+        return 0;
+
+     label3:
+        flow = (IntraConstantPropagation.ConstantPropagationMap) obj;
+
+        $stack6 = this.<IntraConstantPropagation.ConstantPropagationMap: java.util.Map map>;
+
+        $stack5 = flow.<IntraConstantPropagation.ConstantPropagationMap: java.util.Map map>;
+
+        $stack7 = staticinvoke <java.util.Objects: boolean equals(java.lang.Object,java.lang.Object)>($stack6, $stack5);
+
+        return $stack7;
+    }
+
+    public int hashCode()
+    {
+        java.lang.Object[] $stack1;
+        IntraConstantPropagation.ConstantPropagationMap this;
+        java.util.Map $stack2;
+        int $stack3;
+
+        this := @this: IntraConstantPropagation.ConstantPropagationMap;
+
+        $stack1 = newarray (java.lang.Object)[1];
+
+        $stack2 = this.<IntraConstantPropagation.ConstantPropagationMap: java.util.Map map>;
+
+        $stack1[0] = $stack2;
+
+        $stack3 = staticinvoke <java.util.Objects: int hash(java.lang.Object[])>($stack1);
+
+        return $stack3;
+    }
+
+    public java.lang.String toString()
+    {
+        IntraConstantPropagation.ConstantPropagationMap this;
+        java.util.Map $stack1;
+        java.lang.String $stack2;
+
+        this := @this: IntraConstantPropagation.ConstantPropagationMap;
+
+        $stack1 = this.<IntraConstantPropagation.ConstantPropagationMap: java.util.Map map>;
+
+        $stack2 = virtualinvoke $stack1.<java.lang.Object: java.lang.String toString()>();
+
+        return $stack2;
+    }
+
+    public static IntraConstantPropagation.ConstantPropagationValue lambda$0(soot.Local)
+    {
+        IntraConstantPropagation.ConstantPropagationValue $stack1;
+        soot.Local l;
+
+        l := @parameter0: soot.Local;
+
+        $stack1 = <IntraConstantPropagation.ConstantPropagationValue: IntraConstantPropagation.ConstantPropagationValue UNDEF>;
+
+        return $stack1;
+    }
+}

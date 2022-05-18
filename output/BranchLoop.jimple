@@ -1,0 +1,63 @@
+class BranchLoop extends java.lang.Object
+{
+
+    void <init>()
+    {
+        BranchLoop this;
+
+        this := @this: BranchLoop;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.io.PrintStream $stack1;
+        java.lang.String[] args;
+
+        args := @parameter0: java.lang.String[];
+
+        $stack1 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $stack1.<java.io.PrintStream: void println(java.lang.String)>("x");
+
+        return;
+    }
+
+    int res(int, int, int)
+    {
+        int m, k, n, a, i;
+        BranchLoop this;
+
+        this := @this: BranchLoop;
+
+        m := @parameter0: int;
+
+        n := @parameter1: int;
+
+        k := @parameter2: int;
+
+        a = 0;
+
+        i = m - 1;
+
+     label1:
+        if i >= k goto label3;
+
+        if i < n goto label2;
+
+        a = n;
+
+     label2:
+        a = a + i;
+
+        i = i + 1;
+
+        goto label1;
+
+     label3:
+        return a;
+    }
+}

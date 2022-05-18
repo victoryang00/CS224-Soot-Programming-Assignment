@@ -1,0 +1,93 @@
+public class ConfigTag.ConfigTag extends java.lang.Object implements soot.tagkit.Tag
+{
+    public static final java.lang.String IDENTIFIER;
+    protected java.lang.String info;
+
+    public void <init>(java.lang.String)
+    {
+        ConfigTag.ConfigTag this;
+        java.lang.String info;
+
+        this := @this: ConfigTag.ConfigTag;
+
+        info := @parameter0: java.lang.String;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+
+        this.<ConfigTag.ConfigTag: java.lang.String info> = info;
+
+        return;
+    }
+
+    public java.lang.String getName()
+    {
+        ConfigTag.ConfigTag this;
+
+        this := @this: ConfigTag.ConfigTag;
+
+        return "ConfigTag";
+    }
+
+    public byte[] getValue()
+    {
+        ConfigTag.ConfigTag this;
+        java.nio.charset.Charset $stack1;
+        java.lang.String $stack2;
+        byte[] $stack3;
+
+        this := @this: ConfigTag.ConfigTag;
+
+        $stack2 = this.<ConfigTag.ConfigTag: java.lang.String info>;
+
+        $stack1 = <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>;
+
+        $stack3 = virtualinvoke $stack2.<java.lang.String: byte[] getBytes(java.nio.charset.Charset)>($stack1);
+
+        return $stack3;
+    }
+
+    public java.lang.String getInfo()
+    {
+        ConfigTag.ConfigTag this;
+        java.lang.String $stack1;
+
+        this := @this: ConfigTag.ConfigTag;
+
+        $stack1 = this.<ConfigTag.ConfigTag: java.lang.String info>;
+
+        return $stack1;
+    }
+
+    public void setInfo(java.lang.String)
+    {
+        ConfigTag.ConfigTag this;
+        java.lang.String value;
+
+        this := @this: ConfigTag.ConfigTag;
+
+        value := @parameter0: java.lang.String;
+
+        this.<ConfigTag.ConfigTag: java.lang.String info> = value;
+
+        return;
+    }
+
+    public java.lang.String toString()
+    {
+        ConfigTag.ConfigTag this;
+        java.lang.String $stack1;
+
+        this := @this: ConfigTag.ConfigTag;
+
+        $stack1 = this.<ConfigTag.ConfigTag: java.lang.String info>;
+
+        return $stack1;
+    }
+
+    public static void <clinit>()
+    {
+        <ConfigTag.ConfigTag: java.lang.String IDENTIFIER> = "ConfigTag";
+
+        return;
+    }
+}

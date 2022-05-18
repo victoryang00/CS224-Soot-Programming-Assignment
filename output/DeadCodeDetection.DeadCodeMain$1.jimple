@@ -1,0 +1,63 @@
+class DeadCodeDetection.DeadCodeMain$1 extends soot.BodyTransformer
+{
+    private final java.lang.String[] val$args;
+
+    void <init>(java.lang.String[])
+    {
+        DeadCodeDetection.DeadCodeMain$1 this;
+        java.lang.String[] l1;
+
+        this := @this: DeadCodeDetection.DeadCodeMain$1;
+
+        l1 := @parameter0: java.lang.String[];
+
+        this.<DeadCodeDetection.DeadCodeMain$1: java.lang.String[] val$args> = l1;
+
+        specialinvoke this.<soot.BodyTransformer: void <init>()>();
+
+        return;
+    }
+
+    protected void internalTransform(soot.Body, java.lang.String, java.util.Map)
+    {
+        java.io.PrintStream $stack5;
+        soot.Scene $stack6;
+        soot.SootClass $stack7;
+        DeadCodeDetection.DeadCodeMain$1 this;
+        java.lang.String[] $stack8, $stack11;
+        java.lang.String $stack9, $stack12, phaseName;
+        soot.SootMethod m;
+        soot.Body b;
+        java.util.Map options;
+
+        this := @this: DeadCodeDetection.DeadCodeMain$1;
+
+        b := @parameter0: soot.Body;
+
+        phaseName := @parameter1: java.lang.String;
+
+        options := @parameter2: java.util.Map;
+
+        $stack5 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $stack5.<java.io.PrintStream: void println(java.lang.String)>("Exiting CFG transformer");
+
+        $stack6 = staticinvoke <soot.Scene: soot.Scene v()>();
+
+        $stack7 = virtualinvoke $stack6.<soot.Scene: soot.SootClass getMainClass()>();
+
+        $stack8 = this.<DeadCodeDetection.DeadCodeMain$1: java.lang.String[] val$args>;
+
+        $stack9 = $stack8[1];
+
+        m = virtualinvoke $stack7.<soot.SootClass: soot.SootMethod getMethodByName(java.lang.String)>($stack9);
+
+        $stack11 = this.<DeadCodeDetection.DeadCodeMain$1: java.lang.String[] val$args>;
+
+        $stack12 = $stack11[0];
+
+        staticinvoke <DeadCodeDetection.DeadCodeMain: void performDeadCodeAnalysis(soot.SootMethod,java.lang.String,soot.Body)>(m, $stack12, b);
+
+        return;
+    }
+}

@@ -1,0 +1,207 @@
+public class IntraConstantPropagation.IntraConstantPropagation extends soot.toolkits.scalar.ForwardFlowAnalysis
+{
+
+    public void <init>(soot.toolkits.graph.DirectedGraph)
+    {
+        IntraConstantPropagation.IntraConstantPropagation this;
+        soot.toolkits.graph.DirectedGraph graph;
+
+        this := @this: IntraConstantPropagation.IntraConstantPropagation;
+
+        graph := @parameter0: soot.toolkits.graph.DirectedGraph;
+
+        specialinvoke this.<soot.toolkits.scalar.ForwardFlowAnalysis: void <init>(soot.toolkits.graph.DirectedGraph)>(graph);
+
+        return;
+    }
+
+    protected void flowThrough(IntraConstantPropagation.ConstantPropagationMap, soot.Unit, IntraConstantPropagation.ConstantPropagationMap)
+    {
+        IntraConstantPropagation.IntraConstantPropagation this;
+        IntraConstantPropagation.ConstantPropagationMap in, out;
+        soot.Unit d;
+        boolean $stack9, $stack11;
+        soot.jimple.AssignStmt as;
+        soot.Value left, right;
+        soot.Local l;
+        IntraConstantPropagation.ConstantPropagationValue right_cp;
+
+        this := @this: IntraConstantPropagation.IntraConstantPropagation;
+
+        in := @parameter0: IntraConstantPropagation.ConstantPropagationMap;
+
+        d := @parameter1: soot.Unit;
+
+        out := @parameter2: IntraConstantPropagation.ConstantPropagationMap;
+
+        virtualinvoke this.<IntraConstantPropagation.IntraConstantPropagation: void copy(IntraConstantPropagation.ConstantPropagationMap,IntraConstantPropagation.ConstantPropagationMap)>(in, out);
+
+        $stack9 = d instanceof soot.jimple.AssignStmt;
+
+        if $stack9 == 0 goto label1;
+
+        as = (soot.jimple.AssignStmt) d;
+
+        left = interfaceinvoke as.<soot.jimple.AssignStmt: soot.Value getLeftOp()>();
+
+        $stack11 = left instanceof soot.Local;
+
+        if $stack11 == 0 goto label1;
+
+        l = (soot.Local) left;
+
+        right = interfaceinvoke as.<soot.jimple.AssignStmt: soot.Value getRightOp()>();
+
+        right_cp = virtualinvoke in.<IntraConstantPropagation.ConstantPropagationMap: IntraConstantPropagation.ConstantPropagationValue compute(soot.Value)>(right);
+
+        virtualinvoke out.<IntraConstantPropagation.ConstantPropagationMap: IntraConstantPropagation.ConstantPropagationValue put(soot.Local,IntraConstantPropagation.ConstantPropagationValue)>(l, right_cp);
+
+     label1:
+        return;
+    }
+
+    protected IntraConstantPropagation.ConstantPropagationMap newInitialFlow()
+    {
+        IntraConstantPropagation.ConstantPropagationMap $stack1;
+        IntraConstantPropagation.IntraConstantPropagation this;
+
+        this := @this: IntraConstantPropagation.IntraConstantPropagation;
+
+        $stack1 = new IntraConstantPropagation.ConstantPropagationMap;
+
+        specialinvoke $stack1.<IntraConstantPropagation.ConstantPropagationMap: void <init>()>();
+
+        return $stack1;
+    }
+
+    protected void merge(IntraConstantPropagation.ConstantPropagationMap, IntraConstantPropagation.ConstantPropagationMap, IntraConstantPropagation.ConstantPropagationMap)
+    {
+        IntraConstantPropagation.ConstantPropagationMap in1, in2, meet, out;
+        IntraConstantPropagation.IntraConstantPropagation this;
+
+        this := @this: IntraConstantPropagation.IntraConstantPropagation;
+
+        in1 := @parameter0: IntraConstantPropagation.ConstantPropagationMap;
+
+        in2 := @parameter1: IntraConstantPropagation.ConstantPropagationMap;
+
+        out := @parameter2: IntraConstantPropagation.ConstantPropagationMap;
+
+        meet = staticinvoke <IntraConstantPropagation.ConstantPropagationMap: IntraConstantPropagation.ConstantPropagationMap meet(IntraConstantPropagation.ConstantPropagationMap,IntraConstantPropagation.ConstantPropagationMap)>(in1, in2);
+
+        virtualinvoke this.<IntraConstantPropagation.IntraConstantPropagation: void copy(IntraConstantPropagation.ConstantPropagationMap,IntraConstantPropagation.ConstantPropagationMap)>(meet, out);
+
+        return;
+    }
+
+    protected void copy(IntraConstantPropagation.ConstantPropagationMap, IntraConstantPropagation.ConstantPropagationMap)
+    {
+        IntraConstantPropagation.ConstantPropagationMap dest, source;
+        IntraConstantPropagation.IntraConstantPropagation this;
+
+        this := @this: IntraConstantPropagation.IntraConstantPropagation;
+
+        source := @parameter0: IntraConstantPropagation.ConstantPropagationMap;
+
+        dest := @parameter1: IntraConstantPropagation.ConstantPropagationMap;
+
+        virtualinvoke dest.<IntraConstantPropagation.ConstantPropagationMap: boolean copyFrom(IntraConstantPropagation.ConstantPropagationMap)>(source);
+
+        return;
+    }
+
+    public void doAnalysis()
+    {
+        IntraConstantPropagation.IntraConstantPropagation this;
+
+        this := @this: IntraConstantPropagation.IntraConstantPropagation;
+
+        specialinvoke this.<soot.toolkits.scalar.ForwardFlowAnalysis: void doAnalysis()>();
+
+        return;
+    }
+
+    protected volatile void copy(java.lang.Object, java.lang.Object)
+    {
+        IntraConstantPropagation.IntraConstantPropagation l0;
+        java.lang.Object l1, l2;
+        IntraConstantPropagation.ConstantPropagationMap $stack3, $stack4;
+
+        l0 := @this: IntraConstantPropagation.IntraConstantPropagation;
+
+        l1 := @parameter0: java.lang.Object;
+
+        l2 := @parameter1: java.lang.Object;
+
+        $stack4 = (IntraConstantPropagation.ConstantPropagationMap) l1;
+
+        $stack3 = (IntraConstantPropagation.ConstantPropagationMap) l2;
+
+        virtualinvoke l0.<IntraConstantPropagation.IntraConstantPropagation: void copy(IntraConstantPropagation.ConstantPropagationMap,IntraConstantPropagation.ConstantPropagationMap)>($stack4, $stack3);
+
+        return;
+    }
+
+    protected volatile java.lang.Object newInitialFlow()
+    {
+        IntraConstantPropagation.IntraConstantPropagation l0;
+        IntraConstantPropagation.ConstantPropagationMap $stack1;
+
+        l0 := @this: IntraConstantPropagation.IntraConstantPropagation;
+
+        $stack1 = virtualinvoke l0.<IntraConstantPropagation.IntraConstantPropagation: IntraConstantPropagation.ConstantPropagationMap newInitialFlow()>();
+
+        return $stack1;
+    }
+
+    protected volatile void flowThrough(java.lang.Object, java.lang.Object, java.lang.Object)
+    {
+        IntraConstantPropagation.IntraConstantPropagation l0;
+        java.lang.Object l1, l2, l3;
+        IntraConstantPropagation.ConstantPropagationMap $stack4, $stack6;
+        soot.Unit $stack5;
+
+        l0 := @this: IntraConstantPropagation.IntraConstantPropagation;
+
+        l1 := @parameter0: java.lang.Object;
+
+        l2 := @parameter1: java.lang.Object;
+
+        l3 := @parameter2: java.lang.Object;
+
+        $stack6 = (IntraConstantPropagation.ConstantPropagationMap) l1;
+
+        $stack5 = (soot.Unit) l2;
+
+        $stack4 = (IntraConstantPropagation.ConstantPropagationMap) l3;
+
+        virtualinvoke l0.<IntraConstantPropagation.IntraConstantPropagation: void flowThrough(IntraConstantPropagation.ConstantPropagationMap,soot.Unit,IntraConstantPropagation.ConstantPropagationMap)>($stack6, $stack5, $stack4);
+
+        return;
+    }
+
+    protected volatile void merge(java.lang.Object, java.lang.Object, java.lang.Object)
+    {
+        IntraConstantPropagation.IntraConstantPropagation l0;
+        java.lang.Object l1, l2, l3;
+        IntraConstantPropagation.ConstantPropagationMap $stack4, $stack5, $stack6;
+
+        l0 := @this: IntraConstantPropagation.IntraConstantPropagation;
+
+        l1 := @parameter0: java.lang.Object;
+
+        l2 := @parameter1: java.lang.Object;
+
+        l3 := @parameter2: java.lang.Object;
+
+        $stack6 = (IntraConstantPropagation.ConstantPropagationMap) l1;
+
+        $stack5 = (IntraConstantPropagation.ConstantPropagationMap) l2;
+
+        $stack4 = (IntraConstantPropagation.ConstantPropagationMap) l3;
+
+        virtualinvoke l0.<IntraConstantPropagation.IntraConstantPropagation: void merge(IntraConstantPropagation.ConstantPropagationMap,IntraConstantPropagation.ConstantPropagationMap,IntraConstantPropagation.ConstantPropagationMap)>($stack6, $stack5, $stack4);
+
+        return;
+    }
+}

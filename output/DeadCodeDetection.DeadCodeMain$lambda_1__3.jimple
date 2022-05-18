@@ -1,0 +1,54 @@
+public final class DeadCodeDetection.DeadCodeMain$lambda_1__3 extends java.lang.Object implements java.util.function.Consumer
+{
+    java.io.FileWriter cap0;
+
+    public static java.util.function.Consumer bootstrap$(java.io.FileWriter)
+    {
+        java.io.FileWriter $r0;
+        DeadCodeDetection.DeadCodeMain$lambda_1__3 $r1;
+
+        $r0 := @parameter0: java.io.FileWriter;
+
+        $r1 = new DeadCodeDetection.DeadCodeMain$lambda_1__3;
+
+        specialinvoke $r1.<DeadCodeDetection.DeadCodeMain$lambda_1__3: void <init>(java.io.FileWriter)>($r0);
+
+        return $r1;
+    }
+
+    public void <init>(java.io.FileWriter)
+    {
+        DeadCodeDetection.DeadCodeMain$lambda_1__3 $r0;
+        java.io.FileWriter $r1;
+
+        $r0 := @this: DeadCodeDetection.DeadCodeMain$lambda_1__3;
+
+        $r1 := @parameter0: java.io.FileWriter;
+
+        specialinvoke $r0.<java.lang.Object: void <init>()>();
+
+        $r0.<DeadCodeDetection.DeadCodeMain$lambda_1__3: java.io.FileWriter cap0> = $r1;
+
+        return;
+    }
+
+    public void accept(java.lang.Object)
+    {
+        DeadCodeDetection.DeadCodeMain$lambda_1__3 $r0;
+        java.lang.Object $r1;
+        soot.Unit $r2;
+        java.io.FileWriter $r3;
+
+        $r0 := @this: DeadCodeDetection.DeadCodeMain$lambda_1__3;
+
+        $r1 := @parameter0: java.lang.Object;
+
+        $r2 = (soot.Unit) $r1;
+
+        $r3 = $r0.<DeadCodeDetection.DeadCodeMain$lambda_1__3: java.io.FileWriter cap0>;
+
+        staticinvoke <DeadCodeDetection.DeadCodeMain: void lambda$1(java.io.FileWriter,soot.Unit)>($r3, $r2);
+
+        return;
+    }
+}
