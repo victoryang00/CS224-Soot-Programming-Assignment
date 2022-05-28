@@ -10,7 +10,11 @@ enum InvokeMorphism {
     InterfaceInvokeExpr,
     VirtualInvokeExpr,
     SpecialInvokeExpr,
-    StaticInvokeExpr
+    StaticInvokeExpr,
+    JStaticInvokeExpr,
+    JSpecialInvokeExpr,
+    JVirtualInvokeExpr,
+    JInterfaceInvokeExpr
 }
 
 /**
@@ -32,6 +36,8 @@ public class CHAAnalysis {
     }
 
     public void resolve(Chain<SootClass> classes_) {
+        Collection<SootMethod> init_entry;
+
         for (SootClass class_ : classes_) {
             for (SootMethod method_ : class_.getMethods()) {
                 if (method_.isAbstract())
@@ -43,20 +49,54 @@ public class CHAAnalysis {
                 }
             }
         }
-        Collection<SootMethod> init_entry;
-        if (entries != null) {
-            init_entry= entries;
+        if (entries == null) {
+            entries = new LinkedList<>();
+            for (SootClass clazz : Scene.v().getApplicationClasses()) {
+                for (SootMethod method : clazz.getMethods()) {
+                    if ("main".equals(method.getName())) {
+                        entries.add(method);
+                    }
+                }
+            }
+            reachableSets.addAll(entries);
         }
-        entries = new LinkedList<>();
-        for (SootClass clazz : Scene.v().getApplicationClasses()) {
-            for (SootMethod method : clazz.getMethods()) {
-                if ("main".equals(method.getName())) {
-                    entries.add(method);
+        init_entry = entries;
+        Queue<SootMethod> queue = new LinkedList<>(init_entry);
+        while (!queue.isEmpty()) {
+            SootMethod method = queue.poll();
+            if (method.hasActiveBody()) {
+                List<Unit> called = new LinkedList<>();
+                if (method.hasActiveBody()) {
+                    Body body = method.getActiveBody();
+                    for (Unit unit : body.getUnits()) {
+                        Stmt stmt = (Stmt) unit;
+                        if (stmt.containsInvokeExpr()) {
+                            called.add(stmt);
+                        }
+                    }
+                    for (Unit call : called) {
+                        ReachableMethods CalleeMap = resolveCallee(call);
+                        for (SootMethod callee : CalleeMap) {
+                            if (!reachableSets.contains(callee)) {
+                                queue.add(callee);
+                            }
+                            reachableSets.add(callee);
+                            /** Add one Edge */
+
+                            /** Create the CHACallNode*/
+                            InvokeExpr invoke = ((Stmt)call).getInvokeExpr();
+                            CHACallNode callNode = new CHACallNode(call, callee, InvokeMorphism.valueOf(invoke.getClass().getSimpleName()).ordinal());
+                            Set<CHACallNode> callers = calleeCallerMap.computeIfAbsent(callee, k -> new HashSet<>());
+                            callers.add(callNode);
+                            /** check if whether in the unit soot method */
+                            SootMethod caller = unitSootMethodMap.get(call);
+                            Set<CHACallNode> callees = calleeCallerMap.computeIfAbsent(caller, k -> new HashSet<>());
+                            callees.add(callNode);
+                        }
+                    }
                 }
             }
         }
-        reachableSets.addAll(entries);
-
     }
 
     /**
@@ -93,23 +133,24 @@ public class CHAAnalysis {
 
     public ReachableMethods resolveCallee(Unit unit) {
         Stmt stmt = (Stmt) unit;
+        List<SootClass> classes;
+
         InvokeExpr invoke = stmt.getInvokeExpr();
         int toPass = InvokeMorphism.valueOf(invoke.getClass().getSimpleName()).ordinal();
         SootMethod method = invoke.getMethod();
         SootClass class_ = method.getDeclaringClass();
         switch (toPass) {
             case 3:
-            return new ReachableMethods(Collections.singleton(invoke.getMethod()));
+                return new ReachableMethods(Collections.singleton(invoke.getMethod()));
             case 2: {
-                SootMethod dis = dispatch(class_,method);
-                if (dis!=null) {
+                SootMethod dis = dispatch(class_, method);
+                if (dis != null) {
                     return new ReachableMethods(Collections.singleton(dis));
-                }else{
+                } else {
                     return new ReachableMethods();
                 }
             }
         }
-        List<SootClass> classes;
         /** Check wether is class */
         if (class_.isInterface()) {
             classes = cha_class.getSubinterfacesOfIncluding(class_);
@@ -124,5 +165,9 @@ public class CHAAnalysis {
             }
         }
         return new ReachableMethods(result);
+    }
+    public Set<CHACallNode> getCallout(SootMethod method){
+        Set<CHACallNode> result = calleeCallerMap.computeIfAbsent(method, k -> new HashSet<>());
+        return Collections.unmodifiableSet(result);
     }
 }

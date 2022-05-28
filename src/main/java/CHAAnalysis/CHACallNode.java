@@ -14,18 +14,22 @@ public class CHACallNode {
     public Unit CalledPlace;
     public SootMethod Callee;
 
-    public CHACallNode(int CallSet, Unit CalledPlace, SootMethod Callee) {
+    public CHACallNode(Unit CalledPlace, SootMethod Callee, int CallSet) {
         switch (CallSet) {
             case 0:
+            case 7:
                 Kind = Interface;
                 break;
             case 1:
+            case 6:
                 Kind = Virtual;
                 break;
             case 2:
+            case 5:
                 Kind = Special;
                 break;
             case 3:
+            case 4:
                 Kind = Static;
                 break;
         }

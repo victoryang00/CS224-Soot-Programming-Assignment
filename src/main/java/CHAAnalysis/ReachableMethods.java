@@ -1,12 +1,14 @@
 package CHAAnalysis;
 
+import soot.Local;
 import soot.SootMethod;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
-public class ReachableMethods {
+public class ReachableMethods implements Iterable<SootMethod>{
     private final Set<SootMethod> reachableMethods;
     boolean is_empty;
 
@@ -18,6 +20,10 @@ public class ReachableMethods {
     public<T> ReachableMethods(Set<T> objects) {
         is_empty =false;
         this.reachableMethods = (Set<SootMethod>) objects;
+    }
+    @Override
+    public Iterator<SootMethod> iterator() {
+        return reachableMethods.iterator();
     }
 
     public void add(SootMethod method) {

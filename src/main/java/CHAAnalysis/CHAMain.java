@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 
 public class CHAMain {
 
@@ -54,9 +55,21 @@ public class CHAMain {
         CHAAnalysis cha = CHAAnalysis.analysis;
         Chain<SootClass>  a = Scene.v().getApplicationClasses();
         cha.resolve(a);
-        for (SootClass clazz_ : a){
-            for (SootMethod method:clazz_.getMethods()){
 
+        for (SootClass clazz : Scene.v().getApplicationClasses()) {
+            for (SootMethod method : clazz.getMethods()) {
+                StringBuilder buff = new StringBuilder();
+                buff.append(method.getSignature())
+                        .append(": \n")
+                        .append("\t ").append(cha.reachableSets.contains(method) ? "Reachable" : "Unreachable")
+                        .append("\n");
+
+                Set<CHACallNode> edgeSet = cha.getCallout(method);
+                for (CHACallNode callEdge : edgeSet) {
+                    buff.append("\t ").append(callEdge).append("\n");
+                }
+                buff.append("\n");
+                System.out.println(buff);
             }
         }
         try {
