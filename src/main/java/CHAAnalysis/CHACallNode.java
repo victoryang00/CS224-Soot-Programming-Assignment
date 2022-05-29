@@ -11,10 +11,10 @@ public class CHACallNode {
     public String Static = "invokestatic";
 
     public String Kind;
-    public Unit CalledPlace;
+    public SootMethod CalledPlace;
     public SootMethod Callee;
 
-    public CHACallNode(Unit CalledPlace, SootMethod Callee, int CallSet) {
+    public CHACallNode(SootMethod CalledPlace, SootMethod Callee, int CallSet) {
         switch (CallSet) {
             case 0:
             case 7:
@@ -39,6 +39,6 @@ public class CHACallNode {
 
     @Override
     public String toString() {
-        return "@" + CalledPlace.getTag(LineNumberTag.IDENTIFIER) + ": " + CalledPlace.toString() + "->" + Callee.getSignature();
+        return "Line " + CalledPlace.getTag(LineNumberTag.IDENTIFIER) + ": " + CalledPlace.toString() + "->" + Callee.getSignature();
     }
 }

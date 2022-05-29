@@ -1,5 +1,6 @@
 package CHAAnalysis;
 
+import com.sun.org.apache.xerces.internal.xs.LSInputList;
 import soot.*;
 import soot.options.Options;
 import soot.util.Chain;
@@ -7,21 +8,26 @@ import soot.util.Chain;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class CHAMain {
 
-    //    public static final String sourceDirectory = System.getProperty("user.dir");
-    public static final String sourceDirectory = System.getProperty("user.dir") + File.separator + "target" + File.separator + "classes";
+    public static final String sourceDirectory = System.getProperty("user.dir");
+//    public static final String sourceDirectory = System.getProperty("user.dir") + File.separator + "target" + File.separator + "classes";
 
     /**
      * reference: <a href="https://github.com/PL-Ninja/MySootScript/tree/c4689d06fd08ffad43c810c40398bd44c7705531">https://github.com/PL-Ninja/MySootScript/tree/c4689d06fd08ffad43c810c40398bd44c7705531</a>
      */
     public static void setupSoot(String classname) {
         LinkedList<String> excluded_class = new LinkedList<>();
+        excluded_class.add("CHAInput3");
+        excluded_class.add("CHAInput1");
+        excluded_class.add("CHAInput2");
+        excluded_class.add("A");
+        excluded_class.add("B");
+        excluded_class.add("C");
+        excluded_class.add("D");
+        excluded_class.add("E");
         excluded_class.add("CHAAnalysis.*");
         excluded_class.add("ConfigTag.*");
         excluded_class.add("DeadCodeDetection.*");
@@ -53,23 +59,29 @@ public class CHAMain {
 
     protected static void performCHAAnalysis(String filename) {
         CHAAnalysis cha = CHAAnalysis.analysis;
-        Chain<SootClass>  a = Scene.v().getApplicationClasses();
+        Chain<SootClass> a = Scene.v().getApplicationClasses();
         cha.resolve(a);
-
+        String toOutput = "";
+        String toOutputLast = "";
+        List<String> toOutputLastList = new LinkedList<>();
+        List<Integer> toCountLast = new LinkedList<>();
         for (SootClass clazz : Scene.v().getApplicationClasses()) {
-            for (SootMethod method : clazz.getMethods()) {
-                StringBuilder buff = new StringBuilder();
-                buff.append(method.getSignature())
-                        .append(": \n")
-                        .append("\t ").append(cha.reachableSets.contains(method) ? "Reachable" : "Unreachable")
-                        .append("\n");
-
-                Set<CHACallNode> edgeSet = cha.getCallout(method);
-                for (CHACallNode callEdge : edgeSet) {
-                    buff.append("\t ").append(callEdge).append("\n");
+            if (clazz.getName().contains(filename)) {
+                for (SootMethod method : clazz.getMethods()) {
+                    if (cha.reachableSets.contains(method)) {
+                        toOutputLast = "";
+                        int edgecount = 0;
+                        toOutput += method.getSignature() + "\n";
+                        toOutputLast += method.getSignature() + ":\n";
+                        Set<CHACallNode> edgeSet = cha.getCallout(method);
+                        for (CHACallNode callEdge : edgeSet) {
+                            toOutputLast += callEdge + "\n";
+                            edgecount++;
+                        }
+                        toOutputLastList.add(toOutputLast);
+                        toCountLast.add(edgecount);
+                    }
                 }
-                buff.append("\n");
-                System.out.println(buff);
             }
         }
         try {
@@ -91,6 +103,10 @@ public class CHAMain {
         }
         try {
             FileWriter myWriter = new FileWriter("output/" + filename + ".txt");
+            myWriter.write("#reacheable method: " + toCountLast.size() + "\n");
+            myWriter.write(toOutput + "\n");
+            myWriter.write("#call graph edges: " + toCountLast.get(0) + "\n");
+            myWriter.write(toOutputLastList.get(0) + "\n");
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {

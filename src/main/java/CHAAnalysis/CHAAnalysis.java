@@ -4,6 +4,7 @@ import soot.*;
 import soot.jimple.*;
 import soot.util.Chain;
 
+import java.lang.reflect.Method;
 import java.util.*;
 
 enum InvokeMorphism {
@@ -23,7 +24,7 @@ enum InvokeMorphism {
 public class CHAAnalysis {
     public static CHAAnalysis analysis = new CHAAnalysis();
 
-    public Hierarchy cha_class = new Hierarchy();
+    public FastHierarchy cha_class = new FastHierarchy();
 
     public Collection<SootMethod> entries;
 
@@ -59,6 +60,15 @@ public class CHAAnalysis {
                 }
             }
             reachableSets.addAll(entries);
+        }else{
+            for (SootClass clazz : Scene.v().getApplicationClasses()) {
+                for (SootMethod method : clazz.getMethods()) {
+                    if ("main".equals(method.getName())) {
+                        entries.add(method);
+                    }
+                }
+            }
+            reachableSets.addAll(entries);
         }
         init_entry = entries;
         Queue<SootMethod> queue = new LinkedList<>(init_entry);
@@ -81,14 +91,14 @@ public class CHAAnalysis {
                                 queue.add(callee);
                             }
                             reachableSets.add(callee);
-                            /** Add one Edge */
+                            /* Add one Edge */
 
-                            /** Create the CHACallNode*/
+                            /* Create the CHACallNode*/
                             InvokeExpr invoke = ((Stmt)call).getInvokeExpr();
-                            CHACallNode callNode = new CHACallNode(call, callee, InvokeMorphism.valueOf(invoke.getClass().getSimpleName()).ordinal());
+                            CHACallNode callNode = new CHACallNode(body.getMethod(), callee, InvokeMorphism.valueOf(invoke.getClass().getSimpleName()).ordinal());
                             Set<CHACallNode> callers = calleeCallerMap.computeIfAbsent(callee, k -> new HashSet<>());
                             callers.add(callNode);
-                            /** check if whether in the unit soot method */
+                            /* check if whether in the unit soot method */
                             SootMethod caller = unitSootMethodMap.get(call);
                             Set<CHACallNode> callees = calleeCallerMap.computeIfAbsent(caller, k -> new HashSet<>());
                             callees.add(callNode);
@@ -133,7 +143,7 @@ public class CHAAnalysis {
 
     public ReachableMethods resolveCallee(Unit unit) {
         Stmt stmt = (Stmt) unit;
-        List<SootClass> classes;
+        Collection<SootClass> classes;
 
         InvokeExpr invoke = stmt.getInvokeExpr();
         int toPass = InvokeMorphism.valueOf(invoke.getClass().getSimpleName()).ordinal();
@@ -141,8 +151,10 @@ public class CHAAnalysis {
         SootClass class_ = method.getDeclaringClass();
         switch (toPass) {
             case 3:
+            case 4:
                 return new ReachableMethods(Collections.singleton(invoke.getMethod()));
-            case 2: {
+            case 2:
+            case 5: {
                 SootMethod dis = dispatch(class_, method);
                 if (dis != null) {
                     return new ReachableMethods(Collections.singleton(dis));
@@ -151,11 +163,11 @@ public class CHAAnalysis {
                 }
             }
         }
-        /** Check wether is class */
+        /* Check wether is class */
         if (class_.isInterface()) {
-            classes = cha_class.getSubinterfacesOfIncluding(class_);
+            classes = cha_class.getAllSubinterfaces( class_);
         } else {
-            classes = cha_class.getSubclassesOfIncluding(class_);
+            classes = cha_class.getSubclassesOf(class_);
         }
         Set<SootMethod> result = new HashSet<>();
         for (SootClass inside_class : classes) {
